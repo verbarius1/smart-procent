@@ -322,7 +322,7 @@ img,svg{display:block}
 /* Версии: номер меняет tools/release.py. ?v=N открывает архивную версию N,
    а устаревшая копия из кэша браузера сама переходит на свежую. */
 (function(){
-  var PAGE_VERSION = 7;
+  var PAGE_VERSION = 8;
   var qs = new URLSearchParams(location.search), want = parseInt(qs.get('v'), 10);
   if (want >= 1 && want < PAGE_VERSION){ location.replace('v/' + want + '/' + location.hash); return; }
   if (!/^https?:/.test(location.protocol) || !window.fetch) return;
@@ -341,7 +341,7 @@ img,svg{display:block}
 {"series":[{"name":"Смарт-процент До 02 февраля","rate":13.5,"termLabel":"4 месяца","placementDate":"2026-10-05","maturityDate":"2027-02-02","collectionStart":"","collectionEnd":"2026-10-05","minAmount":1000,"price":1000,"fee":"0%","url":"https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"}]}
 </script>
 
-<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">7</span></a></div>
+<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">8</span></a></div>
 
 <header class="header" id="top">
   <div class="container header-in">
@@ -440,7 +440,7 @@ img,svg{display:block}
         <ol class="steps">
           <li class="step"><span class="step-num">1</span><div><b>Купите в Т‑Инвестициях</b><span class="step-desc">«Что купить» → «ЦФА» → «Первичные размещения» → «Смарт-процент». Нужна версия приложения 7.2.0 или новее</span></div></li>
           <li class="step"><span class="step-num">2</span><div><b id="step2Title">Ставка фиксируется на весь срок</b><span class="step-desc" id="step2Desc">У каждого выпуска свой срок и ставка</span></div></li>
-          <li class="step"><span class="step-num">3</span><div><b id="step3Title">В дату погашения — сумма и доход</b><span class="step-desc">При погашении возвращаются вложенная сумма и начисленный доход</span></div></li>
+          <li class="step"><span class="step-num">3</span><div><b id="step3Title">В дату погашения вернутся деньги и доход</b><span class="step-desc">Вложенная сумма и начисленный доход придут вместе, в дату погашения</span></div></li>
         </ol>
         <p class="note"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg><span id="howNote">Продать до даты погашения нельзя — деньги вернутся только в эту дату</span></p>
       </div>
@@ -858,7 +858,7 @@ function renderHow(single){
   var d = fmtDate(single.maturityDate, true);
   $('step2Title').textContent = 'Ставка ' + fmtRate(single.rate) + ' годовых зафиксирована';
   $('step2Desc').textContent = 'На' + NB + single.termLabel + ', до ' + d;
-  $('step3Title').textContent = d + ' — сумма и доход';
+  $('step3Title').textContent = d + ' вернутся деньги и доход';
   $('howNote').textContent = 'Продать до' + NB + d + ' нельзя — деньги вернутся только в дату погашения';
 }
 
