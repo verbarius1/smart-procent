@@ -137,52 +137,41 @@ img,svg{display:block}
 .mt-32{margin-top:32px}
 @media(min-width:768px){.mt-32{margin-top:40px}}
 
-/* series */
-.series-list{display:grid;gap:16px}
-@media(min-width:768px){.series-list{grid-template-columns:repeat(2,1fr)}.series-list.single{grid-template-columns:1fr}}
-@media(max-width:767px){
-  .series-list.carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:32px -16px 0;padding:0 16px 4px;scrollbar-width:none}
-  .series-list.carousel::-webkit-scrollbar{display:none}
-  .series-list.carousel .series-card{flex:0 0 86%;scroll-snap-align:center}
-}
-.series-card{background:var(--card);border-radius:var(--r-xl);padding:24px;display:flex;flex-direction:column;gap:20px}
-@media(min-width:768px){.series-card{padding:32px}}
-.series-name{font-size:15px;color:var(--text-2);font-weight:500}
-.series-rate{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:6px}
-.series-rate .num{font-size:48px;font-weight:700;line-height:1;letter-spacing:-.02em}
-.series-rate .unit{font-size:20px;font-weight:600}
-.series-term{margin-top:8px}
-.countdown{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:#fff;font-size:15px;font-weight:500;align-self:flex-start}
+/* countdown */
+.countdown{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:var(--chip);font-size:15px;font-weight:500}
 .countdown.last{background:#FFF3BF}
 .countdown svg{color:var(--text-2)}
-.progress{height:6px;border-radius:3px;background:#E1E3E7;overflow:hidden;margin-top:10px}
+.hero-countdown{margin-top:16px}
+.progress{height:6px;border-radius:3px;background:#E1E3E7;overflow:hidden;margin:10px auto 0;max-width:320px}
 .progress i{display:block;height:100%;background:var(--yellow);border-radius:3px}
-.pairs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
-.pair b{display:block;font-size:20px;font-weight:700;line-height:1.25}
-.pair span{display:block;color:var(--text-2);font-size:15px;margin-top:2px}
-@media(min-width:768px){
-  .series-list.single .series-card{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;column-gap:48px;row-gap:24px}
-  .series-list.single .series-card .s-top{grid-row:span 2}
-  .series-list.single .series-rate .num{font-size:72px}
-}
-.series-more{text-align:center;margin-top:24px}
-.empty-card{text-align:center;padding:40px 24px}
-.empty-card b{display:block;font-size:22px;font-weight:700}
-.empty-card p{color:var(--text-2);margin:8px auto 0;max-width:520px}
+.hero-more{margin-top:16px;font-size:15px}
+.calc-countdown{margin-top:12px}
+.calc-countdown .countdown{background:#fff}
+.calc-countdown .progress{margin-left:0}
 
 /* calculator */
 .calc-grid{display:grid;gap:20px}
+.calc-grid>*{min-width:0}
 @media(min-width:900px){.calc-grid{grid-template-columns:1fr 1fr;gap:32px;align-items:stretch}}
 .tabs{display:flex;flex-wrap:wrap;gap:8px}
 .tab{min-height:44px;padding:0 16px;border-radius:12px;border:0;background:#fff;cursor:pointer;font-size:15px;font-weight:500;color:var(--text);white-space:nowrap}
 .tab[aria-selected="true"]{background:#333;color:#fff}
 .series-static{display:inline-flex;padding:10px 14px;border-radius:12px;background:var(--chip);font-size:15px;font-weight:500}
-.field{display:block;position:relative;margin-top:16px;background:#fff;border-radius:var(--r-md);padding:12px 48px 10px 16px;border:2px solid transparent;cursor:text}
-.field:focus-within{border-color:var(--yellow)}
-.field-label{display:block;font-size:13px;color:var(--text-2)}
-.field input{width:100%;border:0;outline:0;background:transparent;font:inherit;font-size:28px;font-weight:700;color:var(--text);padding:0;margin-top:2px}
-.field-suffix{position:absolute;right:16px;bottom:14px;font-size:24px;font-weight:700;color:var(--text-2)}
-.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.field-title{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:20px}
+.field-title label{font-size:17px;font-weight:600;cursor:pointer}
+.field-title span{font-size:14px;color:var(--text-2)}
+.field{display:flex;align-items:center;gap:10px;margin-top:8px;background:#fff;border-radius:var(--r-md);padding:8px 10px 8px 18px;border:2px solid #BFC3CA;cursor:text;transition:border-color .15s ease,box-shadow .15s ease}
+.field:hover{border-color:#8E929A}
+.field:focus-within{border-color:#F2C200;box-shadow:0 0 0 4px rgba(255,221,45,.4)}
+.field input{flex:1;min-width:0;width:100%;border:0;outline:0;background:transparent;font:inherit;font-size:30px;font-weight:700;color:var(--text);padding:6px 0;caret-color:#333}
+.field input::placeholder{color:#A3A7AE;font-weight:500;font-size:20px}
+.field-suffix{font-size:26px;font-weight:700;color:var(--text-2)}
+.field-edit{flex:0 0 44px;height:44px;border-radius:12px;background:var(--yellow);display:grid;place-items:center;color:#333}
+.field.nudge{animation:nudge 1.1s ease 2}
+@keyframes nudge{0%,100%{border-color:#BFC3CA;box-shadow:0 0 0 0 rgba(255,221,45,0)}50%{border-color:#F2C200;box-shadow:0 0 0 7px rgba(255,221,45,.45)}}
+.field-help{font-size:14px;color:var(--text-2);margin-top:8px}
+.quick-label{font-size:14px;color:var(--text-2);margin-top:16px}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .quick button{min-height:40px;padding:0 14px;border-radius:12px;border:0;background:#fff;cursor:pointer;font-size:15px;font-weight:500;color:var(--text)}
 .quick button[aria-pressed="true"]{background:#333;color:#fff}
 .hint{min-height:22px;margin-top:10px;font-size:14px;color:#9A5B00}
@@ -221,12 +210,22 @@ img,svg{display:block}
   .track{display:none}
 }
 
+/* reliability */
+.trust{display:grid;gap:12px}
+@media(min-width:768px){.trust{grid-template-columns:repeat(3,1fr);gap:16px}}
+.trust-card{border-radius:var(--r-xl);padding:24px;display:flex;flex-direction:column;gap:6px;min-height:150px}
+@media(min-width:768px){.trust-card{padding:28px 32px;min-height:180px}}
+.trust-card b{font-size:36px;font-weight:700;line-height:1.1;letter-spacing:-.02em}
+@media(min-width:768px){.trust-card b{font-size:44px}}
+.trust-card span{color:var(--text-2);font-size:15px;margin-top:auto}
+.trust-card.t1{background:var(--dark-2);color:#fff}
+.trust-card.t1 b{color:var(--yellow)}
+.trust-card.t1 span{color:rgba(255,255,255,.78)}
+.trust-card.t2{background:var(--card)}
+.trust-card.t3{background:var(--card-blue)}
+.trust-feat{margin-top:16px}
+
 /* group */
-.ratings{display:grid;gap:12px}
-@media(min-width:768px){.ratings{grid-template-columns:repeat(3,1fr);gap:16px}}
-.rating{background:var(--card);border-radius:var(--r-lg);padding:20px 24px;display:flex;gap:16px;align-items:center}
-.rating b{display:block;font-size:24px;font-weight:700;line-height:1.2}
-.rating span{display:block;color:var(--text-2);font-size:15px}
 .kpi-wrap{background:var(--card-blue);border-radius:var(--r-xl);padding:20px;margin-top:16px}
 @media(min-width:768px){.kpi-wrap{padding:32px}}
 .kpi-wrap h3{font-size:22px;font-weight:700;margin:4px 4px 16px}
@@ -291,7 +290,8 @@ img,svg{display:block}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .js .rv{opacity:1;transform:none;transition:none}
-  .sticky,.btn,.faq summary svg{transition:none}
+  .sticky,.btn,.faq summary svg,.field{transition:none}
+  .field.nudge{animation:none}
 }
 </style>
 </head>
@@ -314,15 +314,14 @@ img,svg{display:block}
     </a>
     <div class="header-right">
       <a class="pill" id="lkLink" href="https://www.tbank.ru/">Личный кабинет</a>
-      <a class="btn btn-primary btn-sm" id="headerCta" data-cta="header" href="#series">Участвовать</a>
+      <a class="btn btn-primary btn-sm" id="headerCta" data-cta="header" href="#calc">Участвовать</a>
       <button class="icon-btn" id="menuBtn" aria-label="Меню" aria-expanded="false" aria-controls="menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
     <nav class="menu" id="menu" aria-label="Разделы страницы">
-      <a href="#series">Выпуски</a>
+      <a href="#terms">Эмитент и условия</a>
       <a href="#calc">Калькулятор</a>
-      <a href="#terms">Условия</a>
       <a href="#group">О группе</a>
       <a href="#buy">Как купить</a>
       <a href="#faq">Вопросы и ответы</a>
@@ -339,13 +338,15 @@ img,svg{display:block}
       <div id="heroOffer">
         <div class="hero-rate"><span class="num" id="heroRate"></span><span class="unit">годовых</span></div>
         <p class="hero-term" id="heroTerm"></p>
+        <div class="hero-countdown" id="heroCountdown" hidden></div>
       </div>
       <p class="hero-empty" id="heroEmpty" hidden>Новые выпуски Смарт-процента скоро. Следите в Т‑Инвестициях</p>
       <div class="hero-chips" id="heroChips"></div>
       <div class="hero-ctas">
-        <a class="btn btn-primary" id="heroCta" data-cta="hero" href="#series">Выбрать выпуск</a>
+        <a class="btn btn-primary" id="heroCta" data-cta="hero" href="#calc">Выбрать выпуск</a>
         <a class="btn btn-gray" href="#how">Как это работает</a>
       </div>
+      <p class="hero-more" id="shelfMore" hidden><a data-cta="hero_all" target="_blank" rel="noopener" href="#">Все выпуски в Т‑Инвестициях</a></p>
       <!-- Заменить на 3D‑ассет бренда: жёлтая плитка с металлической гранью на подиуме -->
       <div class="hero-visual" aria-hidden="true">
         <div class="hv-scale">
@@ -365,7 +366,7 @@ img,svg{display:block}
       <div class="how-card rv">
         <h2 id="howTitle">Как это работает</h2>
         <ol class="steps">
-          <li class="step"><span class="step-num">1</span><div><b>Выберите выпуск и сумму</b><span class="step-desc">У каждого выпуска свой срок и ставка<span id="howMin"></span></span></div></li>
+          <li class="step"><span class="step-num">1</span><div><b>Выберите выпуск и сумму</b><span class="step-desc">У каждого выпуска свой срок и ставка</span></div></li>
           <li class="step"><span class="step-num">2</span><div><b>Ставка фиксируется на весь срок</b><span class="step-desc">Вы предоставляете средства Т‑Банку во временное пользование на заранее определённый срок</span></div></li>
           <li class="step"><span class="step-num">3</span><div><b>В дату погашения — сумма и доход</b><span class="step-desc">При погашении возвращаются вложенная сумма и начисленный доход</span></div></li>
         </ol>
@@ -377,12 +378,19 @@ img,svg{display:block}
     </div>
   </section>
 
-  <section class="section" id="series" aria-labelledby="seriesTitle">
+  <section class="section" id="terms" aria-labelledby="termsTitle">
     <div class="container">
-      <h2 class="h2 rv" id="seriesTitle">Сейчас в размещении</h2>
-      <p class="lead rv">Ставка фиксируется на весь срок выпуска</p>
-      <div class="series-list mt-32" id="seriesList"></div>
-      <p class="series-more" id="shelfMore" hidden><a class="btn btn-gray" data-cta="series_all" target="_blank" rel="noopener" href="#">Все выпуски в Т‑Инвестициях</a></p>
+      <h2 class="h2 rv" id="termsTitle">Эмитент с рейтингом AA(RU)</h2>
+      <p class="lead rv">Смарт-процент выпускает АО «ТБанк» — основа экосистемы Т‑Технологий. Выпуск регулируется законом о ЦФА и проходит под контролем Банка России</p>
+      <div class="trust mt-32">
+        <div class="trust-card t1 rv"><b>AA(RU)</b><span>Кредитный рейтинг Т‑Банка от АКРА, прогноз «Позитивный»</span></div>
+        <div class="trust-card t2 rv"><b>ruAA</b><span>Кредитный рейтинг Т‑Банка от Эксперт РА, прогноз «Позитивный»</span></div>
+        <div class="trust-card t3 rv"><b>259‑ФЗ</b><span>Выпуск по закону «О цифровых финансовых активах» под контролем Банка России</span></div>
+      </div>
+      <div class="card trust-feat rv">
+        <ul class="feat" id="featList"></ul>
+      </div>
+      <p class="footnote">Рейтинги Т‑Банка: АКРА — 12.03.2026, Эксперт РА — 08.06.2026. Источник: <a href="https://t-technologies.ru/investors/bonds/" target="_blank" rel="noopener">t‑technologies.ru</a></p>
     </div>
   </section>
 
@@ -393,11 +401,15 @@ img,svg{display:block}
         <div class="calc-grid">
           <div>
             <div id="calcSeries"></div>
-            <label class="field" for="amount">
-              <span class="field-label" id="amountLabel">Сумма</span>
-              <input id="amount" type="text" inputmode="numeric" autocomplete="off" value="100 000" aria-describedby="calcHint">
+            <div class="calc-countdown" id="calcCountdown" hidden></div>
+            <div class="field-title"><label for="amount">Ваша сумма</label><span id="amountLabel"></span></div>
+            <label class="field" id="amountField" for="amount">
+              <input id="amount" type="text" inputmode="numeric" autocomplete="off" placeholder="Введите сумму" aria-describedby="amountHelp calcHint">
               <span class="field-suffix" aria-hidden="true">₽</span>
+              <span class="field-edit" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></span>
             </label>
+            <p class="field-help" id="amountHelp">Нажмите на поле и введите свою сумму или выберите готовую</p>
+            <p class="quick-label">Быстрый выбор</p>
             <div class="quick" id="quick" aria-label="Быстрый выбор суммы"></div>
             <p class="hint" id="calcHint" aria-live="polite"></p>
           </div>
@@ -409,15 +421,6 @@ img,svg{display:block}
             <p class="fine">Расчёт ориентировочный, до налогов. Точные условия — в решении о выпуске.</p>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="terms" aria-labelledby="termsTitle">
-    <div class="container">
-      <h2 class="h2 rv" id="termsTitle">Условия</h2>
-      <div class="card mt-32 rv">
-        <ul class="feat" id="featList"></ul>
       </div>
     </div>
   </section>
@@ -466,8 +469,8 @@ img,svg{display:block}
           </svg>
         </article>
         <article class="uc c3 rv">
-          <h3>Начать с небольшой суммы</h3>
-          <p id="ucMin">Минимальный размер участия — в условиях выпуска</p>
+          <h3>Добавить в портфель фиксированную доходность</h3>
+          <p>С понятной датой погашения и ставкой, известной заранее</p>
           <svg class="art" viewBox="0 0 220 150" aria-hidden="true">
             <defs>
               <linearGradient id="g3m" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8E9199"/><stop offset=".5" stop-color="#E9EAEE"/><stop offset="1" stop-color="#9A9DA5"/></linearGradient>
@@ -493,15 +496,9 @@ img,svg{display:block}
 
   <section class="section" id="group" aria-labelledby="groupTitle">
     <div class="container">
-      <h2 class="h2 rv" id="groupTitle">ЦФА от группы Т‑Технологии</h2>
-      <p class="lead rv">Эмитент — АО «ТБанк». В основе экосистемы Т‑Технологий лежит Т‑Банк, один из крупнейших в мире онлайн-банков</p>
-      <div class="ratings mt-32">
-        <div class="rating rv"><span class="ico" style="background:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg></span><div><b>AA(RU)</b><span>АКРА · прогноз «Позитивный»</span></div></div>
-        <div class="rating rv"><span class="ico" style="background:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg></span><div><b>ruAA</b><span>Эксперт РА · прогноз «Позитивный»</span></div></div>
-        <div class="rating rv"><span class="ico" style="background:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><div><b>Атомайз</b><span>Платформа ЦФА в группе Т‑Технологии</span></div></div>
-      </div>
-      <div class="kpi-wrap rv">
-        <h3>Т‑Технологии в цифрах</h3>
+      <h2 class="h2 rv" id="groupTitle">Т‑Технологии в цифрах</h2>
+      <p class="lead rv">В основе экосистемы Т‑Технологий лежит Т‑Банк, один из крупнейших в мире онлайн-банков</p>
+      <div class="kpi-wrap mt-32 rv">
         <div class="kpis">
           <div class="kpi"><div class="kpi-val"><b>56 млн+</b></div><span>клиентов</span></div>
           <div class="kpi"><div class="kpi-val"><b>3,5 трлн ₽</b><em>+25%</em></div><span>кредитный портфель</span></div>
@@ -511,7 +508,7 @@ img,svg{display:block}
           <div class="kpi"><div class="kpi-val"><b>29,3%</b></div><span>средняя рентабельность капитала (ROE) за последние 4 квартала</span></div>
           <div class="divers"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l7 5"/></svg></span><span>Более половины чистой выручки приносят направления, не связанные с розничными кредитами</span></div>
         </div>
-        <p class="footnote">Показатели МКПАО «Т‑Технологии» на основе финансовых результатов за II квартал 2026 года: данные за последние 4 квартала, динамика год к году. Рейтинги Т‑Банка: АКРА — 12.03.2026, Эксперт РА — 08.06.2026. Источник: <a href="https://t-technologies.ru/" target="_blank" rel="noopener">t‑technologies.ru</a></p>
+        <p class="footnote">Показатели МКПАО «Т‑Технологии» на основе финансовых результатов за II квартал 2026 года: данные за последние 4 квартала, динамика год к году. Источник: <a href="https://t-technologies.ru/" target="_blank" rel="noopener">t‑technologies.ru</a></p>
       </div>
     </div>
   </section>
@@ -584,8 +581,8 @@ var CONFIG = {
   ISSUE_DOCS_URL: '',     // [РЕШЕНИЕ О ВЫПУСКЕ]
   AD_LABEL: '',           // [Реклама. Рекламодатель, ИНН. erid]
   ACCOUNT_URL: 'https://www.tbank.ru/',
-  QUICK_AMOUNTS: [10000, 50000, 100000, 500000],
-  DEFAULT_AMOUNT: 100000,
+  QUICK_AMOUNTS: [100000, 500000, 1000000, 5000000],
+  DEFAULT_AMOUNT: 500000,
   // Ответы FAQ, которые нужно подтвердить. Пока пусто — вопрос не показывается.
   FAQ_PENDING: {
     noAccount: '',  // Как купить, если нет брокерского счёта
@@ -632,6 +629,7 @@ var ICONS = {
   calendar:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
   lock:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>',
   tag:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 12.5V4.5a1 1 0 011-1h8l8 8-9 9z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>',
+  layers:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg>',
   clock:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   clock22:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   chevron:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
@@ -663,15 +661,14 @@ function init(data){
                   .sort(function(a,b){ return a.termDays - b.termDays; });
 
   var best = active.slice().sort(function(a,b){ return b.rate - a.rate; })[0];
-  var mainUrl = CONFIG.SHELF_URL || (best && best.url) || '';
+  var mainUrl = active.length === 1 ? active[0].url : (CONFIG.SHELF_URL || (best && best.url) || '');
   var minAmount = active.length ? Math.min.apply(null, active.map(function(s){ return s.minAmount; })) : 0;
   var fees = active.map(function(s){ return s.fee; }).filter(Boolean);
   var sameFee = fees.length && fees.every(function(f){ return f === fees[0]; }) ? fees[0] : '';
 
   renderHero(active, best, minAmount, sameFee, mainUrl);
-  renderSeries(active);
   renderCalc(active);
-  renderFeatures(active, minAmount, sameFee);
+  renderFeatures();
   renderFaq();
   renderLinks(mainUrl, active, minAmount);
   setupSticky(active, best, mainUrl);
@@ -688,17 +685,18 @@ function renderHero(active, best, minAmount, fee, mainUrl){
     var s = active[0];
     $('heroRate').textContent = fmtRate(s.rate);
     $('heroTerm').textContent = 'на ' + s.termLabel + ' · погашение ' + fmtDate(s.maturityDate, true);
+    var hcd = $('heroCountdown'); hcd.innerHTML = countdownHtml(s); hcd.hidden = false;
+    var cta1 = $('heroCta'); cta1.textContent = 'Участвовать'; cta1.href = s.url; cta1.target = '_blank'; cta1.rel = 'noopener'; cta1.dataset.series = s.name;
   } else {
     var terms = active.map(function(s){ return s.termLabel; });
     $('heroRate').textContent = 'до ' + fmtRate(best.rate);
     $('heroTerm').textContent = 'Сроки: ' + terms[0] + ' — ' + terms[terms.length-1];
   }
-  var chips = [];
-  if (minAmount) chips.push('от ' + fmtRub(minAmount));
+  var chips = ['эмитент АО «ТБанк», AA(RU)'];
   if (fee) chips.push('комиссия за размещение ' + fee);
-  chips.push('эмитент АО «ТБанк», AA(RU)');
+  if (minAmount) chips.push('от ' + fmtRub(minAmount));
   $('heroChips').innerHTML = chips.map(function(c){ return '<span class="chip">' + esc(c) + '</span>'; }).join('');
-  if (minAmount) $('howMin').textContent = '. Участие — от ' + fmtRub(minAmount);
+  if (CONFIG.SHELF_URL){ var sm = $('shelfMore'); sm.hidden = false; sm.querySelector('a').href = CONFIG.SHELF_URL; }
 }
 
 function countdownHtml(s){
@@ -711,38 +709,6 @@ function countdownHtml(s){
     html += '<div class="progress" role="progressbar" aria-label="Прошло времени сбора" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + Math.round(done*100) + '"><i style="width:' + (done*100).toFixed(1) + '%"></i></div>';
   }
   return html;
-}
-
-function renderSeries(active){
-  var list = $('seriesList');
-  if (!active.length){
-    list.className = 'series-list single';
-    list.innerHTML = '<div class="card empty-card"><b>Сейчас нет выпусков в сборе</b><p>Новые выпуски Смарт-процента появляются регулярно — следите в приложении Т‑Инвестиции</p></div>';
-    if (CONFIG.SHELF_URL) showShelf();
-    return;
-  }
-  list.className = 'series-list' + (active.length === 1 ? ' single' : '') + (active.length > 2 ? ' carousel' : '');
-  list.innerHTML = active.map(function(s, i){
-    return '<article class="series-card rv">' +
-      '<div class="s-top">' +
-        '<div class="series-name">' + esc(s.name) + '</div>' +
-        '<div class="series-rate"><span class="num">' + fmtRate(s.rate) + '</span><span class="unit">годовых</span></div>' +
-        '<div class="series-term">на ' + esc(s.termLabel) + ' · погашение ' + fmtDate(s.maturityDate, true) + '</div>' +
-      '</div>' +
-      '<div>' + countdownHtml(s) + '</div>' +
-      '<div class="pairs">' +
-        '<div class="pair"><b>' + fmtRub(s.minAmount) + '</b><span>Минимальный размер участия</span></div>' +
-        '<div class="pair"><b>' + fmtRub(s.price) + '</b><span>Цена в момент размещения</span></div>' +
-        '<div class="pair"><b>' + fmtDate(s.placementDate) + '</b><span>Дата размещения</span></div>' +
-        (s.fee ? '<div class="pair"><b>' + esc(s.fee) + '</b><span>Комиссия за размещение</span></div>' : '') +
-      '</div>' +
-      '<a class="btn btn-primary btn-block" data-cta="series_card" data-series="' + esc(s.name) + '" target="_blank" rel="noopener" href="' + esc(s.url) + '">Участвовать</a>' +
-    '</article>';
-  }).join('');
-  if (CONFIG.SHELF_URL) showShelf();
-}
-function showShelf(){
-  var p = $('shelfMore'); p.hidden = false; p.querySelector('a').href = CONFIG.SHELF_URL;
 }
 
 /* ---------- калькулятор ---------- */
@@ -785,6 +751,8 @@ function renderCalc(active){
   });
   var input = $('amount');
   input.value = fmtNum(calc.amount);
+  input.addEventListener('focus', function(){ setTimeout(function(){ input.select(); }, 0); });
+  setupNudge();
   input.addEventListener('input', function(){
     var digits = input.value.replace(/\D/g,'').replace(/^0+/,'').slice(0,10);
     calc.amount = digits ? Number(digits) : 0;
@@ -797,7 +765,8 @@ function renderCalc(active){
 function updateCalc(user){
   var s = calc.active[calc.idx];
   var price = s.price, min = s.minAmount;
-  $('amountLabel').textContent = 'Сумма, кратная ' + fmtRub(price);
+  $('amountLabel').textContent = 'кратно ' + fmtRub(price);
+  if (calc.active.length > 1){ var cc = $('calcCountdown'); cc.innerHTML = countdownHtml(s); cc.hidden = false; }
   var eff = Math.floor(calc.amount / price) * price;
   var hint = '';
   if (calc.amount < min){ eff = 0; hint = calc.amount ? 'Минимальная сумма — ' + fmtRub(min) : ''; }
@@ -819,20 +788,29 @@ function updateCalc(user){
   }
 }
 
-/* ---------- условия ---------- */
-function renderFeatures(active, minAmount, fee){
+function setupNudge(){
+  var field = $('amountField');
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var io = new IntersectionObserver(function(es){
+    if (!es[0].isIntersecting) return;
+    io.disconnect();
+    if (document.activeElement !== $('amount')) field.classList.add('nudge');
+  }, {threshold:.9});
+  io.observe(field);
+  field.addEventListener('animationend', function(){ field.classList.remove('nudge'); });
+}
+
+/* ---------- эмитент и условия ---------- */
+function renderFeatures(){
   var items = [
-    [ICONS.percent, 'Фиксированная доходность', 'Не меняется весь срок'],
-    minAmount ? [ICONS.ruble, 'Старт от ' + fmtRub(minAmount), 'Цена одного ЦФА в момент размещения'] : null,
-    [ICONS.calendar, 'Доход в конце срока', 'Вместе с вложенной суммой в дату погашения'],
-    [ICONS.lock, 'Досрочно продать нельзя', 'Вторичные торги не предусмотрены — актив нужно держать до погашения'],
-    fee ? [ICONS.tag, 'Комиссия за размещение — ' + fee, 'Плата за участие в размещении не взимается'] : null,
-    [ICONS.clock22, 'Актив в портфеле в тот же день', 'Если участвуете в размещении до 17:00 в рабочий день']
-  ].filter(Boolean);
+    [ICONS.layers, 'Платформа в группе Т‑Технологии', 'ЦФА размещаются на платформе Атомайз'],
+    [ICONS.percent, 'Ставка зафиксирована', 'Доходность определена условиями выпуска и не меняется весь срок'],
+    [ICONS.calendar, 'Сумма и доход — в дату погашения', 'При погашении возвращаются вложенная сумма и начисленный доход'],
+    [ICONS.lock, 'Досрочно продать нельзя', 'Вторичные торги не предусмотрены — актив нужно держать до погашения']
+  ];
   $('featList').innerHTML = items.map(function(it){
     return '<li><span class="ico">' + it[0] + '</span><div><b>' + esc(it[1]) + '</b><span>' + esc(it[2]) + '</span></div></li>';
   }).join('');
-  if (minAmount) $('ucMin').textContent = 'Участие — от ' + fmtRub(minAmount);
 }
 
 /* ---------- FAQ ---------- */
@@ -877,7 +855,6 @@ function renderLinks(mainUrl, active, minAmount){
   });
   var hc = $('headerCta');
   if (mainUrl){ hc.href = mainUrl; hc.target = '_blank'; hc.rel = 'noopener'; } else hc.hidden = true;
-  if (minAmount) $('finalSub').textContent = 'Выпуски Смарт-процента — от ' + fmtRub(minAmount) + ' в приложении Т‑Инвестиции';
   if (CONFIG.AD_LABEL){ $('adLabel').textContent = CONFIG.AD_LABEL; $('adLabel').hidden = false; }
   var links = [];
   if (CONFIG.RISKS_URL) links.push(['Риски', CONFIG.RISKS_URL]);
