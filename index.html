@@ -59,8 +59,9 @@ img,svg{display:block}
 .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:700;font-size:17px;text-decoration:none!important}
 .logo img{height:36px;width:auto}
 .header-right{margin-left:auto;display:flex;gap:8px;align-items:center}
-.pill{min-height:40px;padding:0 16px;border-radius:20px;background:var(--chip);color:#333;display:inline-flex;align-items:center;font-size:15px;font-weight:500;text-decoration:none!important}
+.pill{white-space:nowrap;min-height:40px;padding:0 16px;border-radius:20px;background:var(--chip);color:#333;display:inline-flex;align-items:center;font-size:15px;font-weight:500;text-decoration:none!important}
 .pill:hover{background:#E4E6E9}
+@media(max-width:380px){.pill{padding:0 12px;font-size:14px}.logo{font-size:16px}}
 .icon-btn{width:40px;height:40px;border-radius:50%;background:var(--chip);border:0;display:grid;place-items:center;cursor:pointer}
 .icon-btn:hover{background:#E4E6E9}
 .header .btn-sm{display:none}
@@ -83,8 +84,15 @@ img,svg{display:block}
 .hero-rate .unit{font-size:22px;font-weight:600}
 @media(min-width:768px){.hero-rate .num{font-size:80px}.hero-rate .unit{font-size:28px}}
 .hero-term{color:var(--text-2);margin-top:8px}
-.hero-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
-.chip{padding:7px 12px;border-radius:12px;background:var(--chip);font-size:14px;color:var(--text)}
+.hero-facts{display:flex;justify-content:center;margin:24px auto 0;max-width:460px}
+.fact{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:10px;padding:2px 12px;text-align:left}
+@media(min-width:768px){.hero-facts{max-width:520px}.fact{flex:0 1 auto;padding:2px 24px}}
+.fact+.fact{border-left:1px solid var(--line)}
+.fact-ic{flex:0 0 36px;height:36px;border-radius:50%;background:#FFF3BF;display:grid;place-items:center;color:#333}
+.fact b{display:block;font-size:20px;font-weight:700;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
+.fact span{display:block;font-size:13px;line-height:1.3;color:var(--text-2);margin-top:2px}
+@media(max-width:380px){.fact{padding:2px 8px;gap:8px}.fact-ic{flex-basis:32px;height:32px}.fact-ic svg{width:18px;height:18px}}
+@media(min-width:768px){.fact b{font-size:22px}.fact span{font-size:14px}}
 .hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
 @media(max-width:519px){.hero-ctas .btn{flex:1 1 100%}}
 .hero-more{margin-top:16px;font-size:15px}
@@ -109,7 +117,9 @@ img,svg{display:block}
 .countdown{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:var(--chip);font-size:15px;font-weight:500}
 .countdown.last{background:#FFF3BF}
 .countdown svg{color:var(--text-2)}
-.hero-countdown{margin-top:16px}
+.hero-countdown{margin-top:14px}
+.hero-countdown .countdown{background:none;padding:0;font-weight:400;color:var(--text-2)}
+.hero-countdown .countdown.last{color:#333;font-weight:600}
 .progress{height:6px;border-radius:3px;background:#E1E3E7;overflow:hidden;margin:10px auto 0;max-width:320px}
 .progress i{display:block;height:100%;background:var(--yellow);border-radius:3px}
 
@@ -185,14 +195,33 @@ img,svg{display:block}
 .trust-card.t1 b{color:var(--yellow)}
 .trust-card.t1 span{color:rgba(255,255,255,.8)}
 .trust-card.t2{background:var(--card)}
-.kpis{display:grid;gap:10px;margin-top:12px;background:var(--card-blue);border-radius:var(--r-xl);padding:12px}
-@media(min-width:768px){.kpis{grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;padding:16px}}
-.kpi{background:#fff;border-radius:var(--r-md);padding:16px 18px}
-.kpi-val{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px}
-.kpi-val b{font-size:24px;font-weight:700;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
-@media(min-width:768px){.kpi-val b{font-size:30px}}
-.kpi-val em{font-style:normal;color:var(--green);font-weight:700;font-size:15px}
-.kpi span{display:block;color:var(--text-2);font-size:14px;margin-top:4px;line-height:1.35}
+.group{margin-top:12px;background:var(--card-blue);border-radius:var(--r-xl);padding:20px 12px 12px}
+@media(min-width:768px){.group{margin-top:16px;padding:32px 16px 16px}}
+.group-head{padding:0 8px 16px}
+@media(min-width:768px){.group-head{padding:0 16px 24px}}
+.group-head h3{font-size:22px;line-height:1.2;font-weight:700;letter-spacing:-.01em}
+@media(min-width:768px){.group-head h3{font-size:28px}}
+.group-head p{color:var(--text-2);font-size:15px;margin-top:6px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(min-width:768px){.kpis{grid-template-columns:repeat(3,1fr);gap:12px}}
+.kpi{background:#fff;border-radius:var(--r-md);padding:14px;display:flex;flex-direction:column}
+@media(min-width:768px){.kpi{padding:20px}}
+.kpi b{font-size:20px;font-weight:700;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
+@media(min-width:768px){.kpi b{font-size:30px}}
+.kpi span{display:block;color:var(--text-2);font-size:13px;margin-top:4px;line-height:1.35}
+@media(min-width:768px){.kpi span{font-size:14px}}
+.kpi em{font-style:normal;color:var(--green);font-weight:600;font-size:13px;margin-top:auto;padding-top:6px}
+@media(min-width:768px){.kpi em{font-size:14px}}
+.docs{display:grid;gap:8px;margin-top:8px}
+@media(min-width:768px){.docs{grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}}
+.doc{display:flex;align-items:center;gap:14px;background:#fff;border-radius:var(--r-md);padding:14px 16px;color:var(--text);text-decoration:none!important;transition:background-color .15s ease}
+.doc:hover{background:#FAFAFB}
+.doc-ic{flex:0 0 40px;height:44px;border-radius:10px;background:#333;color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;display:grid;place-items:center}
+.doc-ic.y{background:var(--yellow);color:#333}
+.doc-t{flex:1;min-width:0}
+.doc-t b{display:block;font-size:15px;font-weight:600;line-height:1.3}
+.doc-t span{display:block;font-size:13px;color:var(--text-2);margin-top:2px}
+.doc svg{flex:0 0 20px;color:var(--text-2)}
 
 /* faq */
 .faq{max-width:800px;margin:32px auto 0}
@@ -286,14 +315,14 @@ img,svg{display:block}
       <div id="heroOffer">
         <div class="hero-rate"><span class="num" id="heroRate"></span><span class="unit">годовых</span></div>
         <p class="hero-term" id="heroTerm"></p>
-        <div class="hero-countdown" id="heroCountdown" hidden></div>
       </div>
       <p class="hero-empty" id="heroEmpty" hidden>Новые выпуски Смарт-процента скоро. Следите в Т‑Инвестициях</p>
-      <div class="hero-chips" id="heroChips"></div>
+      <div class="hero-facts" id="heroFacts"></div>
       <div class="hero-ctas">
         <a class="btn btn-primary" id="heroCta" data-cta="hero" href="#calc">Выбрать выпуск</a>
         <a class="btn btn-gray" id="heroCta2" href="#calc">Посчитать доход</a>
       </div>
+      <div class="hero-countdown" id="heroCountdown" hidden></div>
       <p class="hero-more" id="shelfMore" hidden><a data-cta="hero_all" target="_blank" rel="noopener" href="#">Все выпуски в Т‑Инвестициях</a></p>
       <!-- Заменить на 3D‑ассет бренда: жёлтая плитка с металлической гранью на подиуме -->
       <div class="hero-visual" aria-hidden="true">
@@ -365,12 +394,26 @@ img,svg{display:block}
         <div class="trust-card t1 rv"><b>AA(RU) и ruAA</b><span>Кредитные рейтинги Т‑Банка от АКРА и Эксперт РА, прогноз «Позитивный». AA&nbsp;— вторая сверху ступень национальных рейтинговых шкал</span></div>
         <div class="trust-card t2 rv"><b>Закон о ЦФА</b><span>ЦФА выпускаются по закону о цифровых финансовых активах (№ 259‑ФЗ) на платформе Атомайз — она входит в группу Т‑Технологии</span></div>
       </div>
-      <div class="kpis rv">
-        <div class="kpi"><div class="kpi-val"><b>56 млн+</b></div><span>клиентов</span></div>
-        <div class="kpi"><div class="kpi-val"><b>6,5 трлн ₽</b><em>+17%</em></div><span>средства клиентов и активы под управлением</span></div>
-        <div class="kpi"><div class="kpi-val"><b>198 млрд ₽</b><em>+31%</em></div><span>операционная чистая прибыль группы за последние 12 месяцев</span></div>
+      <!-- Показатели группы: обновлять раз в квартал по t-technologies.ru -->
+      <div class="group rv" aria-labelledby="groupTitle">
+        <div class="group-head">
+          <h3 id="groupTitle">Т‑Банк и группа Т‑Технологии в цифрах</h3>
+          <p>Результаты группы, в которую входит Т‑Банк, по МСФО за II&nbsp;квартал 2026&nbsp;года. Выручка, прибыль и ROE — за последние 4 квартала</p>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><b>56 млн+</b><span>клиентов</span></div>
+          <div class="kpi"><b>6,5 трлн ₽</b><span>средства клиентов и активы под управлением</span><em>+17% за год</em></div>
+          <div class="kpi"><b>3,5 трлн ₽</b><span>кредитный портфель</span><em>+25% за год</em></div>
+          <div class="kpi"><b>802 млрд ₽</b><span>чистая выручка</span><em>+24% за год</em></div>
+          <div class="kpi"><b>198 млрд ₽</b><span>операционная чистая прибыль</span><em>+31% за год</em></div>
+          <div class="kpi"><b>29,3%</b><span>ROE — средняя доходность на капитал</span></div>
+        </div>
+        <div class="docs">
+          <a class="doc" data-doc="group_presentation" href="https://cdn.tbank-online.com/static/documents/ea8a2e21-6493-4323-ae88-9a93b1e48676.pdf" target="_blank" rel="noopener"><span class="doc-ic y" aria-hidden="true">PDF</span><span class="doc-t"><b>Презентация результатов II&nbsp;квартала 2026&nbsp;года</b><span>Т‑Технологии для инвесторов</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          <a class="doc" data-doc="group_press_release" href="https://cdn.tbank-online.com/static/documents/3090164f-38b3-4c7f-b6b3-60a03cac98ee.pdf" target="_blank" rel="noopener"><span class="doc-ic" aria-hidden="true">PDF</span><span class="doc-t"><b>Пресс-релиз о результатах II&nbsp;квартала 2026&nbsp;года</b><span>Т‑Технологии для инвесторов</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+        </div>
       </div>
-      <p class="footnote">Рейтинги: АКРА — 12.03.2026, Эксперт РА — 08.06.2026. Показатели МКПАО «Т‑Технологии» по итогам II квартала 2026 года, динамика год к году; приведены для справки и не гарантируют исполнение обязательств по ЦФА. Источник: <a href="https://t-technologies.ru/" target="_blank" rel="noopener">t‑technologies.ru</a></p>
+      <p class="footnote">Рейтинги: АКРА — 12.03.2026, Эксперт РА — 08.06.2026. Показатели МКПАО «Т‑Технологии», рост — год к году; приведены для справки и не гарантируют исполнение обязательств по ЦФА. Источник: <a href="https://t-technologies.ru/" target="_blank" rel="noopener">t‑technologies.ru</a></p>
     </div>
   </section>
 
@@ -470,6 +513,8 @@ function openLink(a, url){ a.href = url; a.target = '_blank'; a.rel = 'noopener'
 
 var ICONS = {
   clock:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  shield:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>',
+  tag:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg>',
   chevron:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
 };
 
@@ -546,9 +591,11 @@ function renderHero(active, single, best, shelf){
   }
   var fees = active.map(function(s){ return s.fee; }).filter(Boolean);
   var fee = fees.length && fees.every(function(f){ return f === fees[0]; }) ? fees[0] : '';
-  var chips = ['Выпускает Т‑Банк, рейтинг AA(RU)'];
-  if (fee) chips.push('Комиссия за' + NB + 'размещение ' + fee);
-  $('heroChips').innerHTML = chips.map(function(c){ return '<span class="chip">' + esc(c) + '</span>'; }).join('');
+  var facts = [[ICONS.shield, 'AA(RU)', 'рейтинг Т‑Банка']];
+  if (fee) facts.push([ICONS.tag, fee, 'комиссия за размещение']);
+  $('heroFacts').innerHTML = facts.map(function(f){
+    return '<div class="fact"><span class="fact-ic" aria-hidden="true">' + f[0] + '</span><div><b>' + esc(f[1]) + '</b><span>' + esc(f[2]) + '</span></div></div>';
+  }).join('');
   if (shelf){ var sm = $('shelfMore'); sm.hidden = false; sm.querySelector('a').href = shelf; }
 }
 
@@ -740,6 +787,7 @@ function setupSticky(active, single, best, mainUrl){
 /* ---------- общее поведение ---------- */
 function setupCommon(){
   document.addEventListener('click', function(e){
+    var d = e.target.closest('[data-doc]'); if (d){ track('doc_open', {doc:d.dataset.doc}); return; }
     var a = e.target.closest('[data-cta]'); if (!a) return;
     track('cta_click', {position:a.dataset.cta, series:a.dataset.series || '', amount:Number(a.dataset.amount) || 0});
   });
