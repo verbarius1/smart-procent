@@ -85,14 +85,11 @@ img,svg{display:block}
 @media(min-width:768px){.hero-rate .num{font-size:80px}.hero-rate .unit{font-size:28px}}
 .hero-term{color:var(--text-2);margin-top:8px}
 .hero-facts{display:flex;justify-content:center;margin:24px auto 0;max-width:460px}
-.fact{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:10px;padding:2px 12px;text-align:left}
-@media(min-width:768px){.hero-facts{max-width:520px}.fact{flex:0 1 auto;padding:2px 24px}}
+.fact{flex:1 1 0;min-width:0;padding:2px 12px;text-align:center}
 .fact+.fact{border-left:1px solid var(--line)}
-.fact-ic{flex:0 0 36px;height:36px;border-radius:50%;background:#FFF3BF;display:grid;place-items:center;color:#333}
-.fact b{display:block;font-size:20px;font-weight:700;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
-.fact span{display:block;font-size:13px;line-height:1.3;color:var(--text-2);margin-top:2px}
-@media(max-width:380px){.fact{padding:2px 8px;gap:8px}.fact-ic{flex-basis:32px;height:32px}.fact-ic svg{width:18px;height:18px}}
-@media(min-width:768px){.fact b{font-size:22px}.fact span{font-size:14px}}
+.fact b{display:block;font-size:24px;font-weight:700;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
+.fact span{display:block;font-size:14px;line-height:1.3;color:var(--text-2);margin-top:4px}
+@media(min-width:768px){.hero-facts{max-width:480px}.fact b{font-size:28px}.fact span{font-size:15px}}
 .hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
 @media(max-width:519px){.hero-ctas .btn{flex:1 1 100%}}
 .hero-more{margin-top:16px;font-size:15px}
@@ -513,8 +510,6 @@ function openLink(a, url){ a.href = url; a.target = '_blank'; a.rel = 'noopener'
 
 var ICONS = {
   clock:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-  shield:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>',
-  tag:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg>',
   chevron:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
 };
 
@@ -591,10 +586,10 @@ function renderHero(active, single, best, shelf){
   }
   var fees = active.map(function(s){ return s.fee; }).filter(Boolean);
   var fee = fees.length && fees.every(function(f){ return f === fees[0]; }) ? fees[0] : '';
-  var facts = [[ICONS.shield, 'AA(RU)', 'рейтинг Т‑Банка']];
-  if (fee) facts.push([ICONS.tag, fee, 'комиссия за размещение']);
+  var facts = [['AA(RU)', 'рейтинг Т‑Банка']];
+  if (fee) facts.push([fee, 'комиссия за размещение']);
   $('heroFacts').innerHTML = facts.map(function(f){
-    return '<div class="fact"><span class="fact-ic" aria-hidden="true">' + f[0] + '</span><div><b>' + esc(f[1]) + '</b><span>' + esc(f[2]) + '</span></div></div>';
+    return '<div class="fact"><b>' + esc(f[0]) + '</b><span>' + esc(f[1]) + '</span></div>';
   }).join('');
   if (shelf){ var sm = $('shelfMore'); sm.hidden = false; sm.querySelector('a').href = shelf; }
 }
