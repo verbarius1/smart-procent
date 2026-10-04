@@ -7,9 +7,9 @@
 <meta name="description" content="Смарт-процент — цифровые финансовые активы с фиксированной доходностью от Т‑Банка. Покупка — в приложении Т‑Инвестиции.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex, nofollow">
-<link rel="preload" href="assets/fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:'Inter';src:url('assets/fonts/Inter.woff2') format('woff2');font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../assets/fonts/Inter.woff2') format('woff2');font-weight:400 700;font-style:normal;font-display:swap}
 :root{
   --bg:#FFFFFF;
   --card:#F6F7F8;
@@ -315,37 +315,19 @@ img,svg{display:block}
 </head>
 <body>
 <script>document.documentElement.classList.add('js')</script>
-<!--live-only-->
-<script>
-/* Версии: номер меняет tools/release.py. ?v=N открывает архивную версию N,
-   а устаревшая копия из кэша браузера сама переходит на свежую. */
-(function(){
-  var PAGE_VERSION = 9;
-  var qs = new URLSearchParams(location.search), want = parseInt(qs.get('v'), 10);
-  if (want >= 1 && want < PAGE_VERSION){ location.replace('v/' + want + '/' + location.hash); return; }
-  if (!/^https?:/.test(location.protocol) || !window.fetch) return;
-  fetch('versions.json', {cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
-    if (!d || !(d.latest > PAGE_VERSION)) return;
-    if (want === d.latest){ location.replace('v/' + d.latest + '/' + location.hash); return; }
-    qs.set('v', d.latest);
-    location.replace(location.pathname + '?' + qs.toString() + location.hash);
-  }).catch(function(){});
-})();
-</script>
-<!--/live-only-->
 
 <!-- Данные выпусков: используются, если страница открыта как файл или series.json недоступен -->
 <script type="application/json" id="series-data">
 {"series":[{"name":"Смарт-процент До 02 февраля","rate":13.5,"termLabel":"4 месяца","placementDate":"2026-10-05","maturityDate":"2027-02-02","collectionStart":"","collectionEnd":"2026-10-05","minAmount":1000,"price":1000,"fee":"0%","url":"https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"}]}
 </script>
 
-<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">9</span></a></div>
+<div class="proto" role="note" style="background:#1C1C1F;color:#fff;font-size:13px;line-height:1.4;text-align:center;padding:8px 16px">Архив: версия 9 от 4 октября 2026, 20:24 · <a href="../../" style="color:#FFDD2D">Открыть актуальную</a> · <a href="../" style="color:#FFDD2D">Все версии</a></div>
 
 <header class="header" id="top">
   <div class="container header-in">
     <a class="logo" href="#top" aria-label="Т‑Инвестиции — в начало страницы">
       <!-- Официальный логотип бренда: положите файл в assets/logo.svg -->
-      <img src="assets/logo.svg" alt="" width="36" height="36" onerror="this.remove()">
+      <img src="../../assets/logo.svg" alt="" width="36" height="36" onerror="this.remove()">
       <span>Т‑Инвестиции</span>
     </a>
     <div class="header-right">
@@ -664,7 +646,7 @@ var ICONS = {
 function loadSeries(){
   var embedded = JSON.parse($('series-data').textContent);
   if (!/^https?:/.test(location.protocol)) return Promise.resolve(embedded);
-  return fetch('series.json', {cache:'no-store'})
+  return fetch('../../series.json', {cache:'no-store'})
     .then(function(r){ return r.ok ? r.json() : embedded; })
     .catch(function(){ return embedded; });
 }
