@@ -36,6 +36,7 @@
 - `SHELF_URL` — все выпуски Смарт-процента в Т‑Инвестициях
 - `PRESENTATION_URL`, `RISKS_URL`, `ISSUE_DOCS_URL` — документы
 - `AD_LABEL` — маркировка рекламы (рекламодатель, ИНН, erid)
+- `UTM_PARAMS` — метки, которые добавятся ко всем ссылкам на выпуски, например `utm_source=landing&utm_medium=web&utm_campaign=smart`
 - `FAQ_PENDING` — ответы на вопросы, которые ждут подтверждения банка
 
 Официальный логотип положите в `assets/logo.svg`.
