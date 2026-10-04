@@ -109,7 +109,27 @@ img,svg{display:block}
   display:grid;place-items:center}
 .hv-front span{font-size:96px;font-weight:700;line-height:1;color:#333;letter-spacing:-.04em}
 .hv-coin{position:absolute;width:76px;height:76px;border-radius:50%;left:calc(50% - 142px);top:calc(50% + 18px);background:radial-gradient(circle at 34% 30%,#FFFFFF 0%,#C9CBD2 55%,#8E9199 100%);box-shadow:inset -4px -6px 10px rgba(0,0,0,.12),0 14px 22px rgba(0,0,0,.18)}
-.hv-coin.y{width:52px;height:52px;left:calc(50% + 92px);top:calc(50% + 44px);background:radial-gradient(circle at 34% 30%,#FFF3A8 0%,#FFD21F 55%,#D9A300 100%)}
+/* стопка монет вместо жёлтой монетки */
+.hv-stack{position:absolute;left:calc(50% + 96px);top:calc(50% + 84px);width:64px;height:0}
+.hv-stack i{position:absolute;left:0;width:64px;height:20px;border-radius:50%;background:radial-gradient(ellipse at 40% 35%,#FFF3A8 0%,#FFD21F 55%,#E0AB00 100%);box-shadow:0 6px 0 #C99700,0 10px 14px rgba(0,0,0,.15)}
+.hv-stack i:nth-child(1){bottom:0}.hv-stack i:nth-child(2){bottom:13px}.hv-stack i:nth-child(3){bottom:26px}.hv-stack i:nth-child(4){bottom:39px}.hv-stack i:nth-child(5){bottom:52px}
+/* анимация картинки: появление, монеты падают в столбик, затем лёгкое покачивание */
+@keyframes hvPop{0%{scale:.55;opacity:0;rotate:-14deg}70%{opacity:1}100%{scale:1;opacity:1;rotate:0deg}}
+@keyframes hvIn{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}
+@keyframes hvDrop{0%{opacity:0;translate:0 -140px}60%{opacity:1;translate:0 4px}80%{translate:0 -3px}100%{opacity:1;translate:0 0}}
+@keyframes hvFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}
+@keyframes hvFloat2{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@keyframes hvBob{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -7px;rotate:8deg}}
+@keyframes hvShadow{0%,100%{scale:1;opacity:1}50%{scale:.88;opacity:.75}}
+@keyframes hvGlow{0%,100%{opacity:.85}50%{opacity:1}}
+.js .hero-visual:not(.go) .hv-glow,.js .hero-visual:not(.go) .hv-floor,.js .hero-visual:not(.go) .hv-back,.js .hero-visual:not(.go) .hv-coin,.js .hero-visual:not(.go) .hv-front,.js .hero-visual:not(.go) .hv-stack i{opacity:0}
+.hero-visual.go .hv-glow{animation:hvGlow 4s ease-in-out infinite}
+.hero-visual.go .hv-floor{animation:hvShadow 4s .8s ease-in-out infinite}
+.hero-visual.go .hv-front{animation:hvPop .8s cubic-bezier(.3,1.4,.5,1) both,hvFloat 4s .8s ease-in-out infinite}
+.hero-visual.go .hv-back{animation:hvIn .6s .15s ease-out both,hvFloat2 4s 1.3s ease-in-out infinite}
+.hero-visual.go .hv-coin{animation:hvIn .6s .3s ease-out both,hvBob 3.2s 1s ease-in-out infinite}
+.hero-visual.go .hv-stack i{animation:hvDrop .55s cubic-bezier(.4,0,.6,1) both}
+.hero-visual.go .hv-stack i:nth-child(1){animation-delay:.9s}.hero-visual.go .hv-stack i:nth-child(2){animation-delay:1.15s}.hero-visual.go .hv-stack i:nth-child(3){animation-delay:1.4s}.hero-visual.go .hv-stack i:nth-child(4){animation-delay:1.65s}.hero-visual.go .hv-stack i:nth-child(5){animation-delay:1.9s}
 
 /* countdown */
 .countdown{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:var(--chip);font-size:15px;font-weight:500}
@@ -310,6 +330,7 @@ img,svg{display:block}
   .js .rv{opacity:1;transform:none;transition:none}
   .sticky,.btn,.faq summary svg,.field{transition:none}
   .field.nudge{animation:none}
+  .hero-visual *{animation:none!important}
 }
 </style>
 </head>
@@ -320,7 +341,7 @@ img,svg{display:block}
 /* Версии: номер меняет tools/release.py. ?v=N открывает архивную версию N,
    а устаревшая копия из кэша браузера сама переходит на свежую. */
 (function(){
-  var PAGE_VERSION = 11;
+  var PAGE_VERSION = 12;
   var qs = new URLSearchParams(location.search), want = parseInt(qs.get('v'), 10);
   if (want >= 1 && want < PAGE_VERSION){ location.replace('v/' + want + '/' + location.hash); return; }
   if (!/^https?:/.test(location.protocol) || !window.fetch) return;
@@ -339,7 +360,7 @@ img,svg{display:block}
 {"series":[{"name":"Смарт-процент До 02 февраля","rate":13.5,"termLabel":"4 месяца","placementDate":"2026-10-05","maturityDate":"2027-02-02","collectionStart":"","collectionEnd":"2026-10-05","minAmount":1000,"price":1000,"fee":"0%","url":"https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"}]}
 </script>
 
-<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">11</span></a></div>
+<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">12</span></a></div>
 
 <header class="header" id="top">
   <div class="container header-in">
@@ -392,7 +413,7 @@ img,svg{display:block}
           <div class="hv-back"></div>
           <div class="hv-coin"></div>
           <div class="hv-front"><span>%</span></div>
-          <div class="hv-coin y"></div>
+          <div class="hv-stack"><i></i><i></i><i></i><i></i><i></i></div>
         </div>
       </div>
     </div>
@@ -982,6 +1003,13 @@ function setupCarousel(){
   uc.addEventListener('scroll', upd, {passive:true}); window.addEventListener('resize', upd); upd();
 }
 
+function setupHeroArt(){
+  var v = document.querySelector('.hero-visual'); if (!v) return;
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches){ v.classList.add('go'); return; }
+  var io = new IntersectionObserver(function(es){ if (es[0].isIntersecting){ v.classList.add('go'); io.disconnect(); } }, {threshold:.35});
+  io.observe(v);
+}
+
 function setupReveal(){
   var els = document.querySelectorAll('.rv');
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -995,6 +1023,7 @@ function setupReveal(){
 
 setupCommon();
 setupCarousel();
+setupHeroArt();
 loadSeries().then(function(d){ init(d); setupReveal(); }).catch(function(){ setupReveal(); });
 })();
 </script>
