@@ -173,7 +173,7 @@ img,svg{display:block}
 
 /* how it works */
 .steps{display:grid;gap:20px;list-style:none}
-@media(min-width:768px){.steps{grid-template-columns:repeat(2,1fr);gap:28px}}
+@media(min-width:768px){.steps{grid-template-columns:repeat(3,1fr);gap:28px}}
 .step{display:flex;gap:14px;align-items:flex-start}
 .step-num{flex:0 0 32px;height:32px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-weight:700;font-size:15px}
 .step b{display:block;font-weight:600;line-height:1.3}
@@ -320,7 +320,7 @@ img,svg{display:block}
 /* Версии: номер меняет tools/release.py. ?v=N открывает архивную версию N,
    а устаревшая копия из кэша браузера сама переходит на свежую. */
 (function(){
-  var PAGE_VERSION = 10;
+  var PAGE_VERSION = 11;
   var qs = new URLSearchParams(location.search), want = parseInt(qs.get('v'), 10);
   if (want >= 1 && want < PAGE_VERSION){ location.replace('v/' + want + '/' + location.hash); return; }
   if (!/^https?:/.test(location.protocol) || !window.fetch) return;
@@ -339,7 +339,7 @@ img,svg{display:block}
 {"series":[{"name":"Смарт-процент До 02 февраля","rate":13.5,"termLabel":"4 месяца","placementDate":"2026-10-05","maturityDate":"2027-02-02","collectionStart":"","collectionEnd":"2026-10-05","minAmount":1000,"price":1000,"fee":"0%","url":"https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"}]}
 </script>
 
-<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">10</span></a></div>
+<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">11</span></a></div>
 
 <header class="header" id="top">
   <div class="container header-in">
@@ -437,7 +437,8 @@ img,svg{display:block}
       <div class="card mt-32 rv">
         <ol class="steps">
           <li class="step"><span class="step-num">1</span><div><b>Купите в Т‑Инвестициях</b><span class="step-desc">«Что купить» → «ЦФА» → «Первичные размещения» → «Смарт-процент». Нужна версия приложения 7.2.0 или новее</span></div></li>
-          <li class="step"><span class="step-num">2</span><div><b id="step3Title">В дату погашения вернутся деньги и доход</b><span class="step-desc">Вложенная сумма и начисленный доход придут вместе, в дату погашения</span></div></li>
+          <li class="step"><span class="step-num">2</span><div><b>Получите актив в тот же день</b><span class="step-desc">Если участвуете до 17:00 в рабочий день. Иначе — вечером следующего рабочего дня</span></div></li>
+          <li class="step"><span class="step-num">3</span><div><b id="step3Title">В дату погашения вернутся деньги и доход</b><span class="step-desc">Вложенная сумма и начисленный доход придут вместе, в дату погашения</span></div></li>
         </ol>
         <p class="note"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg><span id="howNote">Продать до даты погашения нельзя — деньги вернутся только в эту дату</span></p>
       </div>
@@ -842,7 +843,6 @@ function renderFeatures(active){
            : [ICONS.percent, 'Фиксированная ставка', 'Не меняется весь срок'],
     minAmount ? [ICONS.ruble, 'Старт от ' + fmtRub(minAmount), 'Цена одного ЦФА в момент размещения'] : null,
     fee ? [ICONS.tag, 'Комиссия за размещение — ' + fee, 'Плата за участие в размещении не взимается'] : null,
-    [ICONS.clock22, 'Актив в портфеле в тот же день', 'Если участвуете в размещении до 17:00 в рабочий день'],
     [ICONS.receipt, 'Налог удерживается автоматически', 'Считать и платить его самостоятельно не нужно']
   ].filter(Boolean);
   $('featList').innerHTML = items.map(function(it){
