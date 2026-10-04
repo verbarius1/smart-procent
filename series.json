@@ -1,0 +1,18 @@
+{
+  "_note": "Выпуски Смарт-процента для лендинга. На странице показываются только выпуски, у которых collectionEnd >= сегодня (МСК). Первый выпуск — демо-пример, замените актуальными.",
+  "series": [
+    {
+      "name": "Смарт-процент До 02 февраля",
+      "rate": 13.5,
+      "termLabel": "4 месяца",
+      "placementDate": "2026-10-05",
+      "maturityDate": "2027-02-02",
+      "collectionStart": "",
+      "collectionEnd": "2026-10-05",
+      "minAmount": 1000,
+      "price": 1000,
+      "fee": "0%",
+      "url": "https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"
+    }
+  ]
+}
