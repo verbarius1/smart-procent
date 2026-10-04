@@ -341,7 +341,7 @@ img,svg{display:block}
 /* Версии: номер меняет tools/release.py. ?v=N открывает архивную версию N,
    а устаревшая копия из кэша браузера сама переходит на свежую. */
 (function(){
-  var PAGE_VERSION = 12;
+  var PAGE_VERSION = 13;
   var qs = new URLSearchParams(location.search), want = parseInt(qs.get('v'), 10);
   if (want >= 1 && want < PAGE_VERSION){ location.replace('v/' + want + '/' + location.hash); return; }
   if (!/^https?:/.test(location.protocol) || !window.fetch) return;
@@ -360,7 +360,7 @@ img,svg{display:block}
 {"series":[{"name":"Смарт-процент До 02 февраля","rate":13.5,"termLabel":"4 месяца","placementDate":"2026-10-05","maturityDate":"2027-02-02","collectionStart":"","collectionEnd":"2026-10-05","minAmount":1000,"price":1000,"fee":"0%","url":"https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"}]}
 </script>
 
-<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">12</span></a></div>
+<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">13</span></a></div>
 
 <header class="header" id="top">
   <div class="container header-in">
@@ -552,8 +552,8 @@ img,svg{display:block}
       <h2 class="h2 rv" id="issuerTitle">Кто выпускает <span class="nw">Смарт-процент</span></h2>
       <p class="lead rv">Т‑Банк — один из крупнейших в мире онлайн-банков и основа экосистемы Т‑Технологий</p>
       <div class="trust mt-32">
-        <div class="trust-card t1 rv"><b>AA(RU) и ruAA</b><span>Кредитные рейтинги Т‑Банка от АКРА и Эксперт РА, прогноз «Позитивный». AA&nbsp;— вторая сверху ступень национальных рейтинговых шкал</span></div>
-        <div class="trust-card t2 rv"><b>Закон о ЦФА</b><span>ЦФА выпускаются по закону о цифровых финансовых активах (№ 259‑ФЗ) на платформе Атомайз — она входит в группу Т‑Технологии</span></div>
+        <div class="trust-card t1 rv"><b>Т‑Банк</b><span>Выпускает Смарт-процент. Кредитные рейтинги AA(RU) от АКРА и ruAA от Эксперт РА, прогноз «Позитивный»</span></div>
+        <div class="trust-card t2 rv"><b>Атомайз</b><span>Платформа, на которой размещаются ЦФА. Входит в группу Т‑Технологии и в реестр ЦБ</span></div>
       </div>
       <!-- Показатели группы: обновлять раз в квартал по t-technologies.ru -->
       <h2 class="h2 rv group-title" id="groupTitle">Т‑Банк и группа Т‑Технологии в цифрах</h2>
