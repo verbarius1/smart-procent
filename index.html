@@ -238,14 +238,12 @@ img,svg{display:block}
 .trust-card.t1 b{color:var(--yellow)}
 .trust-card.t1 span{color:rgba(255,255,255,.8)}
 .trust-card.t2{background:var(--card)}
-.group{margin-top:12px;background:var(--card-blue);border-radius:var(--r-xl);padding:20px 12px 12px}
-@media(min-width:768px){.group{margin-top:16px;padding:32px 16px 16px}}
-.group-head{padding:0 8px 16px}
-@media(min-width:768px){.group-head{padding:0 16px 24px}}
-.group-head h3{font-size:22px;line-height:1.2;font-weight:700;letter-spacing:-.01em}
-@media(min-width:768px){.group-head h3{font-size:28px}}
-.group-head p{color:var(--text-2);font-size:15px;margin-top:6px}
+.group-title{margin-top:56px}
+@media(min-width:768px){.group-title{margin-top:80px}}
+.group{margin-top:24px;background:var(--card-blue);border-radius:var(--r-xl);padding:12px}
+@media(min-width:768px){.group{margin-top:32px;padding:16px}}
 .kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:767px){.kpi.wide{grid-column:1/-1}.kpi.row{flex-direction:row;align-items:baseline;flex-wrap:wrap;gap:4px 10px}.kpi.row span{margin-top:0;font-size:15px}}
 @media(min-width:768px){.kpis{grid-template-columns:repeat(3,1fr);gap:12px}}
 .kpi{background:#fff;border-radius:var(--r-md);padding:14px;display:flex;flex-direction:column}
 @media(min-width:768px){.kpi{padding:20px}}
@@ -322,7 +320,7 @@ img,svg{display:block}
 /* Версии: номер меняет tools/release.py. ?v=N открывает архивную версию N,
    а устаревшая копия из кэша браузера сама переходит на свежую. */
 (function(){
-  var PAGE_VERSION = 8;
+  var PAGE_VERSION = 9;
   var qs = new URLSearchParams(location.search), want = parseInt(qs.get('v'), 10);
   if (want >= 1 && want < PAGE_VERSION){ location.replace('v/' + want + '/' + location.hash); return; }
   if (!/^https?:/.test(location.protocol) || !window.fetch) return;
@@ -341,7 +339,7 @@ img,svg{display:block}
 {"series":[{"name":"Смарт-процент До 02 февраля","rate":13.5,"termLabel":"4 месяца","placementDate":"2026-10-05","maturityDate":"2027-02-02","collectionStart":"","collectionEnd":"2026-10-05","minAmount":1000,"price":1000,"fee":"0%","url":"https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"}]}
 </script>
 
-<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">8</span></a></div>
+<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">9</span></a></div>
 
 <header class="header" id="top">
   <div class="container header-in">
@@ -537,18 +535,16 @@ img,svg{display:block}
         <div class="trust-card t2 rv"><b>Закон о ЦФА</b><span>ЦФА выпускаются по закону о цифровых финансовых активах (№ 259‑ФЗ) на платформе Атомайз — она входит в группу Т‑Технологии</span></div>
       </div>
       <!-- Показатели группы: обновлять раз в квартал по t-technologies.ru -->
+      <h2 class="h2 rv group-title" id="groupTitle">Т‑Банк и группа Т‑Технологии в цифрах</h2>
+      <p class="lead rv">Результаты группы, в которую входит Т‑Банк, по МСФО за II&nbsp;квартал 2026&nbsp;года. Выручка, прибыль и ROE — за последние 4 квартала</p>
       <div class="group rv" aria-labelledby="groupTitle">
-        <div class="group-head">
-          <h3 id="groupTitle">Т‑Банк и группа Т‑Технологии в цифрах</h3>
-          <p>Результаты группы, в которую входит Т‑Банк, по МСФО за II&nbsp;квартал 2026&nbsp;года. Выручка, прибыль и ROE — за последние 4 квартала</p>
-        </div>
         <div class="kpis">
-          <div class="kpi"><b>56 млн+</b><span>клиентов</span></div>
+          <div class="kpi wide row"><b>56 млн+</b><span>клиентов</span></div>
           <div class="kpi"><b>6,5 трлн ₽</b><span>средства клиентов и активы под управлением</span><em>+17% за год</em></div>
           <div class="kpi"><b>3,5 трлн ₽</b><span>кредитный портфель</span><em>+25% за год</em></div>
           <div class="kpi"><b>802 млрд ₽</b><span>чистая выручка</span><em>+24% за год</em></div>
           <div class="kpi"><b>198 млрд ₽</b><span>операционная чистая прибыль</span><em>+31% за год</em></div>
-          <div class="kpi"><b>29,3%</b><span>ROE — средняя доходность на капитал</span></div>
+          <div class="kpi wide"><b>29,3%</b><span>ROE — средняя доходность на капитал</span></div>
         </div>
         <div class="divers"><span class="ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l7 5"/></svg></span><span>Более половины чистой выручки приносят направления, не связанные с розничными кредитами</span></div>
         <div class="docs">
