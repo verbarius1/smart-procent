@@ -173,7 +173,7 @@ img,svg{display:block}
 
 /* how it works */
 .steps{display:grid;gap:20px;list-style:none}
-@media(min-width:768px){.steps{grid-template-columns:repeat(3,1fr);gap:28px}}
+@media(min-width:768px){.steps{grid-template-columns:repeat(2,1fr);gap:28px}}
 .step{display:flex;gap:14px;align-items:flex-start}
 .step-num{flex:0 0 32px;height:32px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-weight:700;font-size:15px}
 .step b{display:block;font-weight:600;line-height:1.3}
@@ -320,7 +320,7 @@ img,svg{display:block}
 /* Версии: номер меняет tools/release.py. ?v=N открывает архивную версию N,
    а устаревшая копия из кэша браузера сама переходит на свежую. */
 (function(){
-  var PAGE_VERSION = 9;
+  var PAGE_VERSION = 10;
   var qs = new URLSearchParams(location.search), want = parseInt(qs.get('v'), 10);
   if (want >= 1 && want < PAGE_VERSION){ location.replace('v/' + want + '/' + location.hash); return; }
   if (!/^https?:/.test(location.protocol) || !window.fetch) return;
@@ -339,7 +339,7 @@ img,svg{display:block}
 {"series":[{"name":"Смарт-процент До 02 февраля","rate":13.5,"termLabel":"4 месяца","placementDate":"2026-10-05","maturityDate":"2027-02-02","collectionStart":"","collectionEnd":"2026-10-05","minAmount":1000,"price":1000,"fee":"0%","url":"https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"}]}
 </script>
 
-<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">9</span></a></div>
+<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">10</span></a></div>
 
 <header class="header" id="top">
   <div class="container header-in">
@@ -437,8 +437,7 @@ img,svg{display:block}
       <div class="card mt-32 rv">
         <ol class="steps">
           <li class="step"><span class="step-num">1</span><div><b>Купите в Т‑Инвестициях</b><span class="step-desc">«Что купить» → «ЦФА» → «Первичные размещения» → «Смарт-процент». Нужна версия приложения 7.2.0 или новее</span></div></li>
-          <li class="step"><span class="step-num">2</span><div><b id="step2Title">Ставка фиксируется на весь срок</b><span class="step-desc" id="step2Desc">У каждого выпуска свой срок и ставка</span></div></li>
-          <li class="step"><span class="step-num">3</span><div><b id="step3Title">В дату погашения вернутся деньги и доход</b><span class="step-desc">Вложенная сумма и начисленный доход придут вместе, в дату погашения</span></div></li>
+          <li class="step"><span class="step-num">2</span><div><b id="step3Title">В дату погашения вернутся деньги и доход</b><span class="step-desc">Вложенная сумма и начисленный доход придут вместе, в дату погашения</span></div></li>
         </ol>
         <p class="note"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg><span id="howNote">Продать до даты погашения нельзя — деньги вернутся только в эту дату</span></p>
       </div>
@@ -658,6 +657,7 @@ var ICONS = {
   lock:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>',
   tag:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 12.5V4.5a1 1 0 011-1h8l8 8-9 9z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>',
   clock22:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  receipt:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>',
   chevron:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
 };
 
@@ -836,13 +836,14 @@ function renderFeatures(active){
   var minAmount = active.length ? Math.min.apply(null, active.map(function(s){ return s.minAmount; })) : 0;
   var fees = active.map(function(s){ return s.fee; }).filter(Boolean);
   var fee = fees.length && fees.every(function(f){ return f === fees[0]; }) ? fees[0] : '';
+  var single = active.length === 1 ? active[0] : null;
   var items = [
-    [ICONS.percent, 'Фиксированная доходность', 'Не меняется весь срок'],
+    single ? [ICONS.percent, 'Ставка ' + fmtRate(single.rate) + ' годовых зафиксирована', 'Не меняется весь срок — до ' + fmtDate(single.maturityDate, true)]
+           : [ICONS.percent, 'Фиксированная ставка', 'Не меняется весь срок'],
     minAmount ? [ICONS.ruble, 'Старт от ' + fmtRub(minAmount), 'Цена одного ЦФА в момент размещения'] : null,
-    [ICONS.calendar, 'Доход в конце срока', 'Вместе с вложенной суммой в дату погашения'],
-    [ICONS.lock, 'Досрочно продать нельзя', 'Вторичные торги не предусмотрены — актив нужно держать до погашения'],
     fee ? [ICONS.tag, 'Комиссия за размещение — ' + fee, 'Плата за участие в размещении не взимается'] : null,
-    [ICONS.clock22, 'Актив в портфеле в тот же день', 'Если участвуете в размещении до 17:00 в рабочий день']
+    [ICONS.clock22, 'Актив в портфеле в тот же день', 'Если участвуете в размещении до 17:00 в рабочий день'],
+    [ICONS.receipt, 'Налог удерживается автоматически', 'Считать и платить его самостоятельно не нужно']
   ].filter(Boolean);
   $('featList').innerHTML = items.map(function(it){
     return '<li><span class="ico" aria-hidden="true">' + it[0] + '</span><div><b>' + esc(it[1]) + '</b><span>' + esc(it[2]) + '</span></div></li>';
@@ -852,8 +853,6 @@ function renderFeatures(active){
 function renderHow(single){
   if (!single) return;   // при нескольких выпусках или без выпусков остаются общие формулировки
   var d = fmtDate(single.maturityDate, true);
-  $('step2Title').textContent = 'Ставка ' + fmtRate(single.rate) + ' годовых зафиксирована';
-  $('step2Desc').textContent = 'На' + NB + single.termLabel + ', до ' + d;
   $('step3Title').textContent = d + ' вернутся деньги и доход';
   $('howNote').textContent = 'Продать до' + NB + d + ' нельзя — деньги вернутся только в дату погашения';
 }
