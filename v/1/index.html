@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Смарт-процент — ЦФА с фиксированной доходностью от Т‑Банка</title>
+<meta name="description" content="Смарт-процент — цифровые финансовые активы с фиксированной доходностью от Т‑Банка. Участие в размещении — в приложении Т‑Инвестиции.">
+<meta name="theme-color" content="#18181B">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --card:#F6F7F8;
+  --card-blue:#E8EBF2;
+  --tile:#FFFFFF;
+  --chip:#EDEEF0;
+  --text:#333333;
+  --text-2:#5F636B;
+  --line:#E3E5E8;
+  --yellow:#FFDD2D;
+  --yellow-hover:#FCC521;
+  --link:#1F66E5;
+  --green:#087A45;
+  --dark:#1C1C1F;
+  --dark-2:#2B2B30;
+  --r-xl:32px;
+  --r-lg:24px;
+  --r-md:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:80px}
+body{font-family:'Onest',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit}
+img,svg{display:block}
+:focus-visible{outline:3px solid var(--link);outline-offset:3px;border-radius:12px}
+.container{max-width:1136px;margin:0 auto;padding:0 16px}
+@media(min-width:768px){.container{padding:0 32px}}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:0 28px;border-radius:var(--r-md);font-size:17px;font-weight:400;line-height:1.2;border:0;cursor:pointer;text-decoration:none!important;transition:background-color .15s ease,transform .15s ease;text-align:center}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--yellow);color:#333}
+.btn-primary:hover{background:var(--yellow-hover)}
+.btn-white{background:#fff;color:#333}
+.btn-white:hover{background:#F3F4F6}
+.btn-ghost-dark{background:rgba(255,255,255,.12);color:#fff}
+.btn-ghost-dark:hover{background:rgba(255,255,255,.18)}
+.btn-gray{background:var(--chip);color:var(--link)}
+.btn-block{width:100%}
+.btn-sm{min-height:40px;padding:0 18px;border-radius:12px;font-size:15px}
+
+/* prototype label */
+.proto{background:var(--card);color:var(--text-2);font-size:13px;line-height:1.4;text-align:center;padding:8px 16px}
+
+/* header */
+.header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);-webkit-backdrop-filter:saturate(180%) blur(12px);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+.header-in{display:flex;align-items:center;gap:12px;height:64px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:700;font-size:17px;text-decoration:none!important}
+.logo img{height:36px;width:auto}
+.header-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.pill{min-height:40px;padding:0 16px;border-radius:20px;background:var(--chip);color:#333;display:inline-flex;align-items:center;font-size:15px;font-weight:500;text-decoration:none!important}
+.pill:hover{background:#E4E6E9}
+.icon-btn{width:40px;height:40px;border-radius:50%;background:var(--chip);border:0;display:grid;place-items:center;cursor:pointer}
+.icon-btn:hover{background:#E4E6E9}
+.header .btn-sm{display:none}
+@media(min-width:960px){.header .btn-sm{display:inline-flex}}
+.menu{position:absolute;right:0;top:60px;width:min(300px,calc(100vw - 32px));background:#fff;border-radius:var(--r-lg);box-shadow:0 16px 48px rgba(0,0,0,.16);padding:8px;display:none}
+.menu.open{display:block}
+.menu a{display:block;padding:12px 16px;border-radius:12px;color:#333;font-weight:500}
+.menu a:hover{background:var(--card);text-decoration:none}
+
+/* hero */
+.hero{position:relative;overflow:hidden;color:#fff;padding:40px 0 136px;
+  background:
+    radial-gradient(70% 55% at 85% 20%,rgba(255,221,45,.20) 0%,rgba(255,221,45,0) 70%),
+    radial-gradient(60% 50% at 10% 100%,rgba(255,190,60,.10) 0%,rgba(255,190,60,0) 70%),
+    linear-gradient(180deg,#141416 0%,#232327 100%)}
+.hero-grid{display:grid;gap:8px;align-items:center}
+@media(min-width:960px){.hero{padding:72px 0 176px}.hero-grid{grid-template-columns:1.1fr .9fr;gap:32px}}
+.eyebrow{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:500}
+.hero h1{font-size:44px;line-height:1.05;font-weight:800;letter-spacing:-.02em;margin-top:12px}
+@media(min-width:768px){.hero h1{font-size:72px}}
+.hero-sub{font-size:18px;color:rgba(255,255,255,.82);margin-top:12px;max-width:520px}
+.hero-rate{margin-top:28px;display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 14px}
+.hero-rate .num{font-size:64px;font-weight:800;line-height:1;color:var(--yellow);letter-spacing:-.03em;white-space:nowrap}
+.hero-rate .unit{font-size:22px;font-weight:600}
+@media(min-width:768px){.hero-rate .num{font-size:96px}.hero-rate .unit{font-size:28px}}
+.hero-term{color:rgba(255,255,255,.82);margin-top:10px}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip-dark{padding:7px 12px;border-radius:12px;background:rgba(255,255,255,.1);font-size:14px;color:rgba(255,255,255,.92)}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+@media(max-width:519px){.hero-ctas .btn{flex:1 1 100%}}
+.hero-empty{margin-top:28px;font-size:24px;font-weight:700;line-height:1.25;max-width:480px}
+
+/* hero visual — заменить на 3D‑ассет бренда */
+.hero-visual{position:relative;height:210px;margin-top:8px;pointer-events:none}
+@media(min-width:960px){.hero-visual{height:400px}}
+.hv-scale{position:absolute;inset:0;transform-origin:center}
+@media(min-width:960px){.hv-scale{transform:scale(1.45)}}
+.hv-glow{position:absolute;left:50%;top:50%;width:300px;height:300px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,221,45,.55) 0%,rgba(255,221,45,0) 62%);filter:blur(10px)}
+.hv-back{position:absolute;width:128px;height:128px;left:calc(50% + 18px);top:calc(50% - 112px);border-radius:38px;transform:rotate(16deg);background:linear-gradient(160deg,#4B4B52,#26262A);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.hv-front{position:absolute;width:168px;height:168px;left:50%;top:50%;transform:translate(-50%,-46%) rotate(-10deg);border-radius:48px;
+  background:linear-gradient(150deg,rgba(255,255,255,.38),rgba(255,255,255,.07) 58%,rgba(255,255,255,.14));
+  border:1px solid rgba(255,255,255,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 34px 60px rgba(0,0,0,.5);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);display:grid;place-items:center}
+.hv-front span{font-size:104px;font-weight:800;line-height:1;background:linear-gradient(180deg,#FFEE8C 0%,#FFD21F 55%,#F5B800 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 10px rgba(255,200,0,.35))}
+.hv-coin{position:absolute;width:76px;height:76px;border-radius:50%;left:calc(50% - 142px);top:calc(50% + 22px);background:radial-gradient(circle at 34% 30%,#FAFAFB 0%,#B8BAC1 55%,#7C7F87 100%);box-shadow:inset -4px -6px 10px rgba(0,0,0,.18),0 18px 30px rgba(0,0,0,.45)}
+.hv-coin.y{width:52px;height:52px;left:calc(50% + 92px);top:calc(50% + 46px);background:radial-gradient(circle at 34% 30%,#FFF3A8 0%,#FFD21F 55%,#D9A300 100%)}
+
+/* how it works */
+.how{position:relative;z-index:2;margin-top:-104px}
+.how-card{background:#fff;border-radius:var(--r-xl);padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.12)}
+@media(min-width:768px){.how-card{padding:40px}}
+.how-card h2{font-size:24px;line-height:1.2;font-weight:700}
+@media(min-width:768px){.how-card h2{font-size:28px}}
+.steps{display:grid;gap:20px;margin-top:20px;list-style:none}
+@media(min-width:768px){.steps{grid-template-columns:repeat(3,1fr);gap:28px;margin-top:28px}}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step-num{flex:0 0 32px;height:32px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-weight:700;font-size:15px}
+.step b{display:block;font-weight:600;line-height:1.3}
+.step-desc{display:block;color:var(--text-2);font-size:15px;margin-top:4px}
+.how-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:24px}
+.note{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md);background:var(--card);font-size:15px;flex:1 1 320px}
+.note svg{flex:0 0 20px;margin-top:2px;color:var(--text-2)}
+
+/* sections */
+.section{padding-top:64px}
+@media(min-width:768px){.section{padding-top:104px}}
+.h2{font-size:32px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-align:center}
+@media(min-width:768px){.h2{font-size:48px}}
+.lead{text-align:center;color:var(--text-2);margin:12px auto 0;max-width:640px}
+.card{background:var(--card);border-radius:var(--r-xl);padding:24px}
+@media(min-width:768px){.card{padding:32px}}
+.mt-32{margin-top:32px}
+@media(min-width:768px){.mt-32{margin-top:40px}}
+
+/* series */
+.series-list{display:grid;gap:16px}
+@media(min-width:768px){.series-list{grid-template-columns:repeat(2,1fr)}.series-list.single{grid-template-columns:1fr}}
+@media(max-width:767px){
+  .series-list.carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:32px -16px 0;padding:0 16px 4px;scrollbar-width:none}
+  .series-list.carousel::-webkit-scrollbar{display:none}
+  .series-list.carousel .series-card{flex:0 0 86%;scroll-snap-align:center}
+}
+.series-card{background:var(--card);border-radius:var(--r-xl);padding:24px;display:flex;flex-direction:column;gap:20px}
+@media(min-width:768px){.series-card{padding:32px}}
+.series-name{font-size:15px;color:var(--text-2);font-weight:500}
+.series-rate{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:6px}
+.series-rate .num{font-size:48px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.series-rate .unit{font-size:20px;font-weight:600}
+.series-term{margin-top:8px}
+.countdown{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:#fff;font-size:15px;font-weight:500;align-self:flex-start}
+.countdown.last{background:#FFF3BF}
+.countdown svg{color:var(--text-2)}
+.progress{height:6px;border-radius:3px;background:#E1E3E7;overflow:hidden;margin-top:10px}
+.progress i{display:block;height:100%;background:var(--yellow);border-radius:3px}
+.pairs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
+.pair b{display:block;font-size:20px;font-weight:700;line-height:1.25}
+.pair span{display:block;color:var(--text-2);font-size:15px;margin-top:2px}
+@media(min-width:768px){
+  .series-list.single .series-card{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;column-gap:48px;row-gap:24px}
+  .series-list.single .series-card .s-top{grid-row:span 2}
+  .series-list.single .series-rate .num{font-size:72px}
+}
+.series-more{text-align:center;margin-top:24px}
+.empty-card{text-align:center;padding:40px 24px}
+.empty-card b{display:block;font-size:22px;font-weight:700}
+.empty-card p{color:var(--text-2);margin:8px auto 0;max-width:520px}
+
+/* calculator */
+.calc-grid{display:grid;gap:20px}
+@media(min-width:900px){.calc-grid{grid-template-columns:1fr 1fr;gap:32px;align-items:stretch}}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{min-height:44px;padding:0 16px;border-radius:12px;border:0;background:#fff;cursor:pointer;font-size:15px;font-weight:500;color:var(--text);white-space:nowrap}
+.tab[aria-selected="true"]{background:#333;color:#fff}
+.series-static{display:inline-flex;padding:10px 14px;border-radius:12px;background:var(--chip);font-size:15px;font-weight:500}
+.field{display:block;position:relative;margin-top:16px;background:#fff;border-radius:var(--r-md);padding:12px 48px 10px 16px;border:2px solid transparent;cursor:text}
+.field:focus-within{border-color:var(--yellow)}
+.field-label{display:block;font-size:13px;color:var(--text-2)}
+.field input{width:100%;border:0;outline:0;background:transparent;font:inherit;font-size:28px;font-weight:700;color:var(--text);padding:0;margin-top:2px}
+.field-suffix{position:absolute;right:16px;bottom:14px;font-size:24px;font-weight:700;color:var(--text-2)}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.quick button{min-height:40px;padding:0 14px;border-radius:12px;border:0;background:#fff;cursor:pointer;font-size:15px;font-weight:500;color:var(--text)}
+.quick button[aria-pressed="true"]{background:#333;color:#fff}
+.hint{min-height:22px;margin-top:10px;font-size:14px;color:#9A5B00}
+.calc-out{background:#fff;border-radius:var(--r-lg);padding:20px;display:flex;flex-direction:column;gap:14px}
+@media(min-width:768px){.calc-out{padding:28px}}
+.out-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.out-row span{color:var(--text-2);font-size:15px}
+.out-row b{font-size:20px;font-weight:700;white-space:nowrap}
+.out-row.big b{font-size:32px;color:var(--text)}
+.fine{font-size:13px;color:var(--text-2)}
+
+/* features */
+.feat{list-style:none;display:grid;gap:22px}
+@media(min-width:768px){.feat{grid-template-columns:repeat(2,1fr);gap:28px 40px}}
+.feat li{display:flex;gap:16px;align-items:flex-start}
+.ico{flex:0 0 44px;height:44px;border-radius:14px;background:#fff;display:grid;place-items:center;color:#333}
+.feat b{display:block;font-weight:600;line-height:1.3}
+.feat span{display:block;color:var(--text-2);font-size:15px;margin-top:3px}
+
+/* use cases */
+.uc-list{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:32px -16px 0;padding:0 16px 4px;scrollbar-width:none}
+.uc-list::-webkit-scrollbar{display:none}
+.uc{flex:0 0 82%;scroll-snap-align:center;border-radius:var(--r-xl);padding:24px 24px 0;display:flex;flex-direction:column;min-height:330px;overflow:hidden}
+.uc h3{font-size:22px;line-height:1.2;font-weight:700}
+.uc p{color:var(--text-2);margin-top:8px;font-size:15px}
+.uc .art{margin-top:auto;align-self:center;width:220px;max-width:100%}
+.uc.c1{background:var(--card)}
+.uc.c2{background:var(--card-blue)}
+.uc.c3{background:var(--dark-2);color:#fff}
+.uc.c3 p{color:rgba(255,255,255,.78)}
+.track{width:120px;height:3px;border-radius:2px;background:#D9DBDF;margin:20px auto 0;position:relative;overflow:hidden}
+.track i{position:absolute;left:0;top:0;height:100%;background:#333;border-radius:2px;width:33%}
+@media(min-width:768px){
+  .uc-list{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0 0;padding:0;overflow:visible}
+  .uc{min-height:380px;padding:32px 32px 0}
+  .track{display:none}
+}
+
+/* group */
+.ratings{display:grid;gap:12px}
+@media(min-width:768px){.ratings{grid-template-columns:repeat(3,1fr);gap:16px}}
+.rating{background:var(--card);border-radius:var(--r-lg);padding:20px 24px;display:flex;gap:16px;align-items:center}
+.rating b{display:block;font-size:24px;font-weight:800;line-height:1.2}
+.rating span{display:block;color:var(--text-2);font-size:15px}
+.kpi-wrap{background:var(--card-blue);border-radius:var(--r-xl);padding:20px;margin-top:16px}
+@media(min-width:768px){.kpi-wrap{padding:32px}}
+.kpi-wrap h3{font-size:22px;font-weight:700;margin:4px 4px 16px}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:900px){.kpis{grid-template-columns:repeat(3,1fr);gap:12px}}
+.kpi{background:#fff;border-radius:var(--r-md);padding:14px}
+@media(min-width:768px){.kpi{padding:20px 24px}}
+.kpi-val{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px}
+.kpi-val b{font-size:21px;font-weight:800;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
+@media(min-width:768px){.kpi-val b{font-size:32px}}
+.kpi-val em{font-style:normal;color:var(--green);font-weight:700;font-size:15px}
+.kpi span{display:block;color:var(--text-2);font-size:14px;margin-top:6px;line-height:1.35}
+.divers{grid-column:1/-1;background:var(--dark-2);color:#fff;border-radius:var(--r-md);padding:18px 20px;font-size:16px;font-weight:600;line-height:1.35;display:flex;gap:14px;align-items:center}
+.divers .ico{background:rgba(255,255,255,.1);color:var(--yellow)}
+@media(min-width:768px){.divers{font-size:18px;padding:20px 24px}}
+.footnote{font-size:13px;color:var(--text-2);margin:16px 4px 0;line-height:1.5}
+
+/* how to buy */
+.buy{display:grid;gap:24px}
+@media(min-width:960px){.buy{grid-template-columns:1fr auto;gap:48px;align-items:center}}
+.buy .steps{margin-top:0}
+@media(min-width:768px){.buy .steps{grid-template-columns:1fr;gap:20px}}
+.buy-cta{margin-top:24px}
+.qr{display:none;text-align:center;background:#fff;border-radius:var(--r-lg);padding:20px;width:220px}
+.qr-box{width:180px;height:180px;margin:0 auto}
+.qr-box img,.qr-box canvas{width:180px!important;height:180px!important}
+.qr p{font-size:13px;color:var(--text-2);margin-top:12px}
+@media(min-width:960px){.qr.ready{display:block}}
+
+/* faq */
+.faq{max-width:800px;margin:32px auto 0}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 4px;font-weight:600;font-size:18px;line-height:1.35}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary svg{flex:0 0 24px;transition:transform .2s;color:var(--text-2)}
+.faq details[open] summary svg{transform:rotate(180deg)}
+.faq .ans{padding:0 4px 20px;color:var(--text);max-width:720px}
+.faq .ans p+p{margin-top:10px}
+
+/* final */
+.final{background:radial-gradient(70% 90% at 50% 0%,rgba(255,221,45,.18),rgba(255,221,45,0) 70%),var(--dark);color:#fff;border-radius:var(--r-xl);padding:40px 24px;text-align:center}
+@media(min-width:768px){.final{padding:64px 40px}}
+.final h2{font-size:30px;line-height:1.15;font-weight:800;letter-spacing:-.02em}
+@media(min-width:768px){.final h2{font-size:44px}}
+.final p{color:rgba(255,255,255,.8);margin:12px auto 0;max-width:520px}
+.final .btn{margin-top:28px;min-width:260px}
+
+/* footer */
+.footer{padding:48px 0 132px;color:var(--text-2);font-size:14px}
+@media(min-width:960px){.footer{padding-bottom:56px}}
+.footer p+p{margin-top:8px}
+.footer-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px}
+
+/* sticky CTA (mobile) */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 -8px 24px rgba(0,0,0,.08);transform:translateY(110%);transition:transform .25s ease}
+.sticky.show{transform:none}
+@media(min-width:960px){.sticky{display:none}}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.js .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .sticky,.btn,.faq summary svg{transition:none}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<!-- Данные выпусков: используются, если страница открыта как файл или series.json недоступен -->
+<script type="application/json" id="series-data">
+{"series":[{"name":"Смарт-процент До 02 февраля","rate":13.5,"termLabel":"4 месяца","placementDate":"2026-10-05","maturityDate":"2027-02-02","collectionStart":"","collectionEnd":"2026-10-05","minAmount":1000,"price":1000,"fee":"0%","url":"https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"}]}
+</script>
+
+<div class="proto" role="note" style="background:#1C1C1F;color:#fff;font-size:13px;line-height:1.4;text-align:center;padding:8px 16px">Архив: версия 1 от 4 октября 2026, 13:47 · <a href="../../" style="color:#FFDD2D">Открыть актуальную</a> · <a href="../" style="color:#FFDD2D">Все версии</a></div>
+
+<header class="header" id="top">
+  <div class="container header-in">
+    <a class="logo" href="#top" aria-label="Т‑Инвестиции — в начало страницы">
+      <!-- Официальный логотип бренда: положите файл в assets/logo.svg -->
+      <img src="../../assets/logo.svg" alt="" width="36" height="36" onerror="this.remove()">
+      <span>Т‑Инвестиции</span>
+    </a>
+    <div class="header-right">
+      <a class="pill" id="lkLink" href="https://www.tbank.ru/">Личный кабинет</a>
+      <a class="btn btn-primary btn-sm" id="headerCta" data-cta="header" href="#series">Участвовать</a>
+      <button class="icon-btn" id="menuBtn" aria-label="Меню" aria-expanded="false" aria-controls="menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+    <nav class="menu" id="menu" aria-label="Разделы страницы">
+      <a href="#series">Выпуски</a>
+      <a href="#calc">Калькулятор</a>
+      <a href="#terms">Условия</a>
+      <a href="#group">О группе</a>
+      <a href="#buy">Как купить</a>
+      <a href="#faq">Вопросы и ответы</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">ЦФА · Т‑Инвестиции</div>
+        <h1>Смарт-процент</h1>
+        <p class="hero-sub">Цифровые финансовые активы с фиксированной доходностью от Т‑Банка</p>
+        <div id="heroOffer">
+          <div class="hero-rate"><span class="num" id="heroRate"></span><span class="unit">годовых</span></div>
+          <p class="hero-term" id="heroTerm"></p>
+        </div>
+        <p class="hero-empty" id="heroEmpty" hidden>Новые выпуски Смарт-процента скоро. Следите в Т‑Инвестициях</p>
+        <div class="hero-chips" id="heroChips"></div>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" id="heroCta" data-cta="hero" href="#series">Выбрать выпуск</a>
+          <a class="btn btn-ghost-dark" href="#how">Как это работает</a>
+        </div>
+      </div>
+      <!-- Заменить на 3D‑ассет бренда: стеклянная плитка с жёлтым акцентом, мягкое свечение -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hv-scale">
+          <div class="hv-glow"></div>
+          <div class="hv-back"></div>
+          <div class="hv-coin"></div>
+          <div class="hv-front"><span>%</span></div>
+          <div class="hv-coin y"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how" aria-labelledby="howTitle">
+    <div class="container">
+      <div class="how-card rv">
+        <h2 id="howTitle">Как это работает</h2>
+        <ol class="steps">
+          <li class="step"><span class="step-num">1</span><div><b>Выберите выпуск и сумму</b><span class="step-desc">У каждого выпуска свой срок и ставка<span id="howMin"></span></span></div></li>
+          <li class="step"><span class="step-num">2</span><div><b>Ставка фиксируется на весь срок</b><span class="step-desc">Вы предоставляете средства Т‑Банку во временное пользование на заранее определённый срок</span></div></li>
+          <li class="step"><span class="step-num">3</span><div><b>В дату погашения — сумма и доход</b><span class="step-desc">При погашении возвращаются вложенная сумма и начисленный доход</span></div></li>
+        </ol>
+        <div class="how-foot">
+          <p class="note"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg><span>Вторичные торги не предусмотрены. Актив необходимо держать до погашения.</span></p>
+          <a id="presLink" href="#" hidden target="_blank" rel="noopener">Посмотреть презентацию</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="series" aria-labelledby="seriesTitle">
+    <div class="container">
+      <h2 class="h2 rv" id="seriesTitle">Сейчас в размещении</h2>
+      <p class="lead rv">Ставка фиксируется на весь срок выпуска</p>
+      <div class="series-list mt-32" id="seriesList"></div>
+      <p class="series-more" id="shelfMore" hidden><a class="btn btn-gray" data-cta="series_all" target="_blank" rel="noopener" href="#">Все выпуски в Т‑Инвестициях</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="calc" aria-labelledby="calcTitle">
+    <div class="container">
+      <h2 class="h2 rv" id="calcTitle">Посчитайте доход</h2>
+      <div class="card mt-32 rv">
+        <div class="calc-grid">
+          <div>
+            <div id="calcSeries"></div>
+            <label class="field" for="amount">
+              <span class="field-label" id="amountLabel">Сумма</span>
+              <input id="amount" type="text" inputmode="numeric" autocomplete="off" value="100 000" aria-describedby="calcHint">
+              <span class="field-suffix" aria-hidden="true">₽</span>
+            </label>
+            <div class="quick" id="quick" aria-label="Быстрый выбор суммы"></div>
+            <p class="hint" id="calcHint" aria-live="polite"></p>
+          </div>
+          <div class="calc-out" aria-live="polite">
+            <div class="out-row big"><span>Доход к погашению</span><b id="outIncome">—</b></div>
+            <div class="out-row"><span>Вернётся всего</span><b id="outTotal">—</b></div>
+            <div class="out-row"><span>Дата погашения</span><b id="outDate">—</b></div>
+            <a class="btn btn-primary btn-block" id="calcCta" data-cta="calculator" target="_blank" rel="noopener" href="#">Участвовать</a>
+            <p class="fine">Расчёт ориентировочный, до налогов. Точные условия — в решении о выпуске.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="terms" aria-labelledby="termsTitle">
+    <div class="container">
+      <h2 class="h2 rv" id="termsTitle">Условия</h2>
+      <div class="card mt-32 rv">
+        <ul class="feat" id="featList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="usecases" aria-labelledby="ucTitle">
+    <div class="container">
+      <h2 class="h2 rv" id="ucTitle">Для чего подойдёт</h2>
+      <div class="uc-list mt-32" id="ucList">
+        <article class="uc c1 rv">
+          <h3>Зафиксировать ставку на весь срок</h3>
+          <p>Актуально при понижении ключевой ставки</p>
+          <svg class="art" viewBox="0 0 220 150" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7F7F9"/><stop offset="1" stop-color="#B7BAC2"/></linearGradient>
+              <linearGradient id="g1y" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFEE8C"/><stop offset="1" stop-color="#F5B800"/></linearGradient>
+            </defs>
+            <ellipse cx="110" cy="143" rx="84" ry="7" fill="#000" opacity=".08"/>
+            <path d="M80 70V52a30 30 0 0160 0v18" fill="none" stroke="#9A9DA6" stroke-width="13" stroke-linecap="round"/>
+            <rect x="58" y="66" width="104" height="76" rx="20" fill="url(#g1m)"/>
+            <rect x="58.5" y="66.5" width="103" height="75" rx="19.5" fill="none" stroke="#fff" stroke-opacity=".7"/>
+            <circle cx="110" cy="98" r="7" fill="#7E818A"/><rect x="107" y="100" width="6" height="18" rx="3" fill="#7E818A"/>
+            <circle cx="160" cy="62" r="28" fill="url(#g1y)"/>
+            <text x="160" y="72" text-anchor="middle" font-family="Onest,Arial,sans-serif" font-weight="800" font-size="28" fill="#333">%</text>
+          </svg>
+        </article>
+        <article class="uc c2 rv">
+          <h3>Отложить деньги к дате</h3>
+          <p>Выберите выпуск со сроком под свою цель</p>
+          <svg class="art" viewBox="0 0 220 150" aria-hidden="true">
+            <defs>
+              <linearGradient id="g2m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FAFAFC"/><stop offset="1" stop-color="#BFC3CC"/></linearGradient>
+              <linearGradient id="g2y" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFEE8C"/><stop offset="1" stop-color="#F5B800"/></linearGradient>
+            </defs>
+            <ellipse cx="110" cy="143" rx="84" ry="7" fill="#000" opacity=".08"/>
+            <rect x="48" y="34" width="124" height="106" rx="22" fill="url(#g2m)"/>
+            <path d="M48 56a22 22 0 0122-22h80a22 22 0 0122 22v8H48z" fill="url(#g2y)"/>
+            <rect x="74" y="20" width="12" height="28" rx="6" fill="#8C8F98"/>
+            <rect x="134" y="20" width="12" height="28" rx="6" fill="#8C8F98"/>
+            <g fill="#D6D9DF">
+              <rect x="66" y="78" width="18" height="14" rx="5"/><rect x="92" y="78" width="18" height="14" rx="5"/><rect x="118" y="78" width="18" height="14" rx="5"/><rect x="144" y="78" width="12" height="14" rx="5"/>
+              <rect x="66" y="100" width="18" height="14" rx="5"/><rect x="92" y="100" width="18" height="14" rx="5"/><rect x="144" y="100" width="12" height="14" rx="5"/>
+              <rect x="66" y="122" width="18" height="10" rx="5"/><rect x="92" y="122" width="18" height="10" rx="5"/>
+            </g>
+            <rect x="116" y="98" width="22" height="18" rx="6" fill="#333"/>
+            <path d="M121 107l4 4 8-8" fill="none" stroke="#FFDD2D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </article>
+        <article class="uc c3 rv">
+          <h3>Начать с небольшой суммы</h3>
+          <p id="ucMin">Минимальный размер участия — в условиях выпуска</p>
+          <svg class="art" viewBox="0 0 220 150" aria-hidden="true">
+            <defs>
+              <linearGradient id="g3m" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8E9199"/><stop offset=".5" stop-color="#E9EAEE"/><stop offset="1" stop-color="#9A9DA5"/></linearGradient>
+              <linearGradient id="g3t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FAFAFB"/><stop offset="1" stop-color="#C9CCD2"/></linearGradient>
+              <linearGradient id="g3y" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D9A300"/><stop offset=".5" stop-color="#FFE45C"/><stop offset="1" stop-color="#E0AB00"/></linearGradient>
+              <linearGradient id="g3yt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3A8"/><stop offset="1" stop-color="#FFD21F"/></linearGradient>
+            </defs>
+            <ellipse cx="110" cy="143" rx="84" ry="7" fill="#000" opacity=".25"/>
+            <g>
+              <rect x="44" y="112" width="84" height="22" fill="url(#g3m)"/><ellipse cx="86" cy="134" rx="42" ry="10" fill="#7E818A"/><ellipse cx="86" cy="112" rx="42" ry="10" fill="url(#g3t)"/>
+              <rect x="44" y="92" width="84" height="20" fill="url(#g3m)"/><ellipse cx="86" cy="92" rx="42" ry="10" fill="url(#g3t)"/>
+              <rect x="44" y="72" width="84" height="20" fill="url(#g3m)"/><ellipse cx="86" cy="72" rx="42" ry="10" fill="url(#g3t)"/>
+            </g>
+            <g>
+              <rect x="122" y="104" width="64" height="20" fill="url(#g3y)"/><ellipse cx="154" cy="124" rx="32" ry="8" fill="#C99700"/><ellipse cx="154" cy="104" rx="32" ry="8" fill="url(#g3yt)"/>
+            </g>
+          </svg>
+        </article>
+      </div>
+      <div class="track" aria-hidden="true"><i id="ucThumb"></i></div>
+    </div>
+  </section>
+
+  <section class="section" id="group" aria-labelledby="groupTitle">
+    <div class="container">
+      <h2 class="h2 rv" id="groupTitle">ЦФА от группы Т‑Технологии</h2>
+      <p class="lead rv">Эмитент — АО «ТБанк». В основе экосистемы Т‑Технологий лежит Т‑Банк, один из крупнейших в мире онлайн-банков</p>
+      <div class="ratings mt-32">
+        <div class="rating rv"><span class="ico" style="background:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg></span><div><b>AA(RU)</b><span>АКРА · прогноз «Позитивный»</span></div></div>
+        <div class="rating rv"><span class="ico" style="background:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg></span><div><b>ruAA</b><span>Эксперт РА · прогноз «Позитивный»</span></div></div>
+        <div class="rating rv"><span class="ico" style="background:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><div><b>Атомайз</b><span>Платформа ЦФА в группе Т‑Технологии</span></div></div>
+      </div>
+      <div class="kpi-wrap rv">
+        <h3>Т‑Технологии в цифрах</h3>
+        <div class="kpis">
+          <div class="kpi"><div class="kpi-val"><b>56 млн+</b></div><span>клиентов</span></div>
+          <div class="kpi"><div class="kpi-val"><b>3,5 трлн ₽</b><em>+25%</em></div><span>кредитный портфель</span></div>
+          <div class="kpi"><div class="kpi-val"><b>6,5 трлн ₽</b><em>+17%</em></div><span>средства клиентов и активы под управлением</span></div>
+          <div class="kpi"><div class="kpi-val"><b>802 млрд ₽</b><em>+24%</em></div><span>чистая выручка за последние 4 квартала</span></div>
+          <div class="kpi"><div class="kpi-val"><b>198 млрд ₽</b><em>+31%</em></div><span>операционная чистая прибыль за последние 4 квартала</span></div>
+          <div class="kpi"><div class="kpi-val"><b>29,3%</b></div><span>средняя рентабельность капитала (ROE) за последние 4 квартала</span></div>
+          <div class="divers"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l7 5"/></svg></span><span>Более половины чистой выручки приносят направления, не связанные с розничными кредитами</span></div>
+        </div>
+        <p class="footnote">Показатели МКПАО «Т‑Технологии» на основе финансовых результатов за II квартал 2026 года: данные за последние 4 квартала, динамика год к году. Рейтинги Т‑Банка: АКРА — 12.03.2026, Эксперт РА — 08.06.2026. Источник: <a href="https://t-technologies.ru/" target="_blank" rel="noopener">t‑technologies.ru</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="buy" aria-labelledby="buyTitle">
+    <div class="container">
+      <h2 class="h2 rv" id="buyTitle">Как купить</h2>
+      <div class="card mt-32 rv">
+        <div class="buy">
+          <div>
+            <ol class="steps">
+              <li class="step"><span class="step-num">1</span><div><b>Откройте приложение Т‑Инвестиции</b></div></li>
+              <li class="step"><span class="step-num">2</span><div><b>Перейдите в «Что купить» → «ЦФА» → «Первичные размещения»</b><span class="step-desc">Раздел доступен в приложении версии 7.2.0 и выше</span></div></li>
+              <li class="step"><span class="step-num">3</span><div><b>Выберите «Смарт-процент», ознакомьтесь с условиями и подтвердите участие</b></div></li>
+            </ol>
+            <a class="btn btn-primary buy-cta" id="buyCta" data-cta="how_to_buy" target="_blank" rel="noopener" href="#">Перейти к выпускам</a>
+          </div>
+          <div class="qr" id="qr">
+            <div class="qr-box" id="qrBox" role="img" aria-label="QR-код для перехода к выпускам"></div>
+            <p>Наведите камеру телефона, чтобы открыть выпуски в приложении</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" aria-labelledby="faqTitle">
+    <div class="container">
+      <h2 class="h2 rv" id="faqTitle">Вопросы и ответы</h2>
+      <div class="faq" id="faqList"></div>
+    </div>
+  </section>
+
+  <section class="section" id="final">
+    <div class="container">
+      <div class="final rv">
+        <h2>Зафиксируйте доходность на весь срок</h2>
+        <p id="finalSub">Выпуски Смарт-процента — в приложении Т‑Инвестиции</p>
+        <a class="btn btn-primary" id="finalCta" data-cta="final" target="_blank" rel="noopener" href="#">Участвовать</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>Не является индивидуальной инвестиционной рекомендацией.</p>
+    <p>Эмитент ЦФА «Смарт-процент» — АО «ТБанк». Расчёты доходности на странице ориентировочные, до налогов; точные условия — в решении о выпуске.</p>
+    <p id="adLabel" hidden></p>
+    <div class="footer-links" id="footerLinks"></div>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky" aria-hidden="true">
+  <a class="btn btn-primary btn-block" id="stickyCta" data-cta="sticky" target="_blank" rel="noopener" href="#" tabindex="-1">Участвовать</a>
+</div>
+
+<noscript><p style="padding:16px;text-align:center">Выпуски Смарт-процента доступны в приложении Т‑Инвестиции: «Что купить» → «ЦФА» → «Первичные размещения».</p></noscript>
+
+<script>
+(function(){
+'use strict';
+
+/* ==================== КОНФИГ ====================
+   Пустая строка = блок или ссылка на странице скрыты. */
+var CONFIG = {
+  SHELF_URL: '',          // [ВСЕ ВЫПУСКИ ЦФА В Т‑ИНВЕСТИЦИЯХ]
+  PRESENTATION_URL: '',   // [ПРЕЗЕНТАЦИЯ]
+  RISKS_URL: '',          // [РИСКИ]
+  ISSUE_DOCS_URL: '',     // [РЕШЕНИЕ О ВЫПУСКЕ]
+  AD_LABEL: '',           // [Реклама. Рекламодатель, ИНН. erid]
+  ACCOUNT_URL: 'https://www.tbank.ru/',
+  QUICK_AMOUNTS: [10000, 50000, 100000, 500000],
+  DEFAULT_AMOUNT: 100000,
+  // Ответы FAQ, которые нужно подтвердить. Пока пусто — вопрос не показывается.
+  FAQ_PENDING: {
+    noAccount: '',  // Как купить, если нет брокерского счёта
+    payout: '',     // Куда приходит доход после погашения
+    taxes: '',      // Как облагается доход
+    limits: ''      // Есть ли ограничения на покупку
+  }
+};
+/* ================================================ */
+
+var TZ = 'Europe/Moscow';
+var MONTHS = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+var params = new URLSearchParams(location.search);
+var PREVIEW = params.has('preview');   // ?preview — показать выпуски с закрытым сбором (для просмотра макета)
+
+window.dataLayer = window.dataLayer || [];
+function track(event, data){ var o = {event:event}; for (var k in (data||{})) o[k] = data[k]; window.dataLayer.push(o); }
+
+function todayISO(){
+  return new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+}
+function utc(iso){ var p = iso.split('-').map(Number); return Date.UTC(p[0], p[1]-1, p[2]); }
+function daysBetween(a, b){ return Math.round((utc(b) - utc(a)) / 864e5); }
+function fmtDate(iso, forceYear){
+  var p = iso.split('-').map(Number);
+  var curY = Number(todayISO().slice(0,4));
+  return p[2] + ' ' + MONTHS[p[1]-1] + ((forceYear || p[0] !== curY) ? ' ' + p[0] : '');
+}
+function plural(n, one, few, many){
+  var m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return one;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+  return many;
+}
+function fmtRate(r){ return r.toLocaleString('ru-RU',{maximumFractionDigits:2}) + '%'; }
+function fmtNum(n){ return Math.round(n).toLocaleString('ru-RU'); }
+function fmtRub(n){ return fmtNum(n) + ' ₽'; }
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function $(id){ return document.getElementById(id); }
+
+var ICONS = {
+  percent:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18.5 5.5l-13 13"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>',
+  ruble:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20V4h5.5a4 4 0 010 8H6M6 16h9"/></svg>',
+  calendar:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+  lock:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>',
+  tag:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 12.5V4.5a1 1 0 011-1h8l8 8-9 9z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>',
+  clock:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  clock22:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  chevron:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
+};
+
+function loadSeries(){
+  var embedded = JSON.parse($('series-data').textContent);
+  if (!/^https?:/.test(location.protocol)) return Promise.resolve(embedded);
+  return fetch('../../series.json', {cache:'no-store'})
+    .then(function(r){ return r.ok ? r.json() : embedded; })
+    .catch(function(){ return embedded; });
+}
+
+function normalize(s, today){
+  var o = {};
+  for (var k in s) o[k] = s[k];
+  o.price = Number(s.price) || 1000;
+  o.minAmount = Number(s.minAmount) || o.price;
+  o.rate = Number(s.rate);
+  o.termDays = daysBetween(s.placementDate, s.maturityDate);
+  o.daysLeft = daysBetween(today, s.collectionEnd);
+  return o;
+}
+
+function init(data){
+  var today = todayISO();
+  var all = (data.series || data || []).map(function(s){ return normalize(s, today); });
+  var active = all.filter(function(s){ return PREVIEW || s.collectionEnd >= today; })
+                  .sort(function(a,b){ return a.termDays - b.termDays; });
+
+  var best = active.slice().sort(function(a,b){ return b.rate - a.rate; })[0];
+  var mainUrl = CONFIG.SHELF_URL || (best && best.url) || '';
+  var minAmount = active.length ? Math.min.apply(null, active.map(function(s){ return s.minAmount; })) : 0;
+  var fees = active.map(function(s){ return s.fee; }).filter(Boolean);
+  var sameFee = fees.length && fees.every(function(f){ return f === fees[0]; }) ? fees[0] : '';
+
+  renderHero(active, best, minAmount, sameFee, mainUrl);
+  renderSeries(active);
+  renderCalc(active);
+  renderFeatures(active, minAmount, sameFee);
+  renderFaq();
+  renderLinks(mainUrl, active, minAmount);
+  setupSticky(active, best, mainUrl);
+}
+
+function renderHero(active, best, minAmount, fee, mainUrl){
+  if (!active.length){
+    $('heroOffer').hidden = true;
+    $('heroEmpty').hidden = false;
+    var cta = $('heroCta');
+    if (CONFIG.SHELF_URL){ cta.textContent = 'Открыть Т‑Инвестиции'; cta.href = CONFIG.SHELF_URL; cta.target = '_blank'; cta.rel = 'noopener'; }
+    else cta.hidden = true;
+  } else if (active.length === 1){
+    var s = active[0];
+    $('heroRate').textContent = fmtRate(s.rate);
+    $('heroTerm').textContent = 'на ' + s.termLabel + ' · погашение ' + fmtDate(s.maturityDate, true);
+  } else {
+    var terms = active.map(function(s){ return s.termLabel; });
+    $('heroRate').textContent = 'до ' + fmtRate(best.rate);
+    $('heroTerm').textContent = 'Сроки: ' + terms[0] + ' — ' + terms[terms.length-1];
+  }
+  var chips = [];
+  if (minAmount) chips.push('от ' + fmtRub(minAmount));
+  if (fee) chips.push('комиссия за размещение ' + fee);
+  chips.push('эмитент АО «ТБанк», AA(RU)');
+  $('heroChips').innerHTML = chips.map(function(c){ return '<span class="chip-dark">' + esc(c) + '</span>'; }).join('');
+  if (minAmount) $('howMin').textContent = '. Участие — от ' + fmtRub(minAmount);
+}
+
+function countdownHtml(s){
+  if (s.daysLeft < 0) return '<span class="countdown">' + ICONS.clock + 'Сбор завершён ' + fmtDate(s.collectionEnd) + '</span>';
+  var tail = s.daysLeft === 0 ? 'последний день' : 'ещё ' + s.daysLeft + ' ' + plural(s.daysLeft,'день','дня','дней');
+  var html = '<span class="countdown' + (s.daysLeft === 0 ? ' last' : '') + '">' + ICONS.clock + 'Сбор до ' + fmtDate(s.collectionEnd) + ' · ' + tail + '</span>';
+  if (s.collectionStart){
+    var total = Math.max(1, daysBetween(s.collectionStart, s.collectionEnd));
+    var done = Math.min(1, Math.max(0, (total - s.daysLeft) / total));
+    html += '<div class="progress" role="progressbar" aria-label="Прошло времени сбора" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + Math.round(done*100) + '"><i style="width:' + (done*100).toFixed(1) + '%"></i></div>';
+  }
+  return html;
+}
+
+function renderSeries(active){
+  var list = $('seriesList');
+  if (!active.length){
+    list.className = 'series-list single';
+    list.innerHTML = '<div class="card empty-card"><b>Сейчас нет выпусков в сборе</b><p>Новые выпуски Смарт-процента появляются регулярно — следите в приложении Т‑Инвестиции</p></div>';
+    if (CONFIG.SHELF_URL) showShelf();
+    return;
+  }
+  list.className = 'series-list' + (active.length === 1 ? ' single' : '') + (active.length > 2 ? ' carousel' : '');
+  list.innerHTML = active.map(function(s, i){
+    return '<article class="series-card rv">' +
+      '<div class="s-top">' +
+        '<div class="series-name">' + esc(s.name) + '</div>' +
+        '<div class="series-rate"><span class="num">' + fmtRate(s.rate) + '</span><span class="unit">годовых</span></div>' +
+        '<div class="series-term">на ' + esc(s.termLabel) + ' · погашение ' + fmtDate(s.maturityDate, true) + '</div>' +
+      '</div>' +
+      '<div>' + countdownHtml(s) + '</div>' +
+      '<div class="pairs">' +
+        '<div class="pair"><b>' + fmtRub(s.minAmount) + '</b><span>Минимальный размер участия</span></div>' +
+        '<div class="pair"><b>' + fmtRub(s.price) + '</b><span>Цена в момент размещения</span></div>' +
+        '<div class="pair"><b>' + fmtDate(s.placementDate) + '</b><span>Дата размещения</span></div>' +
+        (s.fee ? '<div class="pair"><b>' + esc(s.fee) + '</b><span>Комиссия за размещение</span></div>' : '') +
+      '</div>' +
+      '<a class="btn btn-primary btn-block" data-cta="series_card" data-series="' + esc(s.name) + '" target="_blank" rel="noopener" href="' + esc(s.url) + '">Участвовать</a>' +
+    '</article>';
+  }).join('');
+  if (CONFIG.SHELF_URL) showShelf();
+}
+function showShelf(){
+  var p = $('shelfMore'); p.hidden = false; p.querySelector('a').href = CONFIG.SHELF_URL;
+}
+
+/* ---------- калькулятор ---------- */
+var calc = { idx:0, amount:CONFIG.DEFAULT_AMOUNT, active:[] };
+var calcTimer;
+
+function renderCalc(active){
+  if (!active.length){ $('calc').hidden = true; return; }
+  calc.active = active;
+  var box = $('calcSeries');
+  if (active.length === 1){
+    box.innerHTML = '<span class="series-static">' + esc(active[0].termLabel) + ' · ' + fmtRate(active[0].rate) + ' годовых</span>';
+  } else {
+    box.innerHTML = '<div class="tabs" role="tablist" aria-label="Выпуск">' + active.map(function(s,i){
+      return '<button class="tab" role="tab" type="button" data-i="' + i + '" aria-selected="' + (i===0) + '">' + esc(s.termLabel) + ' · ' + fmtRate(s.rate) + '</button>';
+    }).join('') + '</div>';
+    box.addEventListener('click', function(e){
+      var b = e.target.closest('.tab'); if (!b) return;
+      calc.idx = Number(b.dataset.i);
+      box.querySelectorAll('.tab').forEach(function(t){ t.setAttribute('aria-selected', String(t === b)); });
+      track('series_select', {series: calc.active[calc.idx].name});
+      updateCalc();
+    });
+    box.addEventListener('keydown', function(e){
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var tabs = [].slice.call(box.querySelectorAll('.tab'));
+      var i = tabs.indexOf(document.activeElement); if (i < 0) return;
+      var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      n.focus(); n.click();
+    });
+  }
+  $('quick').innerHTML = CONFIG.QUICK_AMOUNTS.map(function(a){
+    return '<button type="button" data-a="' + a + '" aria-pressed="false">' + fmtRub(a) + '</button>';
+  }).join('');
+  $('quick').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    calc.amount = Number(b.dataset.a);
+    $('amount').value = fmtNum(calc.amount);
+    updateCalc(true);
+  });
+  var input = $('amount');
+  input.value = fmtNum(calc.amount);
+  input.addEventListener('input', function(){
+    var digits = input.value.replace(/\D/g,'').replace(/^0+/,'').slice(0,10);
+    calc.amount = digits ? Number(digits) : 0;
+    input.value = digits ? fmtNum(calc.amount) : '';
+    updateCalc(true);
+  });
+  updateCalc(false);
+}
+
+function updateCalc(user){
+  var s = calc.active[calc.idx];
+  var price = s.price, min = s.minAmount;
+  $('amountLabel').textContent = 'Сумма, кратная ' + fmtRub(price);
+  var eff = Math.floor(calc.amount / price) * price;
+  var hint = '';
+  if (calc.amount < min){ eff = 0; hint = calc.amount ? 'Минимальная сумма — ' + fmtRub(min) : ''; }
+  else if (calc.amount % price){ hint = 'Сумма должна быть кратна ' + fmtRub(price) + ' — считаем для ' + fmtRub(eff); }
+  var income = eff * s.rate / 100 * s.termDays / 365;
+  $('calcHint').textContent = hint;
+  $('outIncome').textContent = eff ? '≈ ' + fmtRub(income) : '—';
+  $('outTotal').textContent = eff ? '≈ ' + fmtRub(eff + income) : '—';
+  $('outDate').textContent = fmtDate(s.maturityDate, true);
+  var btn = $('calcCta');
+  btn.textContent = eff ? 'Участвовать на ' + fmtRub(eff) : 'Участвовать';
+  btn.href = s.url;
+  btn.dataset.series = s.name;
+  btn.dataset.amount = eff;
+  $('quick').querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed', String(Number(b.dataset.a) === calc.amount)); });
+  if (user){
+    clearTimeout(calcTimer);
+    calcTimer = setTimeout(function(){ track('calc_amount', {series:s.name, amount:eff}); }, 600);
+  }
+}
+
+/* ---------- условия ---------- */
+function renderFeatures(active, minAmount, fee){
+  var items = [
+    [ICONS.percent, 'Фиксированная доходность', 'Не меняется весь срок'],
+    minAmount ? [ICONS.ruble, 'Старт от ' + fmtRub(minAmount), 'Цена одного ЦФА в момент размещения'] : null,
+    [ICONS.calendar, 'Доход в конце срока', 'Вместе с вложенной суммой в дату погашения'],
+    [ICONS.lock, 'Досрочно продать нельзя', 'Вторичные торги не предусмотрены — актив нужно держать до погашения'],
+    fee ? [ICONS.tag, 'Комиссия за размещение — ' + fee, 'Плата за участие в размещении не взимается'] : null,
+    [ICONS.clock22, 'Актив в портфеле в тот же день', 'Если участвуете в размещении до 17:00 в рабочий день']
+  ].filter(Boolean);
+  $('featList').innerHTML = items.map(function(it){
+    return '<li><span class="ico">' + it[0] + '</span><div><b>' + esc(it[1]) + '</b><span>' + esc(it[2]) + '</span></div></li>';
+  }).join('');
+  if (minAmount) $('ucMin').textContent = 'Участие — от ' + fmtRub(minAmount);
+}
+
+/* ---------- FAQ ---------- */
+function renderFaq(){
+  var P = CONFIG.FAQ_PENDING;
+  var faq = [
+    ['Что такое ЦФА',
+     ['Цифровые финансовые активы — цифровые права, которые выпускаются и учитываются в информационной системе на основе распределённого реестра.',
+      'Их выпуск и обращение регулирует Федеральный закон № 259‑ФЗ «О цифровых финансовых активах». Гражданский кодекс РФ (ст. 128) относит цифровые права к объектам гражданских прав.']],
+    ['Кто выпускает Смарт-процент',
+     ['Эмитент — АО «ТБанк», кредитный рейтинг AA(RU) от АКРА. ЦФА размещаются на платформе Атомайз, которая входит в группу Т‑Технологии.']],
+    ['Как работает Смарт-процент',
+     ['Вы предоставляете средства Т‑Банку во временное пользование на заранее определённый срок и получаете фиксированную доходность по условиям выпуска. При погашении ЦФА возвращаются вложенная сумма и начисленный доход.']],
+    ['Можно ли продать досрочно',
+     ['Нет. Вторичные торги не предусмотрены. Актив необходимо держать до погашения.']],
+    ['Когда я получу актив',
+     ['Смарт-процент выпускается каждый рабочий день в 17:00. Если вы поучаствовали в размещении до 17:00, актив появится в портфеле в этот же день. Если позже или в выходной день, то актив появится вечером следующего рабочего дня.']],
+    ['Чем Смарт-процент отличается от вклада',
+     ['ЦФА — не банковский вклад: на них не распространяется система страхования вкладов (АСВ). Продать актив или вернуть деньги до погашения нельзя. Ставка фиксируется условиями выпуска на весь срок.']],
+    P.noAccount ? ['Как купить, если нет брокерского счёта', [P.noAccount]] : null,
+    P.payout ? ['Куда приходит доход после погашения', [P.payout]] : null,
+    P.taxes ? ['Как облагается доход', [P.taxes]] : null,
+    P.limits ? ['Есть ли ограничения на покупку', [P.limits]] : null
+  ].filter(Boolean);
+  var box = $('faqList');
+  box.innerHTML = faq.map(function(f){
+    return '<details class="rv"><summary>' + esc(f[0]) + ICONS.chevron + '</summary><div class="ans">' +
+      f[1].map(function(p){ return '<p>' + esc(p) + '</p>'; }).join('') + '</div></details>';
+  }).join('');
+  box.querySelectorAll('details').forEach(function(d){
+    d.addEventListener('toggle', function(){ if (d.open) track('faq_open', {question: d.querySelector('summary').textContent}); });
+  });
+}
+
+/* ---------- ссылки, футер, QR ---------- */
+function renderLinks(mainUrl, active, minAmount){
+  $('lkLink').href = CONFIG.ACCOUNT_URL;
+  if (CONFIG.PRESENTATION_URL){ var pl = $('presLink'); pl.href = CONFIG.PRESENTATION_URL; pl.hidden = false; }
+  ['buyCta','finalCta'].forEach(function(id){
+    var a = $(id);
+    if (mainUrl) a.href = mainUrl; else a.hidden = true;
+  });
+  var hc = $('headerCta');
+  if (mainUrl){ hc.href = mainUrl; hc.target = '_blank'; hc.rel = 'noopener'; } else hc.hidden = true;
+  if (minAmount) $('finalSub').textContent = 'Выпуски Смарт-процента — от ' + fmtRub(minAmount) + ' в приложении Т‑Инвестиции';
+  if (CONFIG.AD_LABEL){ $('adLabel').textContent = CONFIG.AD_LABEL; $('adLabel').hidden = false; }
+  var links = [];
+  if (CONFIG.RISKS_URL) links.push(['Риски', CONFIG.RISKS_URL]);
+  if (CONFIG.ISSUE_DOCS_URL) links.push(['Решение о выпуске', CONFIG.ISSUE_DOCS_URL]);
+  if (CONFIG.PRESENTATION_URL) links.push(['Презентация', CONFIG.PRESENTATION_URL]);
+  links.push(['Отчётность группы Т‑Технологии', 'https://t-technologies.ru/results/']);
+  $('footerLinks').innerHTML = links.map(function(l){ return '<a href="' + esc(l[1]) + '" target="_blank" rel="noopener">' + esc(l[0]) + '</a>'; }).join('');
+  if (mainUrl && window.matchMedia('(min-width:960px)').matches) loadQr(mainUrl);
+}
+
+function loadQr(url){
+  var s = document.createElement('script');
+  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+  s.onload = function(){
+    try {
+      new window.QRCode($('qrBox'), {text:url, width:180, height:180, colorDark:'#333333', colorLight:'#ffffff', correctLevel: window.QRCode.CorrectLevel.M});
+      $('qr').classList.add('ready');
+    } catch(e){}
+  };
+  document.head.appendChild(s);
+}
+
+/* ---------- липкая кнопка ---------- */
+function setupSticky(active, best, mainUrl){
+  var bar = $('sticky'), a = $('stickyCta');
+  if (!mainUrl){ bar.hidden = true; return; }
+  a.href = mainUrl;
+  a.textContent = !active.length ? 'Открыть Т‑Инвестиции'
+    : active.length === 1 ? 'Участвовать · ' + fmtRate(best.rate)
+    : 'Участвовать · до ' + fmtRate(best.rate);
+  var heroVisible = true, endVisible = false;
+  function apply(){
+    var show = !heroVisible && !endVisible;
+    bar.classList.toggle('show', show);
+    bar.setAttribute('aria-hidden', String(!show));
+    a.tabIndex = show ? 0 : -1;
+  }
+  new IntersectionObserver(function(es){ heroVisible = es[0].isIntersecting; apply(); }).observe($('hero'));
+  new IntersectionObserver(function(es){ endVisible = es.some(function(e){ return e.isIntersecting; }); apply(); }, {threshold:.2}).observe($('final'));
+}
+
+/* ---------- общее поведение ---------- */
+function setupCommon(){
+  // клики по CTA
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('[data-cta]'); if (!a) return;
+    track('cta_click', {position:a.dataset.cta, series:a.dataset.series || '', amount:Number(a.dataset.amount) || 0});
+  });
+  // меню
+  var btn = $('menuBtn'), menu = $('menu');
+  function close(){ menu.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+  btn.addEventListener('click', function(e){ e.stopPropagation(); var o = menu.classList.toggle('open'); btn.setAttribute('aria-expanded', String(o)); });
+  menu.addEventListener('click', function(e){ if (e.target.closest('a')) close(); });
+  document.addEventListener('click', function(e){ if (!menu.contains(e.target) && e.target !== btn) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  // глубина прокрутки
+  var marks = [25,50,75,100], sent = {};
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - innerHeight;
+    var p = h > 0 ? scrollY / h * 100 : 100;
+    marks.forEach(function(m){ if (p >= m - 0.5 && !sent[m]){ sent[m] = 1; track('scroll_depth', {percent:m}); } });
+  }, {passive:true});
+  // индикатор карусели
+  var uc = $('ucList'), thumb = $('ucThumb');
+  function upd(){
+    var max = uc.scrollWidth - uc.clientWidth;
+    var vis = uc.clientWidth / uc.scrollWidth;
+    thumb.style.width = (vis * 100) + '%';
+    thumb.style.transform = 'translateX(' + (max > 0 ? (uc.scrollLeft / max) * ((1 - vis) / vis) * 100 : 0) + '%)';
+  }
+  uc.addEventListener('scroll', upd, {passive:true}); window.addEventListener('resize', upd); upd();
+}
+
+function setupReveal(){
+  var els = document.querySelectorAll('.rv');
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(function(el){ el.classList.add('in'); }); return;
+  }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(el){ io.observe(el); });
+}
+
+setupCommon();
+loadSeries().then(function(d){ init(d); setupReveal(); }).catch(function(){ setupReveal(); });
+})();
+</script>
+</body>
+</html>
