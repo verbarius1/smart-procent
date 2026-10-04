@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Смарт-процент — ЦФА с фиксированной доходностью от Т‑Банка</title>
 <meta name="description" content="Смарт-процент — цифровые финансовые активы с фиксированной доходностью от Т‑Банка. Участие в размещении — в приложении Т‑Инвестиции.">
-<meta name="theme-color" content="#18181B">
+<meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex, nofollow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face{font-family:'Inter';src:url('assets/fonts/Inter.woff2') format('woff2');font-weight:400 700;font-style:normal;font-display:swap}
 :root{
   --bg:#FFFFFF;
   --card:#F6F7F8;
@@ -32,7 +31,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:80px}
-body{font-family:'Onest',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;font-optical-sizing:auto;background:var(--bg);color:var(--text);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--link);text-decoration:none}
 a:hover{text-decoration:underline}
 button{font:inherit;color:inherit}
@@ -50,9 +49,8 @@ img,svg{display:block}
 .btn-primary:hover{background:var(--yellow-hover)}
 .btn-white{background:#fff;color:#333}
 .btn-white:hover{background:#F3F4F6}
-.btn-ghost-dark{background:rgba(255,255,255,.12);color:#fff}
-.btn-ghost-dark:hover{background:rgba(255,255,255,.18)}
 .btn-gray{background:var(--chip);color:var(--link)}
+.btn-gray:hover{background:#E4E6E9}
 .btn-block{width:100%}
 .btn-sm{min-height:40px;padding:0 18px;border-radius:12px;font-size:15px}
 
@@ -76,47 +74,45 @@ img,svg{display:block}
 .menu a{display:block;padding:12px 16px;border-radius:12px;color:#333;font-weight:500}
 .menu a:hover{background:var(--card);text-decoration:none}
 
-/* hero */
-.hero{position:relative;overflow:hidden;color:#fff;padding:40px 0 136px;
-  background:
-    radial-gradient(70% 55% at 85% 20%,rgba(255,221,45,.20) 0%,rgba(255,221,45,0) 70%),
-    radial-gradient(60% 50% at 10% 100%,rgba(255,190,60,.10) 0%,rgba(255,190,60,0) 70%),
-    linear-gradient(180deg,#141416 0%,#232327 100%)}
-.hero-grid{display:grid;gap:8px;align-items:center}
-@media(min-width:960px){.hero{padding:72px 0 176px}.hero-grid{grid-template-columns:1.1fr .9fr;gap:32px}}
-.eyebrow{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:500}
-.hero h1{font-size:44px;line-height:1.05;font-weight:800;letter-spacing:-.02em;margin-top:12px}
-@media(min-width:768px){.hero h1{font-size:72px}}
-.hero-sub{font-size:18px;color:rgba(255,255,255,.82);margin-top:12px;max-width:520px}
-.hero-rate{margin-top:28px;display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 14px}
-.hero-rate .num{font-size:64px;font-weight:800;line-height:1;color:var(--yellow);letter-spacing:-.03em;white-space:nowrap}
+/* hero — белый, как на классических лендингах tbank.ru */
+.hero{position:relative;overflow:hidden;background:#fff;padding:40px 0 0;text-align:center}
+@media(min-width:768px){.hero{padding:72px 0 0}}
+.eyebrow{font-size:17px;color:var(--text-2)}
+.hero h1{font-size:40px;line-height:1.08;font-weight:700;letter-spacing:-.025em;margin-top:8px}
+@media(min-width:768px){.hero h1{font-size:64px}}
+.hero-sub{font-size:18px;margin:14px auto 0;max-width:560px}
+@media(min-width:768px){.hero-sub{font-size:20px}}
+.hero-rate{margin-top:24px;display:flex;justify-content:center;align-items:baseline;flex-wrap:wrap;gap:2px 12px}
+.hero-rate .num{font-size:56px;font-weight:700;line-height:1;letter-spacing:-.03em;white-space:nowrap}
 .hero-rate .unit{font-size:22px;font-weight:600}
-@media(min-width:768px){.hero-rate .num{font-size:96px}.hero-rate .unit{font-size:28px}}
-.hero-term{color:rgba(255,255,255,.82);margin-top:10px}
-.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.chip-dark{padding:7px 12px;border-radius:12px;background:rgba(255,255,255,.1);font-size:14px;color:rgba(255,255,255,.92)}
-.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+@media(min-width:768px){.hero-rate .num{font-size:80px}.hero-rate .unit{font-size:28px}}
+.hero-term{color:var(--text-2);margin-top:8px}
+.hero-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
+.chip{padding:7px 12px;border-radius:12px;background:var(--chip);font-size:14px;color:var(--text)}
+.hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
 @media(max-width:519px){.hero-ctas .btn{flex:1 1 100%}}
-.hero-empty{margin-top:28px;font-size:24px;font-weight:700;line-height:1.25;max-width:480px}
+.hero-empty{margin:24px auto 0;font-size:24px;font-weight:600;line-height:1.3;max-width:480px}
 
 /* hero visual — заменить на 3D‑ассет бренда */
-.hero-visual{position:relative;height:210px;margin-top:8px;pointer-events:none}
-@media(min-width:960px){.hero-visual{height:400px}}
-.hv-scale{position:absolute;inset:0;transform-origin:center}
-@media(min-width:960px){.hv-scale{transform:scale(1.45)}}
-.hv-glow{position:absolute;left:50%;top:50%;width:300px;height:300px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,221,45,.55) 0%,rgba(255,221,45,0) 62%);filter:blur(10px)}
-.hv-back{position:absolute;width:128px;height:128px;left:calc(50% + 18px);top:calc(50% - 112px);border-radius:38px;transform:rotate(16deg);background:linear-gradient(160deg,#4B4B52,#26262A);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 40px rgba(0,0,0,.35)}
-.hv-front{position:absolute;width:168px;height:168px;left:50%;top:50%;transform:translate(-50%,-46%) rotate(-10deg);border-radius:48px;
-  background:linear-gradient(150deg,rgba(255,255,255,.38),rgba(255,255,255,.07) 58%,rgba(255,255,255,.14));
-  border:1px solid rgba(255,255,255,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 34px 60px rgba(0,0,0,.5);
-  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);display:grid;place-items:center}
-.hv-front span{font-size:104px;font-weight:800;line-height:1;background:linear-gradient(180deg,#FFEE8C 0%,#FFD21F 55%,#F5B800 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 10px rgba(255,200,0,.35))}
-.hv-coin{position:absolute;width:76px;height:76px;border-radius:50%;left:calc(50% - 142px);top:calc(50% + 22px);background:radial-gradient(circle at 34% 30%,#FAFAFB 0%,#B8BAC1 55%,#7C7F87 100%);box-shadow:inset -4px -6px 10px rgba(0,0,0,.18),0 18px 30px rgba(0,0,0,.45)}
-.hv-coin.y{width:52px;height:52px;left:calc(50% + 92px);top:calc(50% + 46px);background:radial-gradient(circle at 34% 30%,#FFF3A8 0%,#FFD21F 55%,#D9A300 100%)}
+.hero-visual{position:relative;height:250px;margin-top:12px;pointer-events:none}
+@media(min-width:768px){.hero-visual{height:380px}}
+.hv-scale{position:absolute;inset:0}
+@media(min-width:768px){.hv-scale{transform:scale(1.4)}}
+.hv-glow{position:absolute;left:50%;top:50%;width:320px;height:320px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,221,45,.30) 0%,rgba(255,221,45,0) 62%)}
+.hv-floor{position:absolute;left:50%;top:calc(50% + 78px);width:300px;height:48px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.16),rgba(0,0,0,0))}
+.hv-back{position:absolute;width:120px;height:120px;left:calc(50% + 14px);top:calc(50% - 108px);border-radius:36px;transform:rotate(16deg);background:linear-gradient(160deg,#5E5E66,#2C2C31);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 18px 30px rgba(0,0,0,.18)}
+.hv-front{position:absolute;width:164px;height:164px;left:50%;top:50%;transform:translate(-50%,-48%) rotate(-10deg);border-radius:46px;
+  background:linear-gradient(150deg,#FFF09A 0%,#FFD21F 45%,#F5B400 100%);
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.5),inset 0 -12px 20px rgba(170,110,0,.22),0 0 0 4px #E8E9EC,0 0 0 5px #C5C8CE,0 28px 44px rgba(0,0,0,.22);
+  display:grid;place-items:center}
+.hv-front span{font-size:96px;font-weight:700;line-height:1;color:#333;letter-spacing:-.04em}
+.hv-coin{position:absolute;width:76px;height:76px;border-radius:50%;left:calc(50% - 142px);top:calc(50% + 18px);background:radial-gradient(circle at 34% 30%,#FFFFFF 0%,#C9CBD2 55%,#8E9199 100%);box-shadow:inset -4px -6px 10px rgba(0,0,0,.12),0 14px 22px rgba(0,0,0,.18)}
+.hv-coin.y{width:52px;height:52px;left:calc(50% + 92px);top:calc(50% + 44px);background:radial-gradient(circle at 34% 30%,#FFF3A8 0%,#FFD21F 55%,#D9A300 100%)}
 
 /* how it works */
-.how{position:relative;z-index:2;margin-top:-104px}
-.how-card{background:#fff;border-radius:var(--r-xl);padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.how{padding-top:24px}
+@media(min-width:768px){.how{padding-top:40px}}
+.how-card{background:var(--card);border-radius:var(--r-xl);padding:24px}
 @media(min-width:768px){.how-card{padding:40px}}
 .how-card h2{font-size:24px;line-height:1.2;font-weight:700}
 @media(min-width:768px){.how-card h2{font-size:28px}}
@@ -127,13 +123,13 @@ img,svg{display:block}
 .step b{display:block;font-weight:600;line-height:1.3}
 .step-desc{display:block;color:var(--text-2);font-size:15px;margin-top:4px}
 .how-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:24px}
-.note{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md);background:var(--card);font-size:15px;flex:1 1 320px}
+.note{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md);background:#fff;font-size:15px;flex:1 1 320px}
 .note svg{flex:0 0 20px;margin-top:2px;color:var(--text-2)}
 
 /* sections */
 .section{padding-top:64px}
 @media(min-width:768px){.section{padding-top:104px}}
-.h2{font-size:32px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-align:center}
+.h2{font-size:32px;line-height:1.12;font-weight:700;letter-spacing:-.02em;text-align:center}
 @media(min-width:768px){.h2{font-size:48px}}
 .lead{text-align:center;color:var(--text-2);margin:12px auto 0;max-width:640px}
 .card{background:var(--card);border-radius:var(--r-xl);padding:24px}
@@ -153,7 +149,7 @@ img,svg{display:block}
 @media(min-width:768px){.series-card{padding:32px}}
 .series-name{font-size:15px;color:var(--text-2);font-weight:500}
 .series-rate{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:6px}
-.series-rate .num{font-size:48px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.series-rate .num{font-size:48px;font-weight:700;line-height:1;letter-spacing:-.02em}
 .series-rate .unit{font-size:20px;font-weight:600}
 .series-term{margin-top:8px}
 .countdown{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:#fff;font-size:15px;font-weight:500;align-self:flex-start}
@@ -229,7 +225,7 @@ img,svg{display:block}
 .ratings{display:grid;gap:12px}
 @media(min-width:768px){.ratings{grid-template-columns:repeat(3,1fr);gap:16px}}
 .rating{background:var(--card);border-radius:var(--r-lg);padding:20px 24px;display:flex;gap:16px;align-items:center}
-.rating b{display:block;font-size:24px;font-weight:800;line-height:1.2}
+.rating b{display:block;font-size:24px;font-weight:700;line-height:1.2}
 .rating span{display:block;color:var(--text-2);font-size:15px}
 .kpi-wrap{background:var(--card-blue);border-radius:var(--r-xl);padding:20px;margin-top:16px}
 @media(min-width:768px){.kpi-wrap{padding:32px}}
@@ -239,7 +235,7 @@ img,svg{display:block}
 .kpi{background:#fff;border-radius:var(--r-md);padding:14px}
 @media(min-width:768px){.kpi{padding:20px 24px}}
 .kpi-val{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px}
-.kpi-val b{font-size:21px;font-weight:800;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
+.kpi-val b{font-size:21px;font-weight:700;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
 @media(min-width:768px){.kpi-val b{font-size:32px}}
 .kpi-val em{font-style:normal;color:var(--green);font-weight:700;font-size:15px}
 .kpi span{display:block;color:var(--text-2);font-size:14px;margin-top:6px;line-height:1.35}
@@ -273,7 +269,7 @@ img,svg{display:block}
 /* final */
 .final{background:radial-gradient(70% 90% at 50% 0%,rgba(255,221,45,.18),rgba(255,221,45,0) 70%),var(--dark);color:#fff;border-radius:var(--r-xl);padding:40px 24px;text-align:center}
 @media(min-width:768px){.final{padding:64px 40px}}
-.final h2{font-size:30px;line-height:1.15;font-weight:800;letter-spacing:-.02em}
+.final h2{font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-.02em}
 @media(min-width:768px){.final h2{font-size:44px}}
 .final p{color:rgba(255,255,255,.8);margin:12px auto 0;max-width:520px}
 .final .btn{margin-top:28px;min-width:260px}
@@ -336,26 +332,25 @@ img,svg{display:block}
 
 <main>
   <section class="hero" id="hero">
-    <div class="container hero-grid">
-      <div>
-        <div class="eyebrow">ЦФА · Т‑Инвестиции</div>
-        <h1>Смарт-процент</h1>
-        <p class="hero-sub">Цифровые финансовые активы с фиксированной доходностью от Т‑Банка</p>
-        <div id="heroOffer">
-          <div class="hero-rate"><span class="num" id="heroRate"></span><span class="unit">годовых</span></div>
-          <p class="hero-term" id="heroTerm"></p>
-        </div>
-        <p class="hero-empty" id="heroEmpty" hidden>Новые выпуски Смарт-процента скоро. Следите в Т‑Инвестициях</p>
-        <div class="hero-chips" id="heroChips"></div>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" id="heroCta" data-cta="hero" href="#series">Выбрать выпуск</a>
-          <a class="btn btn-ghost-dark" href="#how">Как это работает</a>
-        </div>
+    <div class="container">
+      <div class="eyebrow">Т‑Инвестиции · ЦФА</div>
+      <h1>Смарт-процент</h1>
+      <p class="hero-sub">Цифровые финансовые активы с фиксированной доходностью от Т‑Банка</p>
+      <div id="heroOffer">
+        <div class="hero-rate"><span class="num" id="heroRate"></span><span class="unit">годовых</span></div>
+        <p class="hero-term" id="heroTerm"></p>
       </div>
-      <!-- Заменить на 3D‑ассет бренда: стеклянная плитка с жёлтым акцентом, мягкое свечение -->
+      <p class="hero-empty" id="heroEmpty" hidden>Новые выпуски Смарт-процента скоро. Следите в Т‑Инвестициях</p>
+      <div class="hero-chips" id="heroChips"></div>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" id="heroCta" data-cta="hero" href="#series">Выбрать выпуск</a>
+        <a class="btn btn-gray" href="#how">Как это работает</a>
+      </div>
+      <!-- Заменить на 3D‑ассет бренда: жёлтая плитка с металлической гранью на подиуме -->
       <div class="hero-visual" aria-hidden="true">
         <div class="hv-scale">
           <div class="hv-glow"></div>
+          <div class="hv-floor"></div>
           <div class="hv-back"></div>
           <div class="hv-coin"></div>
           <div class="hv-front"><span>%</span></div>
@@ -445,7 +440,7 @@ img,svg{display:block}
             <rect x="58.5" y="66.5" width="103" height="75" rx="19.5" fill="none" stroke="#fff" stroke-opacity=".7"/>
             <circle cx="110" cy="98" r="7" fill="#7E818A"/><rect x="107" y="100" width="6" height="18" rx="3" fill="#7E818A"/>
             <circle cx="160" cy="62" r="28" fill="url(#g1y)"/>
-            <text x="160" y="72" text-anchor="middle" font-family="Onest,Arial,sans-serif" font-weight="800" font-size="28" fill="#333">%</text>
+            <text x="160" y="72" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="28" fill="#333">%</text>
           </svg>
         </article>
         <article class="uc c2 rv">
@@ -702,7 +697,7 @@ function renderHero(active, best, minAmount, fee, mainUrl){
   if (minAmount) chips.push('от ' + fmtRub(minAmount));
   if (fee) chips.push('комиссия за размещение ' + fee);
   chips.push('эмитент АО «ТБанк», AA(RU)');
-  $('heroChips').innerHTML = chips.map(function(c){ return '<span class="chip-dark">' + esc(c) + '</span>'; }).join('');
+  $('heroChips').innerHTML = chips.map(function(c){ return '<span class="chip">' + esc(c) + '</span>'; }).join('');
   if (minAmount) $('howMin').textContent = '. Участие — от ' + fmtRub(minAmount);
 }
 
