@@ -7,9 +7,9 @@
 <meta name="description" content="Смарт-процент — цифровые финансовые активы с фиксированной доходностью от Т‑Банка. Покупка — в приложении Т‑Инвестиции.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex, nofollow">
-<link rel="preload" href="assets/fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:'Inter';src:url('assets/fonts/Inter.woff2') format('woff2');font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../assets/fonts/Inter.woff2') format('woff2');font-weight:400 700;font-style:normal;font-display:swap}
 :root{
   --bg:#FFFFFF;
   --card:#F6F7F8;
@@ -51,7 +51,6 @@ img,svg{display:block}
 .btn-sm{min-height:40px;padding:0 18px;border-radius:12px;font-size:15px}
 
 /* prototype label */
-.proto a{color:var(--link)}
 .proto{background:var(--card);color:var(--text-2);font-size:13px;line-height:1.4;text-align:center;padding:8px 16px}
 
 /* header */
@@ -60,9 +59,8 @@ img,svg{display:block}
 .logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:700;font-size:17px;text-decoration:none!important}
 .logo img{height:36px;width:auto}
 .header-right{margin-left:auto;display:flex;gap:8px;align-items:center}
-.pill{white-space:nowrap;min-height:40px;padding:0 16px;border-radius:20px;background:var(--chip);color:#333;display:inline-flex;align-items:center;font-size:15px;font-weight:500;text-decoration:none!important}
+.pill{min-height:40px;padding:0 16px;border-radius:20px;background:var(--chip);color:#333;display:inline-flex;align-items:center;font-size:15px;font-weight:500;text-decoration:none!important}
 .pill:hover{background:#E4E6E9}
-@media(max-width:380px){.pill{padding:0 12px;font-size:14px}.logo{font-size:16px}}
 .icon-btn{width:40px;height:40px;border-radius:50%;background:var(--chip);border:0;display:grid;place-items:center;cursor:pointer}
 .icon-btn:hover{background:#E4E6E9}
 .header .btn-sm{display:none}
@@ -85,12 +83,8 @@ img,svg{display:block}
 .hero-rate .unit{font-size:22px;font-weight:600}
 @media(min-width:768px){.hero-rate .num{font-size:80px}.hero-rate .unit{font-size:28px}}
 .hero-term{color:var(--text-2);margin-top:8px}
-.hero-facts{display:flex;justify-content:center;margin:24px auto 0;max-width:460px}
-.fact{flex:1 1 0;min-width:0;padding:2px 12px;text-align:center}
-.fact+.fact{border-left:1px solid var(--line)}
-.fact b{display:block;font-size:24px;font-weight:700;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
-.fact span{display:block;font-size:14px;line-height:1.3;color:var(--text-2);margin-top:4px}
-@media(min-width:768px){.hero-facts{max-width:480px}.fact b{font-size:28px}.fact span{font-size:15px}}
+.hero-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
+.chip{padding:7px 12px;border-radius:12px;background:var(--chip);font-size:14px;color:var(--text)}
 .hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
 @media(max-width:519px){.hero-ctas .btn{flex:1 1 100%}}
 .hero-more{margin-top:16px;font-size:15px}
@@ -115,9 +109,7 @@ img,svg{display:block}
 .countdown{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:var(--chip);font-size:15px;font-weight:500}
 .countdown.last{background:#FFF3BF}
 .countdown svg{color:var(--text-2)}
-.hero-countdown{margin-top:14px}
-.hero-countdown .countdown{background:none;padding:0;font-weight:400;color:var(--text-2)}
-.hero-countdown .countdown.last{color:#333;font-weight:600}
+.hero-countdown{margin-top:16px}
 .progress{height:6px;border-radius:3px;background:#E1E3E7;overflow:hidden;margin:10px auto 0;max-width:320px}
 .progress i{display:block;height:100%;background:var(--yellow);border-radius:3px}
 
@@ -193,33 +185,14 @@ img,svg{display:block}
 .trust-card.t1 b{color:var(--yellow)}
 .trust-card.t1 span{color:rgba(255,255,255,.8)}
 .trust-card.t2{background:var(--card)}
-.group{margin-top:12px;background:var(--card-blue);border-radius:var(--r-xl);padding:20px 12px 12px}
-@media(min-width:768px){.group{margin-top:16px;padding:32px 16px 16px}}
-.group-head{padding:0 8px 16px}
-@media(min-width:768px){.group-head{padding:0 16px 24px}}
-.group-head h3{font-size:22px;line-height:1.2;font-weight:700;letter-spacing:-.01em}
-@media(min-width:768px){.group-head h3{font-size:28px}}
-.group-head p{color:var(--text-2);font-size:15px;margin-top:6px}
-.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-@media(min-width:768px){.kpis{grid-template-columns:repeat(3,1fr);gap:12px}}
-.kpi{background:#fff;border-radius:var(--r-md);padding:14px;display:flex;flex-direction:column}
-@media(min-width:768px){.kpi{padding:20px}}
-.kpi b{font-size:20px;font-weight:700;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
-@media(min-width:768px){.kpi b{font-size:30px}}
-.kpi span{display:block;color:var(--text-2);font-size:13px;margin-top:4px;line-height:1.35}
-@media(min-width:768px){.kpi span{font-size:14px}}
-.kpi em{font-style:normal;color:var(--green);font-weight:600;font-size:13px;margin-top:auto;padding-top:6px}
-@media(min-width:768px){.kpi em{font-size:14px}}
-.docs{display:grid;gap:8px;margin-top:8px}
-@media(min-width:768px){.docs{grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}}
-.doc{display:flex;align-items:center;gap:14px;background:#fff;border-radius:var(--r-md);padding:14px 16px;color:var(--text);text-decoration:none!important;transition:background-color .15s ease}
-.doc:hover{background:#FAFAFB}
-.doc-ic{flex:0 0 40px;height:44px;border-radius:10px;background:#333;color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;display:grid;place-items:center}
-.doc-ic.y{background:var(--yellow);color:#333}
-.doc-t{flex:1;min-width:0}
-.doc-t b{display:block;font-size:15px;font-weight:600;line-height:1.3}
-.doc-t span{display:block;font-size:13px;color:var(--text-2);margin-top:2px}
-.doc svg{flex:0 0 20px;color:var(--text-2)}
+.kpis{display:grid;gap:10px;margin-top:12px;background:var(--card-blue);border-radius:var(--r-xl);padding:12px}
+@media(min-width:768px){.kpis{grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;padding:16px}}
+.kpi{background:#fff;border-radius:var(--r-md);padding:16px 18px}
+.kpi-val{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px}
+.kpi-val b{font-size:24px;font-weight:700;line-height:1.15;letter-spacing:-.01em;white-space:nowrap}
+@media(min-width:768px){.kpi-val b{font-size:30px}}
+.kpi-val em{font-style:normal;color:var(--green);font-weight:700;font-size:15px}
+.kpi span{display:block;color:var(--text-2);font-size:14px;margin-top:4px;line-height:1.35}
 
 /* faq */
 .faq{max-width:800px;margin:32px auto 0}
@@ -272,37 +245,19 @@ img,svg{display:block}
 </head>
 <body>
 <script>document.documentElement.classList.add('js')</script>
-<!--live-only-->
-<script>
-/* Версии: номер меняет tools/release.py. ?v=N открывает архивную версию N,
-   а устаревшая копия из кэша браузера сама переходит на свежую. */
-(function(){
-  var PAGE_VERSION = 6;
-  var qs = new URLSearchParams(location.search), want = parseInt(qs.get('v'), 10);
-  if (want >= 1 && want < PAGE_VERSION){ location.replace('v/' + want + '/' + location.hash); return; }
-  if (!/^https?:/.test(location.protocol) || !window.fetch) return;
-  fetch('versions.json', {cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
-    if (!d || !(d.latest > PAGE_VERSION)) return;
-    if (want === d.latest){ location.replace('v/' + d.latest + '/' + location.hash); return; }
-    qs.set('v', d.latest);
-    location.replace(location.pathname + '?' + qs.toString() + location.hash);
-  }).catch(function(){});
-})();
-</script>
-<!--/live-only-->
 
 <!-- Данные выпусков: используются, если страница открыта как файл или series.json недоступен -->
 <script type="application/json" id="series-data">
 {"series":[{"name":"Смарт-процент До 02 февраля","rate":13.5,"termLabel":"4 месяца","placementDate":"2026-10-05","maturityDate":"2027-02-02","collectionStart":"","collectionEnd":"2026-10-05","minAmount":1000,"price":1000,"fee":"0%","url":"https://www.tinkoff.ru/invest/shelves/issuance/dfa/01a0fccf-cc18-77b5-8075-0a1f6798c5e5"}]}
 </script>
 
-<div class="proto" role="note">Прототип для согласования, не официальная страница Т‑Банка · <a href="v/">Версия <span id="pageVersion">6</span></a></div>
+<div class="proto" role="note" style="background:#1C1C1F;color:#fff;font-size:13px;line-height:1.4;text-align:center;padding:8px 16px">Архив: версия 4 от 4 октября 2026, 16:05 · <a href="../../" style="color:#FFDD2D">Открыть актуальную</a> · <a href="../" style="color:#FFDD2D">Все версии</a></div>
 
 <header class="header" id="top">
   <div class="container header-in">
     <a class="logo" href="#top" aria-label="Т‑Инвестиции — в начало страницы">
       <!-- Официальный логотип бренда: положите файл в assets/logo.svg -->
-      <img src="assets/logo.svg" alt="" width="36" height="36" onerror="this.remove()">
+      <img src="../../assets/logo.svg" alt="" width="36" height="36" onerror="this.remove()">
       <span>Т‑Инвестиции</span>
     </a>
     <div class="header-right">
@@ -331,14 +286,14 @@ img,svg{display:block}
       <div id="heroOffer">
         <div class="hero-rate"><span class="num" id="heroRate"></span><span class="unit">годовых</span></div>
         <p class="hero-term" id="heroTerm"></p>
+        <div class="hero-countdown" id="heroCountdown" hidden></div>
       </div>
       <p class="hero-empty" id="heroEmpty" hidden>Новые выпуски Смарт-процента скоро. Следите в Т‑Инвестициях</p>
-      <div class="hero-facts" id="heroFacts"></div>
+      <div class="hero-chips" id="heroChips"></div>
       <div class="hero-ctas">
         <a class="btn btn-primary" id="heroCta" data-cta="hero" href="#calc">Выбрать выпуск</a>
         <a class="btn btn-gray" id="heroCta2" href="#calc">Посчитать доход</a>
       </div>
-      <div class="hero-countdown" id="heroCountdown" hidden></div>
       <p class="hero-more" id="shelfMore" hidden><a data-cta="hero_all" target="_blank" rel="noopener" href="#">Все выпуски в Т‑Инвестициях</a></p>
       <!-- Заменить на 3D‑ассет бренда: жёлтая плитка с металлической гранью на подиуме -->
       <div class="hero-visual" aria-hidden="true">
@@ -410,26 +365,12 @@ img,svg{display:block}
         <div class="trust-card t1 rv"><b>AA(RU) и ruAA</b><span>Кредитные рейтинги Т‑Банка от АКРА и Эксперт РА, прогноз «Позитивный». AA&nbsp;— вторая сверху ступень национальных рейтинговых шкал</span></div>
         <div class="trust-card t2 rv"><b>Закон о ЦФА</b><span>ЦФА выпускаются по закону о цифровых финансовых активах (№ 259‑ФЗ) на платформе Атомайз — она входит в группу Т‑Технологии</span></div>
       </div>
-      <!-- Показатели группы: обновлять раз в квартал по t-technologies.ru -->
-      <div class="group rv" aria-labelledby="groupTitle">
-        <div class="group-head">
-          <h3 id="groupTitle">Т‑Банк и группа Т‑Технологии в цифрах</h3>
-          <p>Результаты группы, в которую входит Т‑Банк, по МСФО за II&nbsp;квартал 2026&nbsp;года. Выручка, прибыль и ROE — за последние 4 квартала</p>
-        </div>
-        <div class="kpis">
-          <div class="kpi"><b>56 млн+</b><span>клиентов</span></div>
-          <div class="kpi"><b>6,5 трлн ₽</b><span>средства клиентов и активы под управлением</span><em>+17% за год</em></div>
-          <div class="kpi"><b>3,5 трлн ₽</b><span>кредитный портфель</span><em>+25% за год</em></div>
-          <div class="kpi"><b>802 млрд ₽</b><span>чистая выручка</span><em>+24% за год</em></div>
-          <div class="kpi"><b>198 млрд ₽</b><span>операционная чистая прибыль</span><em>+31% за год</em></div>
-          <div class="kpi"><b>29,3%</b><span>ROE — средняя доходность на капитал</span></div>
-        </div>
-        <div class="docs">
-          <a class="doc" data-doc="group_presentation" href="https://cdn.tbank-online.com/static/documents/ea8a2e21-6493-4323-ae88-9a93b1e48676.pdf" target="_blank" rel="noopener"><span class="doc-ic y" aria-hidden="true">PDF</span><span class="doc-t"><b>Презентация результатов II&nbsp;квартала 2026&nbsp;года</b><span>Т‑Технологии для инвесторов</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-          <a class="doc" data-doc="group_press_release" href="https://cdn.tbank-online.com/static/documents/3090164f-38b3-4c7f-b6b3-60a03cac98ee.pdf" target="_blank" rel="noopener"><span class="doc-ic" aria-hidden="true">PDF</span><span class="doc-t"><b>Пресс-релиз о результатах II&nbsp;квартала 2026&nbsp;года</b><span>Т‑Технологии для инвесторов</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-        </div>
+      <div class="kpis rv">
+        <div class="kpi"><div class="kpi-val"><b>56 млн+</b></div><span>клиентов</span></div>
+        <div class="kpi"><div class="kpi-val"><b>6,5 трлн ₽</b><em>+17%</em></div><span>средства клиентов и активы под управлением</span></div>
+        <div class="kpi"><div class="kpi-val"><b>198 млрд ₽</b><em>+31%</em></div><span>операционная чистая прибыль группы за последние 12 месяцев</span></div>
       </div>
-      <p class="footnote">Рейтинги: АКРА — 12.03.2026, Эксперт РА — 08.06.2026. Показатели МКПАО «Т‑Технологии», рост — год к году; приведены для справки и не гарантируют исполнение обязательств по ЦФА. Источник: <a href="https://t-technologies.ru/" target="_blank" rel="noopener">t‑technologies.ru</a></p>
+      <p class="footnote">Рейтинги: АКРА — 12.03.2026, Эксперт РА — 08.06.2026. Показатели МКПАО «Т‑Технологии» по итогам II квартала 2026 года, динамика год к году; приведены для справки и не гарантируют исполнение обязательств по ЦФА. Источник: <a href="https://t-technologies.ru/" target="_blank" rel="noopener">t‑technologies.ru</a></p>
     </div>
   </section>
 
@@ -535,7 +476,7 @@ var ICONS = {
 function loadSeries(){
   var embedded = JSON.parse($('series-data').textContent);
   if (!/^https?:/.test(location.protocol)) return Promise.resolve(embedded);
-  return fetch('series.json', {cache:'no-store'})
+  return fetch('../../series.json', {cache:'no-store'})
     .then(function(r){ return r.ok ? r.json() : embedded; })
     .catch(function(){ return embedded; });
 }
@@ -605,11 +546,9 @@ function renderHero(active, single, best, shelf){
   }
   var fees = active.map(function(s){ return s.fee; }).filter(Boolean);
   var fee = fees.length && fees.every(function(f){ return f === fees[0]; }) ? fees[0] : '';
-  var facts = [['AA(RU)', 'рейтинг Т‑Банка']];
-  if (fee) facts.push([fee, 'комиссия за размещение']);
-  $('heroFacts').innerHTML = facts.map(function(f){
-    return '<div class="fact"><b>' + esc(f[0]) + '</b><span>' + esc(f[1]) + '</span></div>';
-  }).join('');
+  var chips = ['Выпускает Т‑Банк, рейтинг AA(RU)'];
+  if (fee) chips.push('Комиссия за' + NB + 'размещение ' + fee);
+  $('heroChips').innerHTML = chips.map(function(c){ return '<span class="chip">' + esc(c) + '</span>'; }).join('');
   if (shelf){ var sm = $('shelfMore'); sm.hidden = false; sm.querySelector('a').href = shelf; }
 }
 
@@ -801,7 +740,6 @@ function setupSticky(active, single, best, mainUrl){
 /* ---------- общее поведение ---------- */
 function setupCommon(){
   document.addEventListener('click', function(e){
-    var d = e.target.closest('[data-doc]'); if (d){ track('doc_open', {doc:d.dataset.doc}); return; }
     var a = e.target.closest('[data-cta]'); if (!a) return;
     track('cta_click', {position:a.dataset.cta, series:a.dataset.series || '', amount:Number(a.dataset.amount) || 0});
   });
