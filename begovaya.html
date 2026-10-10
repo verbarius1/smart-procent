@@ -69,6 +69,36 @@ td small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 tr.group th{background:var(--bg);font-family:var(--display);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-block:8px}
 tr.group td{background:var(--bg)}
 .foot{color:var(--muted);font-size:12.5px;max-width:90ch}
+.flat{min-width:210px;width:210px}
+.mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border-radius:8px;overflow:hidden}
+.tile{all:unset;cursor:zoom-in;position:relative;aspect-ratio:4/3;background:var(--accent-soft);overflow:hidden;display:block}
+.tile.main{grid-column:1/-1;aspect-ratio:3/2}
+.tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.tile:hover img{transform:scale(1.04)}
+.tile:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.tile.broken img{display:none}
+.tile.broken.main::after{content:"фото не загрузилось";position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:12px}
+.more{position:absolute;inset:0;display:grid;place-items:center;background:rgba(10,14,25,.55);color:#fff;font-weight:600;font-size:13px}
+.galleries{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.galleries h2{font-family:var(--display);font-weight:600;font-size:20px;margin:0}
+.grow{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;margin-top:12px;min-width:0}
+.grow-h{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.grow-h b{font-family:var(--display);font-size:14px;font-weight:600}
+.grow-h span{color:var(--muted)}
+.strip{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
+.strip .tile{flex:0 0 auto;width:220px;border-radius:6px;scroll-snap-align:start}
+.strip .tile.planbox{background:#fff}
+.strip .tile.planbox img{object-fit:contain}
+.badge{position:absolute;left:6px;top:6px;background:rgba(10,14,25,.7);color:#fff;font-size:11px;padding:2px 7px;border-radius:999px}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(6,8,14,.94);display:flex;align-items:center;justify-content:center;padding:calc(56px + env(safe-area-inset-top,0px)) 56px calc(24px + env(safe-area-inset-bottom,0px))}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:4px}
+.lb-top{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;color:#e9ebf0;gap:12px}
+.lb button{all:unset;cursor:pointer;color:#fff;font-size:26px;line-height:1;padding:8px 12px;border-radius:8px}
+.lb button:hover,.lb button:focus-visible{background:rgba(255,255,255,.12)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:44px!important}
+.lb-nav.prev{left:4px}.lb-nav.next{right:4px}
+@media (max-width:600px){.lb{padding-inline:8px}.lb-nav{top:auto;bottom:calc(10px + env(safe-area-inset-bottom,0px));transform:none}.strip .tile{width:170px}}
+@media (prefers-reduced-motion:reduce){.tile img{transition:none}}
 </style>
 </head>
 <body>
@@ -97,7 +127,20 @@ tr.group td{background:var(--bg)}
   </table>
   </div>
 
-  <p class="foot">Стоимость заезда = первый месяц + залог + комиссия. Во всех объявлениях коммуналка включена, счётчики оплачиваются отдельно, предоплата за 1 месяц, срок от года. Если фото не загружаются, нажмите на карточку: откроется объявление с полной галереей.</p>
+  <p class="foot">Стоимость заезда = первый месяц + залог + комиссия. Во всех объявлениях коммуналка включена, счётчики оплачиваются отдельно, предоплата за 1 месяц, срок от года.</p>
+
+  <section class="galleries" aria-labelledby="gh">
+    <h2 id="gh">Все фотографии</h2>
+    <p class="sub">Нажмите на снимок, чтобы открыть его крупно. Листать стрелками ← → или свайпом.</p>
+    <div id="gal"></div>
+  </section>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Просмотр фото">
+  <div class="lb-top"><span id="lbcap"></span><button type="button" id="lbx" aria-label="Закрыть">✕</button></div>
+  <button type="button" class="lb-nav prev" id="lbp" aria-label="Предыдущее фото">‹</button>
+  <img id="lbimg" alt="" referrerpolicy="no-referrer">
+  <button type="button" class="lb-nav next" id="lbn" aria-label="Следующее фото">›</button>
 </div>
 
 <script>
@@ -110,6 +153,23 @@ const F=[
  {id:"289882845",n:6,title:"Раздельный санузел, гардеробная",rooms:"2 изолированные",price:92000,area:51,live:30,kit:9,floor:"17 / 37",ceil:"3 м",bath:"раздельный, душевая кабина",reno:"евроремонт",view:"во двор",park:"наземная, своего места нет",comm:60,who:"Автор ID 194851 (документы проверены)",rules:"без маленьких детей и животных; не курить",rulesFlag:true,extra:"тёплый пол, фильтры для воды; в гостиной диван 1,5-спальный",upd:"16 сен",views:2173,viewsFlag:true,photos:29,img:"https://images.cdn-cian.ru/images/kvartira-moskva-horoshevskoe-shosse-2787756028-1.jpg",addr:"12к1"},
  {id:"250186898",n:7,title:"Двухуровневый пентхаус",rooms:"2 (два уровня)",price:135000,area:85,live:55,kit:25,floor:"44 / 44",ceil:"—",bath:"2: совмещённый и раздельный, ванна",reno:"дизайнерский",view:"панорама на город",park:"не указано",comm:0,who:"Агентство «Метрополис»",rules:"строго без животных",extra:"дом 2007 года, свой тепловой пункт",upd:"21 сен",views:547,photos:17,img:"https://images.cdn-cian.ru/images/34/418/201/kvartira-moskva-horoshevskoe-shosse-1028144332-1.jpg",addr:"16к2"}
 ];
+const K="kvartira-moskva-horoshevskoe-shosse-";
+const PH={
+ 1:{p:"",ids:[2973556407,2973556432,2973559477,2973559433,2973556404,2973561323,2973559434,2973559431,2973556421],plan:"2974129769"},
+ 2:{list:["0/803/949/"+K+"949308007","7/803/949/"+K+"949308756","9/703/949/"+K+"949307998","3/803/949/"+K+"949308332","3/803/949/"+K+"949308349","4/803/949/"+K+"949308443","5/803/949/"+K+"949308563","7/803/949/"+K+"949308741"]},
+ 3:{p:"",ids:[2980079432,2980079426,2980067133,2980079425,2980079430,2980067168,2980079433,2980079429,2980067206,2980067219,2980067138,2980067130,2980067110,2980079428,2980072755]},
+ 4:{p:"bare",ids:[2981807530,2981807544,2981807579,2981807594,2981807629,2981807663,2981807697,2981807721,2981807749,2981807796,2981807811,2981807833,2981807873,2981807910,2981807928,2981807961]},
+ 5:{p:"",ids:[2974122579,2974122917,2974122919,2974123595,2974143929,2974144394,2974144795,2974145600,2974145603,2974145599,2974145607,2974199761,2974200172,2974201153,2974201843,2974253614,2974202169,2974202167],plan:"2974291982"},
+ 6:{p:"",ids:[2787756028,2787578674,1824900627,2787571980,2787754710,2787756022,1824900953,1824900981,1824904841,1824900301,1824901135,2787571970,1824900441,1824900458,1824900462,1824900261,1824901340,1824901568,1824901285,1824913740,1824900751,1824901777,1824901771,1824901739,1824901543,1824901494,1824900318,1824901151,1824901368]},
+ 7:{list:[1028144332,1028144347,1028144342,1028144336,1028144344,1028144343,1028144335,1028144334,1028144333,1028144337,1028144346,1028144341,1028144345,1028144338,1028144339,1028144340].map(i=>"34/418/201/"+K+i).concat([K+"2968882707"])}
+};
+const IMG="https://images.cdn-cian.ru/images/";
+F.forEach(f=>{
+  const d=PH[f.n];
+  const stems=d.list||d.ids.map(i=>(d.p==="bare"?"":K)+i);
+  f.pics=stems.map(s=>({big:IMG+s+"-1.jpg",small:IMG+s+"-2.jpg"}));
+  if(d.plan) f.pics.push({big:IMG+d.plan+"-1.jpg",small:IMG+d.plan+"-1.jpg",plan:true});
+});
 const rub=v=>v.toLocaleString("ru-RU")+" ₽";
 F.forEach(f=>{f.commRub=f.price*f.comm/100;f.movein=f.price*2+f.commRub;f.ppm=Math.round(f.price/f.area)});
 const minOf=k=>Math.min(...F.filter(f=>f[k]!=null).map(f=>f[k]));
@@ -119,10 +179,8 @@ const url=f=>"https://www.cian.ru/rent/flat/"+f.id+"/";
 const head=document.getElementById("head");
 F.forEach(f=>{
   const th=document.createElement("th");th.scope="col";th.className="flat";
-  th.innerHTML=`<a class="photo" href="${url(f)}" target="_blank" rel="noopener" aria-label="Открыть объявление №${f.n} на Циане">
-      <span class="ph">Фото: ${f.photos}<small>открыть на Циане</small></span>
-      <img src="${f.img}" alt="Квартира №${f.n}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">
-    </a>
+  const m=f.pics.filter(p=>!p.plan).slice(0,4);
+  th.innerHTML=`<div class="mosaic">${m.map((p,i)=>`<button type="button" class="tile${i===0?' main':''}" data-f="${f.n}" data-i="${i}" aria-label="Фото ${i+1} квартиры №${f.n}"><img src="${i===0?p.big:p.small}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.tile').classList.add('broken')">${i===3?`<span class="more">все ${f.pics.length}</span>`:''}</button>`).join("")}</div>
     <div class="num">№${f.n} · ${f.addr}</div>
     <div class="name">${f.title}</div>
     <div class="price">${rub(f.price)}<small> / мес.</small></div>
@@ -165,6 +223,31 @@ rows.forEach(r=>{
     return `<td class="${cls}">${fmt(f)}</td>`}).join("");
   body.appendChild(tr);
 });
+
+// Full galleries
+const gal=document.getElementById("gal");
+F.forEach(f=>{
+  const box=document.createElement("div");box.className="grow";box.id="g"+f.n;
+  box.innerHTML=`<div class="grow-h"><b>№${f.n}. ${f.title}</b><span>${rub(f.price)} · ${String(f.area).replace(".",",")} м² · этаж ${f.floor}</span><a class="open" href="${url(f)}" target="_blank" rel="noopener">Объявление →</a></div>
+  <div class="strip">${f.pics.map((p,i)=>`<button type="button" class="tile${p.plan?' planbox':''}" data-f="${f.n}" data-i="${i}" aria-label="${p.plan?'Планировка':'Фото '+(i+1)} квартиры №${f.n}"><img src="${p.small}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.tile').classList.add('broken')">${p.plan?'<span class="badge">планировка</span>':''}</button>`).join("")}</div>`;
+  gal.appendChild(box);
+});
+
+// Viewer
+const lb=document.getElementById("lb"),lbimg=document.getElementById("lbimg"),lbcap=document.getElementById("lbcap");
+let cur=null,idx=0,lastFocus=null;
+function show(){const p=cur.pics[idx];lbimg.src=p.big;lbcap.textContent=`№${cur.n} · ${cur.title} — ${p.plan?"планировка":"фото "+(idx+1)} из ${cur.pics.length}`}
+function openLb(n,i){cur=F.find(f=>f.n==n);idx=+i;lastFocus=document.activeElement;show();lb.hidden=false;document.body.style.overflow="hidden";document.getElementById("lbx").focus()}
+function closeLb(){lb.hidden=true;lbimg.removeAttribute("src");document.body.style.overflow="";lastFocus&&lastFocus.focus()}
+function step(d){idx=(idx+d+cur.pics.length)%cur.pics.length;show()}
+document.addEventListener("click",e=>{const t=e.target.closest(".tile");if(t&&t.dataset.f){openLb(t.dataset.f,t.dataset.i)}});
+document.getElementById("lbx").onclick=closeLb;
+document.getElementById("lbp").onclick=()=>step(-1);
+document.getElementById("lbn").onclick=()=>step(1);
+lb.addEventListener("click",e=>{if(e.target===lb)closeLb()});
+document.addEventListener("keydown",e=>{if(lb.hidden)return;if(e.key==="Escape")closeLb();if(e.key==="ArrowLeft")step(-1);if(e.key==="ArrowRight")step(1)});
+let sx=null;lb.addEventListener("touchstart",e=>{sx=e.touches[0].clientX},{passive:true});
+lb.addEventListener("touchend",e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)step(dx<0?1:-1);sx=null});
 </script>
 </body>
 </html>
