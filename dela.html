@@ -52,7 +52,11 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradi
   padding-top:calc(env(safe-area-inset-top,0px) + max(48px, 14vh));padding-bottom:calc(env(safe-area-inset-bottom,0px) + 48px);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   display:flex;flex-direction:column;gap:18px}
-h1{font-size:34px;font-weight:700;margin:0 4px;color:var(--title);letter-spacing:-.01em;text-wrap:balance;text-shadow:0 1px 18px rgba(0,0,0,.45)}
+header{display:flex;flex-direction:column;gap:4px;margin:0 4px}
+.today{font-size:15px;font-weight:500;color:var(--title);opacity:.85;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+.today::first-letter{text-transform:uppercase}
+.hempty{margin:10px 0 2px;font-size:13px;color:var(--muted)}
+h1{font-size:34px;font-weight:700;margin:0;color:var(--title);letter-spacing:-.01em;text-wrap:balance;text-shadow:0 1px 18px rgba(0,0,0,.45)}
 .panel{background:var(--panel);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);
   border:1px solid var(--line);border-radius:20px;padding:18px 16px;display:flex;flex-direction:column;gap:16px;
   box-shadow:0 10px 40px rgba(20,10,5,.25)}
@@ -122,14 +126,14 @@ details.hist[open] summary::before{transform:rotate(90deg)}
 .splash::after{content:"";position:absolute;inset:0;background:rgba(20,12,8,.35)}
 .splash span{position:relative;z-index:1;font-size:40px;font-weight:700;color:var(--title);text-shadow:0 2px 24px rgba(0,0,0,.5)}
 .splash.out{opacity:0;pointer-events:none}
-.wrap h1,.panel{transition:opacity .6s ease}
-body.celebrate .wrap h1,body.celebrate .panel{opacity:0;pointer-events:none}
+.wrap header,.panel{transition:opacity .6s ease}
+body.celebrate .wrap header,body.celebrate .panel{opacity:0;pointer-events:none}
 .yay{position:fixed;inset:0;z-index:40;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .6s ease .3s}
 .yay div{text-align:center;color:var(--title);text-shadow:0 2px 24px rgba(0,0,0,.55)}
 .yay b{display:block;font-size:42px;font-weight:700}
 .yay small{display:block;margin-top:6px;font-size:16px;opacity:.85}
 body.celebrate .yay{opacity:1;pointer-events:auto}
-@media (prefers-reduced-motion:reduce){.bar i,details.hist summary::before,.splash,.wrap h1,.panel,.yay{transition:none}li.flash{animation:none}}
+@media (prefers-reduced-motion:reduce){.bar i,details.hist summary::before,.splash,.wrap header,.panel,.yay{transition:none}li.flash{animation:none}}
 </style>
 </head>
 <body>
@@ -137,7 +141,7 @@ body.celebrate .yay{opacity:1;pointer-events:auto}
 <script>try{if(navigator.standalone||matchMedia('(display-mode: standalone)').matches)document.getElementById('splash').hidden=false}catch(e){}</script>
 <div class="yay" id="yay" aria-live="polite"><div><b>Всё сделано</b><small>Все дела из списка выполнены</small></div></div>
 <div class="wrap">
-  <h1>Дела двоих</h1>
+  <header><span class="today" id="today"></span><h1>Дела двоих</h1></header>
   <div class="panel">
     <div class="meta"><span id="count">Загружаю…</span><div class="bar"><i id="fill"></i></div></div>
     <ul id="list"><li class="empty">Загружаю список…</li></ul>
@@ -248,6 +252,7 @@ body.celebrate .yay{opacity:1;pointer-events:auto}
     $('editToggle').hidden = !SCRIPT_URL;
     $('editToggle').textContent = pin ? 'Выйти' : 'Редактировать';
     renderHistory(edit);
+    renderToday();
   }
 
   // меню приоритета у точки
@@ -319,12 +324,22 @@ body.celebrate .yay{opacity:1;pointer-events:auto}
   }
   setTimeout(hideSplash, 3000);
 
+  var WEEKDAYS = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  function renderToday(){
+    var d = new Date();
+    $('today').textContent = WEEKDAYS[d.getDay()] + ', ' + d.getDate() + ' ' + MONTHS[d.getMonth()];
+  }
+
   function renderHistory(edit){
     var h = state.history || [];
-    $('hist').hidden = !edit || !h.length;
+    $('hist').hidden = !edit;
     if ($('hist').hidden) return;
     $('histSum').textContent = 'История · ' + h.length;
     var body = $('histBody'); body.textContent = '';
+    if (!h.length) {
+      var em = document.createElement('p'); em.className = 'hempty';
+      em.textContent = 'Здесь появятся дела через сутки после выполнения.'; body.append(em);
+    }
     var last = '';
     h.forEach(function(it){
       var d = new Date(it.at), k = dayKey(d);
