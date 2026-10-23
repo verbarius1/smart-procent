@@ -2,140 +2,14 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title data-keep>Дела осени</title>
-<meta data-keep name="claude:viewport-fit-sides" content="cover">
-<link data-keep rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&display=swap">
-<style data-keep>
-/* Layout: one narrow column — header with progress, list, add-row */
-:root{
-  --bg:#f3f4f7; --card:#ffffff; --fg:#1d2230; --muted:#6b7286; --line:#e2e5ec;
-  --accent:#3d5afe; --done:#9aa1b2;
-  --font:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#12141b; --card:#1b1e28; --fg:#e7e9f0; --muted:#8d93a6; --line:#2a2e3b;
-  --accent:#8c9cff; --done:#5d6375; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#12141b; --card:#1b1e28; --fg:#e7e9f0; --muted:#8d93a6; --line:#2a2e3b;
-  --accent:#8c9cff; --done:#5d6375; color-scheme:dark}
-body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px}
-.wrap{max-width:560px;margin:0 auto;padding-block:40px 64px;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  display:flex;flex-direction:column;gap:20px}
-h1{font-size:30px;font-weight:700;margin:0;text-wrap:balance;letter-spacing:-.01em}
-.meta{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
-.bar{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
-.bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
-ul{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-li{display:flex;align-items:center;gap:12px;padding:14px 12px 14px 16px;border-top:1px solid var(--line)}
-li:first-child{border-top:0}
-li label{flex:1;min-width:0;display:flex;align-items:center;gap:12px;cursor:pointer;line-height:1.35}
-li input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent);flex:none;margin:0;cursor:pointer}
-li.done span{color:var(--done);text-decoration:line-through}
-li span{overflow-wrap:anywhere}
-.del{border:0;background:none;color:var(--muted);font-size:20px;line-height:1;width:32px;height:32px;border-radius:8px;cursor:pointer;flex:none}
-.del:hover{background:var(--line);color:var(--fg)}
-form{display:flex;gap:8px}
-form input{flex:1;min-width:0;font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
-form button{font:inherit;font-weight:500;padding:0 18px;border-radius:10px;border:0;background:var(--accent);color:var(--card);cursor:pointer}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.note{font-size:13px;color:var(--muted);margin:0}
-button:disabled,input:disabled{opacity:.5;cursor:default}
-@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
-</style>
+<title>Дела осени</title>
+<meta http-equiv="refresh" content="0; url=https://claude.ai/artifact/8dQJs4WLX4i76pzxznvC9u">
+<script>location.replace("https://claude.ai/artifact/8dQJs4WLX4i76pzxznvC9u");</script>
+<style>body{font:16px system-ui,sans-serif;margin:40px 16px;color:#1d2230;background:#f3f4f7}a{color:#3d5afe}@media (prefers-color-scheme:dark){body{color:#e7e9f0;background:#12141b}a{color:#8c9cff}}</style>
 </head>
 <body>
-<div class="wrap" data-keep>
-  <h1>Дела осени</h1>
-  <div class="meta"><span id="count"></span><div class="bar"><i id="fill"></i></div></div>
-  <ul id="list"></ul>
-  <form id="add"><input id="newItem" placeholder="Новое дело" autocomplete="off"><button id="addBtn">Добавить</button></form>
-  <p class="note" id="note">Копия списка. Отметки на этой странице не сохраняются.</p>
-</div>
-<script data-keep type="application/json" id="state">{"items":[
-{"t":"Собрать столик","d":false},
-{"t":"Почистить ванную","d":false},
-{"t":"Взять лекарство для кота","d":false},
-{"t":"Заказать наушники за Т-Мани","d":false},
-{"t":"Выбрать место на Новый год","d":false},
-{"t":"Взять билет из Гонконга","d":false},
-{"t":"Повесить подсветку","d":false},
-{"t":"Спланировать поездку","d":false},
-{"t":"ЖЕСТКИЙ СЕКС","d":false}
-]}</script>
-<script data-keep>
-(function(){
-  var state = JSON.parse(document.getElementById('state').textContent);
-  var list = document.getElementById('list');
-  var art = null, canWrite = true, timer = null;
-
-  function render(){
-    list.textContent = '';
-    state.items.forEach(function(it, i){
-      var li = document.createElement('li'); if (it.d) li.className = 'done';
-      var lab = document.createElement('label');
-      var cb = document.createElement('input'); cb.type='checkbox'; cb.id='c'+i; cb.checked=it.d; cb.disabled=!canWrite;
-      cb.addEventListener('change', function(){ it.d = cb.checked; render(); save(); });
-      var sp = document.createElement('span'); sp.textContent = it.t;
-      lab.append(cb, sp);
-      var del = document.createElement('button'); del.className='del'; del.type='button'; del.textContent='×';
-      del.setAttribute('aria-label','Удалить «'+it.t+'»'); del.disabled=!canWrite;
-      del.addEventListener('click', function(){ state.items.splice(i,1); render(); save(); });
-      li.append(lab, del); list.append(li);
-    });
-    var n = state.items.length, d = state.items.filter(function(x){return x.d}).length;
-    document.getElementById('count').textContent = 'Сделано ' + d + ' из ' + n;
-    document.getElementById('fill').style.width = (n ? d/n*100 : 0) + '%';
-    document.getElementById('newItem').disabled = !canWrite;
-    document.getElementById('addBtn').disabled = !canWrite;
-  }
-
-  document.getElementById('add').addEventListener('submit', function(e){
-    e.preventDefault();
-    var inp = document.getElementById('newItem'), v = inp.value.trim();
-    if (!v) return;
-    state.items.push({t:v, d:false}); inp.value=''; render(); save();
-  });
-
-  function buildDoc(){
-    var reset = '';
-    var hs = document.head.querySelector('style'); if (hs) reset = hs.textContent;
-    var parts = [];
-    document.querySelectorAll('[data-keep]').forEach(function(el){
-      var c = el.cloneNode(true);
-      if (c.id === 'state') c.textContent = JSON.stringify(state).replace(/</g,'\\u003c');
-      var l = c.querySelector && c.querySelector('#list'); if (l) l.textContent='';
-      var f = c.querySelector && c.querySelector('#fill'); if (f) f.removeAttribute('style');
-      var cnt = c.querySelector && c.querySelector('#count'); if (cnt) cnt.textContent='';
-      c.querySelectorAll && c.querySelectorAll('[disabled]').forEach(function(x){x.removeAttribute('disabled')});
-      parts.push(c.outerHTML);
-    });
-    return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>' + reset + '</style></head><body>' + parts.join('\n') + '</body></html>';
-  }
-
-  function save(){
-    if (!art || !canWrite) return;
-    clearTimeout(timer);
-    timer = setTimeout(function(){
-      art.publish(buildDoc()).catch(function(err){
-        var code = err && err.code;
-        if (code === 'not_granted' || code === 'not_writer') { canWrite = false; readOnly(); render(); }
-      });
-    }, 700);
-  }
-  function readOnly(){ document.getElementById('note').textContent = 'Только просмотр: изменения здесь не сохраняются.'; }
-
-  render();
-  if (window.claude && claude.use) {
-    claude.use('artifact').then(function(a){
-      art = a;
-      if (!a) { canWrite = false; readOnly(); render(); }
-    });
-  }
-})();
-</script>
-
+<p>Открываю чек-лист… Если не открылся, <a href="https://claude.ai/artifact/8dQJs4WLX4i76pzxznvC9u">перейдите по ссылке</a>.</p>
 </body>
 </html>
