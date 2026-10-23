@@ -23,7 +23,7 @@
   --accent:#b06e2c; --on-accent:#fff8ee; --done:#a8978a; --err:#b3261e;
   --p1:#c8463b; --p2:#e08a2c; --p3:#9c8f86;
   --field:rgba(255,255,255,.65); --veil:rgba(30,18,12,.18);
-  --title:#fff6ea;
+  --title:#fff6ea; --panel-solid:#fbf3e8; --glow:rgba(224,138,44,.22);
   --font:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
   color-scheme:light;
 }
@@ -31,7 +31,7 @@
   --panel:rgba(32,22,17,.74); --fg:#f5ebe0; --muted:#bba797; --line:rgba(255,235,210,.13);
   --accent:#e3a75c; --on-accent:#2b1d16; --done:#857469; --err:#ff8a80;
   --p1:#ef6a5d; --p2:#eea24a; --p3:#a39689;
-  --field:rgba(255,240,225,.08); --veil:rgba(10,6,4,.45);
+  --field:rgba(255,240,225,.08); --veil:rgba(10,6,4,.45); --panel-solid:#2c1f19; --glow:rgba(238,162,74,.22);
   color-scheme:dark}}
 *{box-sizing:border-box}
 html{background:var(--base);min-height:100%}
@@ -65,7 +65,17 @@ li.empty{color:var(--muted)}
 .dot[data-p="1"]{--pc:var(--p1)} .dot[data-p="2"]{--pc:var(--p2)} .dot[data-p="3"]{--pc:var(--p3)}
 .dot:disabled{cursor:default}
 li.done .dot::before{opacity:.35}
-.dot:not(:disabled):hover{background:var(--line)}
+.dot:not(:disabled):hover,.dot[aria-expanded="true"]{background:var(--line)}
+li{position:relative}
+.pmenu{position:absolute;left:36px;top:50%;transform:translateY(-50%);z-index:5;display:flex;gap:4px;padding:5px;
+  background:var(--panel-solid);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 24px rgba(20,10,5,.25)}
+.pmenu button{display:flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border:0;border-radius:10px;background:none;
+  color:var(--fg);font:inherit;font-weight:500;cursor:pointer;font-variant-numeric:tabular-nums}
+.pmenu button::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--pc)}
+.pmenu button[data-p="1"]{--pc:var(--p1)} .pmenu button[data-p="2"]{--pc:var(--p2)} .pmenu button[data-p="3"]{--pc:var(--p3)}
+.pmenu button[aria-checked="true"]{background:var(--line);font-weight:700}
+li.flash{animation:flash 1.6s ease-out;border-radius:10px}
+@keyframes flash{0%,40%{background:var(--glow);box-shadow:0 0 0 8px var(--glow)}100%{background:transparent;box-shadow:0 0 0 8px transparent}}
 .del{border:0;background:none;color:var(--muted);font-size:20px;line-height:1;width:32px;height:32px;border-radius:8px;cursor:pointer;flex:none}
 .del:hover{background:var(--line);color:var(--fg)}
 form.add{display:flex;flex-wrap:wrap;gap:8px}
@@ -97,7 +107,7 @@ details.hist[open] summary::before{transform:rotate(90deg)}
 .hrow span{flex:1;min-width:0;overflow-wrap:anywhere;color:var(--done)}
 .hrow small{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
 .back{font:inherit;font-size:13px;border:1px solid var(--line);background:none;color:var(--fg);border-radius:8px;padding:5px 10px;cursor:pointer}
-@media (prefers-reduced-motion:reduce){.bar i,details.hist summary::before{transition:none}}
+@media (prefers-reduced-motion:reduce){.bar i,details.hist summary::before{transition:none}li.flash{animation:none}}
 </style>
 </head>
 <body>
@@ -168,20 +178,20 @@ details.hist[open] summary::before{transform:rotate(90deg)}
   }
 
   function render(){
+    openM = null;
     var list = $('list'); list.textContent = '';
     var edit = canEdit(), items = sorted();
     if (!items.length && loaded) {
       var e = document.createElement('li'); e.className = 'empty'; e.textContent = 'Все дела сделаны. Добавьте новое.'; list.append(e);
     }
     items.forEach(function(it, i){
-      var li = document.createElement('li'); if (it.d) li.className = 'done';
+      var li = document.createElement('li'); if (it.d) li.className = 'done'; li.dataset.key = it.t;
+      if (flash.key === it.t && Date.now() - flash.at < 1600) { li.classList.add('flash'); li.style.animationDelay = -(Date.now() - flash.at) + 'ms'; }
       var dot = document.createElement('button'); dot.type = 'button'; dot.className = 'dot'; dot.dataset.p = pr(it);
       dot.setAttribute('aria-label', 'Приоритет ' + pr(it) + (edit ? ', нажмите, чтобы изменить' : ''));
       dot.disabled = !edit;
-      dot.addEventListener('click', function(){
-        var np = pr(it) % 3 + 1; it.p = np; render();
-        send({ action: 'prio', t: it.t, p: np });
-      });
+      dot.setAttribute('aria-haspopup', 'true'); dot.setAttribute('aria-expanded', 'false');
+      dot.addEventListener('click', function(ev){ ev.stopPropagation(); openMenu(li, dot, it); });
       var lab = document.createElement('label');
       var cb = document.createElement('input'); cb.type = 'checkbox'; cb.id = 'c' + i; cb.checked = !!it.d; cb.disabled = !edit;
       cb.addEventListener('change', function(){
@@ -211,6 +221,58 @@ details.hist[open] summary::before{transform:rotate(90deg)}
     $('editToggle').hidden = !SCRIPT_URL;
     $('editToggle').textContent = pin ? 'Выйти' : 'Редактировать';
     renderHistory(edit);
+  }
+
+  // меню приоритета у точки
+  var openM = null, flash = { key: null, at: 0 };
+  function closeMenu(){
+    if (!openM) return;
+    openM.menu.remove(); openM.dot.setAttribute('aria-expanded', 'false'); openM = null;
+  }
+  function openMenu(li, dot, it){
+    var same = openM && openM.dot === dot; closeMenu(); if (same) return;
+    var m = document.createElement('div'); m.className = 'pmenu'; m.setAttribute('role', 'menu');
+    [1, 2, 3].forEach(function(n){
+      var b = document.createElement('button'); b.type = 'button'; b.dataset.p = n; b.textContent = n;
+      b.setAttribute('role', 'menuitemradio'); b.setAttribute('aria-checked', pr(it) === n ? 'true' : 'false');
+      b.setAttribute('aria-label', 'Приоритет ' + n);
+      b.addEventListener('click', function(ev){
+        ev.stopPropagation(); closeMenu();
+        if (pr(it) === n) return;
+        it.p = n; moveWithFlip(it.t);
+        send({ action: 'prio', t: it.t, p: n });
+      });
+      m.append(b);
+    });
+    li.append(m); dot.setAttribute('aria-expanded', 'true');
+    openM = { menu: m, dot: dot };
+    var cur = m.querySelector('[aria-checked="true"]'); if (cur) cur.focus({ preventScroll: true });
+  }
+  document.addEventListener('click', function(e){ if (openM && !openM.menu.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && openM) { var d = openM.dot; closeMenu(); d.focus(); } });
+
+  // плавный переезд дела на новое место и подсветка
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function rects(){
+    var r = {}; document.querySelectorAll('#list li[data-key]').forEach(function(li){ r[li.dataset.key] = li.getBoundingClientRect().top; }); return r;
+  }
+  function moveWithFlip(key){
+    var before = rects(); render();
+    var target = null;
+    document.querySelectorAll('#list li[data-key]').forEach(function(li){
+      if (li.dataset.key === key) target = li;
+      if (reduce) return;
+      var dy = (before[li.dataset.key] || 0) - li.getBoundingClientRect().top;
+      if (!dy || before[li.dataset.key] === undefined) return;
+      li.style.transform = 'translateY(' + dy + 'px)'; li.style.transition = 'none';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        li.style.transition = 'transform .45s cubic-bezier(.2,.7,.2,1)'; li.style.transform = '';
+      }); });
+    });
+    if (target) {
+      flash = { key: key, at: Date.now() }; target.classList.add('flash');
+      setTimeout(function(){ target.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); }, reduce ? 0 : 460);
+    }
   }
 
   function renderHistory(edit){
