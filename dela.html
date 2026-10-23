@@ -63,33 +63,22 @@ input:disabled{cursor:default}
     <button class="link" id="editToggle" type="button">Редактировать</button>
   </div>
   <form class="access" id="access" hidden>
-    <p>Чтобы отмечать дела, вставьте ключ доступа к GitHub. Он хранится только в этом браузере.</p>
-    <input class="text" id="token" type="password" placeholder="github_pat_…" autocomplete="off">
-    <button class="btn" type="submit">Сохранить ключ</button>
+    <p>Чтобы отмечать дела, введите PIN-код. Он запомнится в этом браузере.</p>
+    <input class="text" id="token" type="password" inputmode="numeric" placeholder="PIN-код" autocomplete="off">
+    <button class="btn" type="submit">Войти</button>
   </form>
 </div>
 <script>
 (function(){
-  var API = 'https://api.github.com/repos/verbarius1/smart-procent/contents/dela.json';
-  var KEY = 'dela-token';
-  var state = { items: [] }, sha = null, token = '', busy = false, queued = false, loaded = false;
+  // Адрес веб-приложения Google Apps Script (хранилище отметок)
+  var SCRIPT_URL = '';
+  var KEY = 'dela-pin';
+  var state = { items: [] }, pin = '', loaded = false, busy = 0;
   var $ = function(id){ return document.getElementById(id); };
-
-  try { token = localStorage.getItem(KEY) || ''; } catch(e) {}
+  try { pin = localStorage.getItem(KEY) || ''; } catch(e) {}
 
   function setNote(t, err){ $('note').textContent = t; $('note').className = err ? 'note err' : 'note'; }
-  function canEdit(){ return !!token && loaded; }
-
-  function b64decode(s){
-    var bin = atob(s.replace(/\n/g, '')), bytes = new Uint8Array(bin.length);
-    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    return new TextDecoder().decode(bytes);
-  }
-  function b64encode(str){
-    var bytes = new TextEncoder().encode(str), bin = '';
-    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
-    return btoa(bin);
-  }
+  function canEdit(){ return !!pin && loaded && !!SCRIPT_URL; }
 
   function render(){
     var list = $('list'); list.textContent = '';
@@ -101,13 +90,16 @@ input:disabled{cursor:default}
       var li = document.createElement('li'); if (it.d) li.className = 'done';
       var lab = document.createElement('label');
       var cb = document.createElement('input'); cb.type = 'checkbox'; cb.id = 'c' + i; cb.checked = !!it.d; cb.disabled = !edit;
-      cb.addEventListener('change', function(){ change(function(s){ var x = find(s, it.t); if (x) x.d = cb.checked; }); });
+      cb.addEventListener('change', function(){ it.d = cb.checked; render(); send({ action: 'toggle', t: it.t, d: cb.checked }); });
       var sp = document.createElement('span'); sp.textContent = it.t;
       lab.append(cb, sp); li.append(lab);
       if (edit) {
         var del = document.createElement('button'); del.className = 'del'; del.type = 'button'; del.textContent = '×';
         del.setAttribute('aria-label', 'Удалить «' + it.t + '»');
-        del.addEventListener('click', function(){ change(function(s){ s.items = s.items.filter(function(x){ return x.t !== it.t; }); }); });
+        del.addEventListener('click', function(){
+          state.items = state.items.filter(function(x){ return x !== it; }); render();
+          send({ action: 'remove', t: it.t });
+        });
         li.append(del);
       }
       list.append(li);
@@ -116,96 +108,52 @@ input:disabled{cursor:default}
     if (loaded) $('count').textContent = 'Сделано ' + d + ' из ' + n;
     $('fill').style.width = (n ? d / n * 100 : 0) + '%';
     $('add').hidden = !edit;
-    $('editToggle').textContent = token ? 'Выйти из редактирования' : 'Редактировать';
-  }
-
-  function find(s, t){ for (var i = 0; i < s.items.length; i++) if (s.items[i].t === t) return s.items[i]; return null; }
-
-  function headers(auth){
-    var h = { 'Accept': 'application/vnd.github+json' };
-    if (auth && token) h['Authorization'] = 'Bearer ' + token;
-    return h;
-  }
-
-  function load(){
-    return fetch(API + '?t=' + Date.now(), { headers: headers(true), cache: 'no-store' }).then(function(r){
-      if (r.status === 401 && token) { forget(); setNote('Ключ не подошёл, введите новый.', true); return load(); }
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    }).then(function(j){
-      if (!j) return;
-      sha = j.sha; state = JSON.parse(b64decode(j.content)); loaded = true;
-    });
+    $('editToggle').hidden = !SCRIPT_URL;
+    $('editToggle').textContent = pin ? 'Выйти из редактирования' : 'Редактировать';
   }
 
   function refresh(quiet){
     if (busy) return;
-    load().then(function(){
-      render();
-      if (!quiet) setNote(token ? 'Отметки сохраняются для всех, у кого есть ссылка.' : 'Список обновляется сам. Отмечать может владелец.');
-    }).catch(function(e){
-      if (!loaded) {
-        // запасной путь: копия файла на GitHub Pages
-        fetch('dela.json?t=' + Date.now(), { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(s){
-          state = s; loaded = true; render(); setNote('Показываю сохранённую копию, свежие отметки подтянутся позже.');
-        }).catch(function(){ setNote('Не удалось загрузить список. Проверьте интернет и обновите страницу.', true); });
-      }
-    });
+    var url = SCRIPT_URL ? SCRIPT_URL + '?t=' + Date.now() : 'dela.json?t=' + Date.now();
+    fetch(url, { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(j){
+        if (busy) return;
+        state = { items: j.items || [] }; loaded = true; render();
+        if (!quiet) setNote(!SCRIPT_URL ? 'Хранилище ещё не подключено: это просто копия списка.'
+          : pin ? 'Отметки сохраняются для всех, у кого есть ссылка.' : 'Список обновляется сам. Отмечать может владелец.');
+      })
+      .catch(function(){ if (!quiet) setNote('Не удалось загрузить список. Проверьте интернет и обновите страницу.', true); });
   }
 
-  // apply a change on top of the freshest version, then write it
-  function change(mutate){
-    mutate(state); render();
-    pendingMutations.push(mutate);
-    flush();
+  function post(body){
+    return fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
   }
-  var pendingMutations = [];
 
-  function flush(){
-    if (busy) { queued = true; return; }
-    if (!pendingMutations.length) return;
-    busy = true; setNote('Сохраняю…');
-    var muts = pendingMutations.splice(0);
-    function attempt(tries){
-      return load().then(function(){
-        muts.forEach(function(m){ m(state); });
-        var body = JSON.stringify({
-          message: 'Дела осени: обновление списка',
-          content: b64encode(JSON.stringify(state, null, 1) + '\n'),
-          sha: sha
-        });
-        return fetch(API, { method: 'PUT', headers: Object.assign(headers(true), { 'Content-Type': 'application/json' }), body: body });
-      }).then(function(r){
-        if (r.status === 409 && tries > 0) return attempt(tries - 1);
-        if (r.status === 401 || r.status === 403 || r.status === 404) { var c = r.status; forget(); throw new Error('key:' + c); }
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json().then(function(j){ sha = j.content.sha; });
-      });
-    }
-    attempt(2).then(function(){
+  function send(body){
+    body.pin = pin; busy++; setNote('Сохраняю…');
+    post(body).then(function(j){
+      if (!j.ok && j.error === 'bad_pin') { forget(); setNote('PIN не подошёл. Нажмите «Редактировать» и введите его снова.', true); return; }
+      if (!j.ok) throw new Error(j.error || 'ошибка');
+      if (busy === 1) { state = { items: j.items }; }
       setNote('Сохранено. Все увидят это при открытии страницы.');
     }).catch(function(e){
-      var m = String(e && e.message || e);
-      if (m.indexOf('key:') === 0) setNote('Ключ не подходит для записи. Введите ключ с правом «Contents: Read and write» для smart-procent.', true);
-      else setNote('Не удалось сохранить (' + m + '). Попробуйте ещё раз.', true);
-      return load().catch(function(){});
-    }).then(function(){
-      busy = false; render();
-      if (queued) { queued = false; flush(); }
-    });
+      setNote('Не удалось сохранить (' + (e && e.message || e) + '). Попробуйте ещё раз.', true);
+    }).then(function(){ busy--; render(); if (!busy) refresh(true); });
   }
 
-  function forget(){ token = ''; try { localStorage.removeItem(KEY); } catch(e) {} render(); }
+  function forget(){ pin = ''; try { localStorage.removeItem(KEY); } catch(e) {} render(); }
 
   $('add').addEventListener('submit', function(e){
     e.preventDefault();
     var v = $('newItem').value.trim(); if (!v) return;
     $('newItem').value = '';
-    change(function(s){ if (!find(s, v)) s.items.push({ t: v, d: false }); });
+    if (!state.items.some(function(x){ return x.t === v; })) { state.items.push({ t: v, d: false }); render(); }
+    send({ action: 'add', t: v });
   });
 
   $('editToggle').addEventListener('click', function(){
-    if (token) { forget(); setNote('Режим просмотра.'); return; }
+    if (pin) { forget(); setNote('Режим просмотра.'); return; }
     $('access').hidden = !$('access').hidden;
     if (!$('access').hidden) $('token').focus();
   });
@@ -213,13 +161,18 @@ input:disabled{cursor:default}
   $('access').addEventListener('submit', function(e){
     e.preventDefault();
     var v = $('token').value.trim(); if (!v) return;
-    token = v; try { localStorage.setItem(KEY, v); } catch(err) {}
-    $('token').value = ''; $('access').hidden = true;
-    refresh();
+    setNote('Проверяю PIN…');
+    post({ action: 'check', pin: v }).then(function(j){
+      if (!j.ok) { setNote('PIN не подошёл.', true); return; }
+      pin = v; try { localStorage.setItem(KEY, v); } catch(err) {}
+      $('token').value = ''; $('access').hidden = true;
+      state = { items: j.items }; render();
+      setNote('Можно отмечать. Отметки сохраняются для всех, у кого есть ссылка.');
+    }).catch(function(){ setNote('Не удалось проверить PIN. Попробуйте ещё раз.', true); });
   });
 
-  refresh();
-  setInterval(function(){ if (!document.hidden) refresh(true); }, 60000);
+  render(); refresh();
+  setInterval(function(){ if (!document.hidden) refresh(true); }, 30000);
   document.addEventListener('visibilitychange', function(){ if (!document.hidden) refresh(true); });
 })();
 </script>
