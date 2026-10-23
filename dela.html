@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Дела двоих</title>
+<meta name="description" content="Наш общий список">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Дела двоих">
+<meta property="og:description" content="Наш общий список">
+<meta property="og:url" content="https://verbarius1.github.io/smart-procent/dela.html">
+<meta property="og:image" content="https://verbarius1.github.io/smart-procent/dela-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="dela.webmanifest">
 <link rel="apple-touch-icon" href="dela-icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="dela-icon-192.png">
@@ -95,6 +104,7 @@ input.text::placeholder{color:var(--muted)}
 .note.err{color:var(--err)}
 .foot{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
 .access{display:flex;flex-direction:column;gap:10px}
+.access input.text{flex:none}
 .access p{margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
 details.hist{border-top:1px solid var(--line);padding-top:12px}
 details.hist summary{cursor:pointer;font-weight:600;color:var(--muted);font-size:14px;list-style:none;display:flex;align-items:center;gap:8px}
@@ -107,10 +117,25 @@ details.hist[open] summary::before{transform:rotate(90deg)}
 .hrow span{flex:1;min-width:0;overflow-wrap:anywhere;color:var(--done)}
 .hrow small{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
 .back{font:inherit;font-size:13px;border:1px solid var(--line);background:none;color:var(--fg);border-radius:8px;padding:5px 10px;cursor:pointer}
-@media (prefers-reduced-motion:reduce){.bar i,details.hist summary::before{transition:none}li.flash{animation:none}}
+.ava{width:64px;height:64px;border-radius:50%;object-fit:cover;align-self:center;border:2px solid var(--line)}
+.splash{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--base) url("dela-bg.jpg") center 30%/cover no-repeat;transition:opacity .5s ease}
+.splash::after{content:"";position:absolute;inset:0;background:rgba(20,12,8,.35)}
+.splash span{position:relative;z-index:1;font-size:40px;font-weight:700;color:var(--title);text-shadow:0 2px 24px rgba(0,0,0,.5)}
+.splash.out{opacity:0;pointer-events:none}
+.wrap h1,.panel{transition:opacity .6s ease}
+body.celebrate .wrap h1,body.celebrate .panel{opacity:0;pointer-events:none}
+.yay{position:fixed;inset:0;z-index:40;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .6s ease .3s}
+.yay div{text-align:center;color:var(--title);text-shadow:0 2px 24px rgba(0,0,0,.55)}
+.yay b{display:block;font-size:42px;font-weight:700}
+.yay small{display:block;margin-top:6px;font-size:16px;opacity:.85}
+body.celebrate .yay{opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){.bar i,details.hist summary::before,.splash,.wrap h1,.panel,.yay{transition:none}li.flash{animation:none}}
 </style>
 </head>
 <body>
+<div class="splash" id="splash" hidden><span>Дела двоих</span></div>
+<script>try{if(navigator.standalone||matchMedia('(display-mode: standalone)').matches)document.getElementById('splash').hidden=false}catch(e){}</script>
+<div class="yay" id="yay" aria-live="polite"><div><b>Всё сделано</b><small>Все дела из списка выполнены</small></div></div>
 <div class="wrap">
   <h1>Дела двоих</h1>
   <div class="panel">
@@ -134,6 +159,7 @@ details.hist[open] summary::before{transform:rotate(90deg)}
       <button class="link" id="editToggle" type="button">Редактировать</button>
     </div>
     <form class="access" id="access" hidden>
+      <img class="ava" src="dela-avatar.jpg" alt="" width="64" height="64">
       <p>Чтобы отмечать дела и видеть историю, введите PIN-код. Он запомнится на этом устройстве.</p>
       <input class="text" id="token" type="password" inputmode="numeric" placeholder="PIN-код" autocomplete="off">
       <button class="btn" type="submit">Войти</button>
@@ -196,6 +222,7 @@ details.hist[open] summary::before{transform:rotate(90deg)}
       var cb = document.createElement('input'); cb.type = 'checkbox'; cb.id = 'c' + i; cb.checked = !!it.d; cb.disabled = !edit;
       cb.addEventListener('change', function(){
         it.d = cb.checked; it.at = cb.checked ? Date.now() : null; render();
+        if (cb.checked && state.items.length && state.items.every(function(x){ return x.d; })) celebrate();
         send({ action: 'toggle', t: it.t, d: cb.checked });
       });
       var tx = document.createElement('div'); tx.className = 'txt';
@@ -275,6 +302,23 @@ details.hist[open] summary::before{transform:rotate(90deg)}
     }
   }
 
+  var yayT = null;
+  function celebrate(){
+    document.body.classList.add('celebrate');
+    clearTimeout(yayT); yayT = setTimeout(endCelebrate, 3200);
+  }
+  function endCelebrate(){ clearTimeout(yayT); document.body.classList.remove('celebrate'); }
+  $('yay').addEventListener('click', endCelebrate);
+
+  // заставка при запуске с экрана «Домой»
+  var splashStart = Date.now(), splashDone = false;
+  function hideSplash(){
+    if (splashDone) return; splashDone = true;
+    var sp = $('splash'); if (sp.hidden) return;
+    setTimeout(function(){ sp.classList.add('out'); setTimeout(function(){ sp.hidden = true; }, 600); }, Math.max(0, 900 - (Date.now() - splashStart)));
+  }
+  setTimeout(hideSplash, 3000);
+
   function renderHistory(edit){
     var h = state.history || [];
     $('hist').hidden = !edit || !h.length;
@@ -320,7 +364,7 @@ details.hist[open] summary::before{transform:rotate(90deg)}
     req.then(function(j){
       if (busy) return;
       if (j.ok === false && j.error === 'bad_pin') { forget(); return refresh(quiet); }
-      apply(j); render();
+      apply(j); render(); hideSplash();
       if (!quiet) setNote(!SCRIPT_URL ? 'Хранилище ещё не подключено: это просто копия списка.'
         : pin ? 'Отметки видят все, у кого есть ссылка.' : 'Список обновляется сам. Отмечать может владелец.');
     }).catch(function(){ if (!quiet) setNote('Не удалось загрузить список. Проверьте интернет и обновите страницу.', true); });
