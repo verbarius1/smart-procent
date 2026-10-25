@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="dela-build" content="20261025143003">
+<meta name="dela-build" content="20261025213654">
 <title>Дела двоих</title>
 <meta name="description" content="Наш общий список">
 <meta property="og:type" content="website">
@@ -44,10 +44,10 @@
   --field:rgba(255,240,225,.08); --veil:rgba(10,6,4,.45); --panel-solid:#2c1f19; --glow:rgba(238,162,74,.22);
   color-scheme:dark}}
 *{box-sizing:border-box}
-html{background:var(--base)}
+html{background:var(--base) url("dela-bg.jpg") center 30%/cover no-repeat}
 body{margin:0;color:var(--fg);font-family:var(--font);font-size:16px;background:transparent;-webkit-tap-highlight-color:transparent}
-body::before{content:"";position:fixed;top:0;left:0;right:0;height:calc(100lvh + env(safe-area-inset-top,0px) + env(safe-area-inset-bottom,0px));z-index:-3;background:var(--base) url("dela-bg.jpg") center 30%/cover no-repeat}
-body::after{content:"";position:fixed;top:0;left:0;right:0;height:calc(100lvh + env(safe-area-inset-top,0px) + env(safe-area-inset-bottom,0px));z-index:-1;background:linear-gradient(180deg,rgba(20,12,8,.35) 0%,var(--veil) 35%,var(--veil) 100%)}
+body::before{content:"";position:fixed;top:0;left:0;right:0;bottom:-140px;z-index:-3;background:var(--base) url("dela-bg.jpg") center 30%/cover no-repeat}
+body::after{content:"";position:fixed;top:0;left:0;right:0;bottom:-140px;z-index:-1;background:linear-gradient(180deg,rgba(20,12,8,.35) 0%,var(--veil) 35%,var(--veil) 100%)}
 [hidden]{display:none!important}
 .topbar{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);z-index:30;pointer-events:none;
   background:rgba(30,18,12,.25);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
@@ -68,7 +68,7 @@ form.add .btn{flex:none}
 /* широкий экран: фото в своих пропорциях по центру, края растворяются в размытом фоне */
 @media (min-width:700px) and (min-aspect-ratio:4/5){
   body::before{filter:blur(40px) brightness(.75);transform:scale(1.15)}
-  .photo{display:block;position:fixed;top:0;bottom:0;left:50%;z-index:-2;height:100vh;width:calc(100vh * 900 / 1310);transform:translateX(-50%);
+  .photo{display:block;position:fixed;top:0;bottom:-140px;left:50%;z-index:-2;height:100vh;width:calc(100vh * 900 / 1310);transform:translateX(-50%);
     background:url("dela-bg.jpg") center/cover no-repeat;
     -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%)}
 }
@@ -142,13 +142,13 @@ details.hist[open] summary::before{transform:rotate(90deg)}
 .hrow small{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
 .back{font:inherit;font-size:13px;border:1px solid var(--line);background:none;color:var(--fg);border-radius:8px;padding:5px 10px;cursor:pointer}
 .ava{width:64px;height:64px;border-radius:50%;object-fit:cover;align-self:center;border:2px solid var(--line)}
-.splash{position:fixed;top:0;left:0;right:0;height:calc(100lvh + env(safe-area-inset-top,0px) + env(safe-area-inset-bottom,0px));z-index:50;display:grid;place-items:center;background:var(--base) url("dela-bg.jpg") center 30%/cover no-repeat;transition:opacity .5s ease}
+.splash{position:fixed;top:0;left:0;right:0;bottom:-140px;padding-bottom:140px;z-index:50;display:grid;place-items:center;background:var(--base) url("dela-bg.jpg") center 30%/cover no-repeat;transition:opacity .5s ease}
 .splash::after{content:"";position:absolute;inset:0;background:rgba(20,12,8,.35)}
 .splash span{position:relative;z-index:1;font-size:40px;font-weight:700;color:var(--title);text-shadow:0 2px 24px rgba(0,0,0,.5)}
 .splash.out{opacity:0;pointer-events:none}
 .wrap header,.panel{transition:opacity .6s ease}
 body.celebrate .wrap header,body.celebrate .panel{opacity:0;pointer-events:none}
-.yay{position:fixed;top:0;left:0;right:0;height:calc(100lvh + env(safe-area-inset-top,0px) + env(safe-area-inset-bottom,0px));z-index:40;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .6s ease .3s}
+.yay{position:fixed;top:0;left:0;right:0;bottom:-140px;padding-bottom:140px;z-index:40;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .6s ease .3s}
 .yay div{text-align:center;color:var(--title);text-shadow:0 2px 24px rgba(0,0,0,.55)}
 .yay b{display:block;font-size:42px;font-weight:700}
 .yay small{display:block;margin-top:6px;font-size:16px;opacity:.85}
@@ -415,19 +415,26 @@ body.celebrate .yay{opacity:1;pointer-events:auto}
   }
 
   function post(body){
-    return fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
-      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var t = setTimeout(function(){ if (ctrl) ctrl.abort(); }, 25000);
+    return fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body), signal: ctrl ? ctrl.signal : undefined })
+      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function(tx){ try { return JSON.parse(tx); } catch(e) { throw new Error('ответ скрипта не прочитан'); } })
+      .catch(function(e){ throw (e && e.name === 'AbortError') ? new Error('скрипт не ответил за 25 секунд') : e; })
+      .then(function(j){ clearTimeout(t); return j; }, function(e){ clearTimeout(t); throw e; });
   }
 
   function refresh(quiet){
     if (busy) return;
     if (!pin) { state = { items: [], history: [] }; loaded = false; render(); hideSplash(); return; }
+    if (!quiet && !loaded) setNote('Загружаю список…');
     post({ action: 'check', pin: pin }).then(function(j){
       if (busy) return;
-      if (j.ok === false && j.error === 'bad_pin') { forget(); return refresh(quiet); }
+      if (j.ok === false && j.error === 'bad_pin') { forget(); setNote('PIN изменился, введите новый.', true); return; }
+      if (j.ok === false) throw new Error(j.error || 'ошибка скрипта');
       apply(j); render(); hideSplash();
       if (!quiet) setNote('Отметки видят все, у кого есть PIN.');
-    }).catch(function(){ hideSplash(); if (!quiet) setNote('Не удалось загрузить список. Проверьте интернет и обновите страницу.', true); });
+    }).catch(function(e){ hideSplash(); if (!quiet || !loaded) setNote('Не удалось загрузить список (' + (e && e.message || e) + '). Обновите страницу.', true); });
   }
 
   function send(body){
