@@ -4,8 +4,8 @@
   "start_url": "dela.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#3a2a22",
-  "theme_color": "#3a2a22",
+  "background_color": "#3a1d1b",
+  "theme_color": "#3a1d1b",
   "icons": [
     { "src": "dela-icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "dela-icon-512.png", "sizes": "512x512", "type": "image/png" }
